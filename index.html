@@ -133,11 +133,8 @@
                 { title: "مصادر لغوية وأدبية", icon: "📚", link: "https://drive.google.com/uc?export=download&id=1STXB2g8N-ego3Frej2ngc_YEMtRnREVa" },
                 { title: "مفاهيم لغوية", icon: "📖", link: "https://drive.google.com/uc?export=download&id=17oUJVmKTSjrCGd5t0yjX3dLGSRtzN5yw" }
             ],
-            // 2. قسم التلخيصات
-            summaries: [
-                { title: "تلخيص مادة الأدب كاملة", icon: "📝", link: "#" },
-                { title: "أهم أسئلة علم البديع", icon: "💡", link: "#" }
-            ]
+            // 2. قسم التلخيصات (فارغ الآن لإضافة ملفاتك)
+            summaries: []
         };
 
         // ==========================================
@@ -149,6 +146,12 @@
         function render() {
             const grid = document.getElementById('main-grid');
             const items = DATA[currentSection];
+            
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-20 opacity-40 text-2xl">لا يوجد محتوى في هذا القسم حالياً.</div>`;
+                return;
+            }
+
             grid.innerHTML = items.map(item => `
                 <div class="glass-card p-10 rounded-[40px] text-center flex flex-col justify-between h-full relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-6 opacity-5 text-5xl group-hover:opacity-20 transition-opacity">👑</div>
