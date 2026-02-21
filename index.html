@@ -55,7 +55,6 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* تأثير اللمس للموبايل وتأثير الماوس للكمبيوتر */
         @media (min-width: 1024px) {
             .glass-card:hover {
                 border-color: #d4af37;
@@ -80,6 +79,19 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+
+        input, textarea {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -100,18 +112,21 @@
         </header>
 
         <!-- Tabs -->
-        <div class="flex flex-row justify-center gap-3 sm:gap-6 mb-10 sm:mb-16">
-            <button onclick="changeSection('courses')" id="tab-courses" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+        <div class="flex flex-wrap justify-center gap-3 sm:gap-6 mb-10 sm:mb-16">
+            <button onclick="changeSection('courses')" id="tab-courses" class="flex-1 max-w-[150px] sm:max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-xs sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]">
                 المقررات
             </button>
-            <button onclick="changeSection('summaries')" id="tab-summaries" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]">
+            <button onclick="changeSection('summaries')" id="tab-summaries" class="flex-1 max-w-[150px] sm:max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-xs sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]">
                 التلخيصات
+            </button>
+            <button onclick="changeSection('contact')" id="tab-contact" class="flex-1 max-w-[150px] sm:max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-xs sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]">
+                تواصل معنا
             </button>
         </div>
 
         <!-- Grid المحتوى المتجاوب -->
         <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-7xl mx-auto w-full px-2">
-            <!-- Content will be injected here -->
+            <!-- سيتم حقن المحتوى هنا -->
         </div>
 
         <!-- Footer -->
@@ -122,7 +137,12 @@
     </div>
 
     <script>
-        // البيانات
+        // ==========================================
+        // منطقة الإعدادات (رقم الهاتف)
+        // ==========================================
+        const MY_PHONE_NUMBER = "201020289403"; 
+        const DISPLAY_PHONE = "01020289403";
+
         const DATA = {
             courses: [
                 { title: "الأدب العباسي", icon: "📜", link: "https://drive.google.com/uc?export=download&id=1JFqVDwBMfp9_WHvi9scF_faNJJ1pNAi1" },
@@ -138,19 +158,41 @@
                 { title: "مصادر لغوية وأدبية", icon: "📚", link: "https://drive.google.com/uc?export=download&id=1STXB2g8N-ego3Frej2ngc_YEMtRnREVa" },
                 { title: "مفاهيم لغوية", icon: "📖", link: "https://drive.google.com/uc?export=download&id=17oUJVmKTSjrCGd5t0yjX3dLGSRtzN5yw" }
             ],
-            summaries: [
-                { title: "القائمة", icon: "📋", link: "https://drive.google.com/uc?export=download&id=1aTvx_AISEr1Ewg4KC-9Um6k5WLHoQno2" }
-            ]
+            summaries: []
         };
 
         let currentSection = 'courses';
 
         function render() {
             const grid = document.getElementById('main-grid');
+            
+            if (currentSection === 'contact') {
+                grid.innerHTML = `
+                    <div class="col-span-full max-w-2xl mx-auto w-full glass-card p-6 sm:p-10 rounded-[30px] sm:rounded-[40px] text-center">
+                        <div class="text-5xl sm:text-7xl mb-6 gold-gradient">💬</div>
+                        <h3 class="text-2xl font-black text-white mb-4">تواصل مع المطور</h3>
+                        <p class="text-[#d4af37] font-bold text-xl mb-4" dir="ltr">${DISPLAY_PHONE}</p>
+                        <p class="text-[#d4af37] opacity-80 mb-8 text-sm sm:text-base">بإمكانك إرسال شكوى، اقتراح، أو طلب مساعدة وسأرد عليك في أقرب وقت.</p>
+                        
+                        <div class="space-y-6 text-right">
+                            <div>
+                                <label class="block text-white mb-2 font-bold mr-2">رسالتك:</label>
+                                <textarea id="user-message" rows="5" class="w-full rounded-2xl p-4 text-white" placeholder="اكتب ما يدور في ذهنك هنا..."></textarea>
+                            </div>
+                            <button onclick="sendToWhatsApp()" class="download-btn w-full py-4 sm:py-5 rounded-xl sm:rounded-2xl text-lg sm:text-xl shadow-lg active:scale-95 flex items-center justify-center gap-3">
+                                <span>إرسال عبر واتساب</span>
+                                <span>🚀</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
             const items = DATA[currentSection];
             
             if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-20 opacity-40 text-xl">لا يوجد محتوى حالياً.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-20 opacity-40 text-xl">لا يوجد محتوى حالياً في هذا القسم.</div>`;
                 return;
             }
 
@@ -172,24 +214,37 @@
             `).join('');
         }
 
+        function sendToWhatsApp() {
+            const message = document.getElementById('user-message').value;
+            if (!message.trim()) {
+                alert("يرجى كتابة الرسالة أولاً!");
+                return;
+            }
+            
+            const encodedMessage = encodeURIComponent("رسالة من طالب عبر منصة LoRD Academy:\n\n" + message);
+            const whatsappURL = `https://wa.me/${MY_PHONE_NUMBER}?text=${encodedMessage}`;
+            
+            window.open(whatsappURL, '_blank');
+        }
+
         function changeSection(section) {
             currentSection = section;
             const btnCourses = document.getElementById('tab-courses');
             const btnSummaries = document.getElementById('tab-summaries');
+            const btnContact = document.getElementById('tab-contact');
 
-            if(section === 'courses') {
-                btnCourses.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]";
-                btnSummaries.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]";
-            } else {
-                btnSummaries.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]";
-                btnCourses.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]";
-            }
+            [btnCourses, btnSummaries, btnContact].forEach(btn => {
+                btn.className = "flex-1 max-w-[150px] sm:max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-xs sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]";
+            });
+
+            const activeBtn = section === 'courses' ? btnCourses : (section === 'summaries' ? btnSummaries : btnContact);
+            activeBtn.className = "flex-1 max-w-[150px] sm:max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-xs sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]";
+            
             render();
         }
 
-        // إنشاء النجوم بذكاء
         const stars = document.getElementById('stars');
-        const count = window.innerWidth < 600 ? 40 : 100; // تقليل النجوم في الموبايل للأداء
+        const count = window.innerWidth < 600 ? 40 : 100;
         for (let i = 0; i < count; i++) {
             const s = document.createElement('div');
             s.className = 'star';
