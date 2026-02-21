@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LoRD Academy - منصة الطالب</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,8 +15,10 @@
             color: #d4af37;
             margin: 0;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
+        /* خلفية النجوم المحسنة */
         .stars-container {
             position: fixed;
             top: 0;
@@ -47,16 +49,24 @@
         }
 
         .glass-card {
-            background: rgba(15, 15, 15, 0.9);
+            background: rgba(15, 15, 15, 0.85);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .glass-card:hover {
+        /* تأثير اللمس للموبايل وتأثير الماوس للكمبيوتر */
+        @media (min-width: 1024px) {
+            .glass-card:hover {
+                border-color: #d4af37;
+                transform: translateY(-10px);
+                box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+            }
+        }
+        
+        .glass-card:active {
+            transform: scale(0.98);
             border-color: #d4af37;
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
         }
 
         .download-btn {
@@ -66,59 +76,54 @@
             transition: 0.3s;
         }
 
-        .download-btn:hover {
-            box-shadow: 0 0 20px #d4af37;
-            transform: scale(1.05);
-            background: white;
-        }
+        /* إخفاء شريط التمرير بشكل جمالي */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div id="stars" class="stars-container"></div>
 
-    <div class="relative z-10 min-h-screen flex flex-col p-4 md:p-10">
+    <div class="relative z-10 min-h-screen flex flex-col p-4 sm:p-6 md:p-10">
         <!-- Header -->
-        <header class="text-center py-12 mb-12 border-b-2 border-[#d4af37] bg-black/60 rounded-b-[60px] shadow-2xl">
-            <h1 class="text-6xl md:text-8xl font-black uppercase gold-gradient tracking-tighter">
+        <header class="text-center py-10 sm:py-16 mb-8 sm:mb-12 border-b-2 border-[#d4af37] bg-black/60 rounded-b-[40px] sm:rounded-b-[80px] shadow-2xl px-4">
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-black uppercase gold-gradient tracking-tighter leading-tight">
                 LoRD Academy
             </h1>
-            <h2 class="text-2xl md:text-4xl text-white font-bold mt-4 tracking-wide">منصة الطالب</h2>
-            <div class="prepared-by mt-4 text-xl opacity-90">إعداد / علي جلال</div>
-            <div class="mt-8 inline-block px-10 py-3 bg-[#d4af37]/10 border border-[#d4af37] rounded-full text-white font-bold animate-pulse">
+            <h2 class="text-xl sm:text-2xl md:text-4xl text-white font-bold mt-2 sm:mt-4 tracking-wide">منصة الطالب</h2>
+            <div class="prepared-by mt-3 text-lg sm:text-xl opacity-90">إعداد / علي جلال</div>
+            <div class="mt-6 sm:mt-8 inline-block px-6 sm:px-10 py-2 sm:py-3 bg-[#d4af37]/10 border border-[#d4af37] rounded-full text-white font-bold text-sm sm:text-base animate-pulse">
                 ﷺ صلي على النبي ﷺ
             </div>
         </header>
 
         <!-- Tabs -->
-        <div class="flex flex-wrap justify-center gap-6 mb-16">
-            <button onclick="changeSection('courses')" id="tab-courses" class="px-12 py-4 rounded-2xl font-black text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_30px_rgba(212,175,55,0.4)]">
-                المقررات الدراسية
+        <div class="flex flex-row justify-center gap-3 sm:gap-6 mb-10 sm:mb-16">
+            <button onclick="changeSection('courses')" id="tab-courses" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                المقررات
             </button>
-            <button onclick="changeSection('summaries')" id="tab-summaries" class="px-12 py-4 rounded-2xl font-black text-xl transition-all border border-[#d4af37]/40 text-[#d4af37] hover:border-[#d4af37]">
-                التلخيصات الهامة
+            <button onclick="changeSection('summaries')" id="tab-summaries" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]">
+                التلخيصات
             </button>
         </div>
 
-        <!-- Grid -->
-        <div id="main-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto w-full">
+        <!-- Grid المحتوى المتجاوب -->
+        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-7xl mx-auto w-full px-2">
             <!-- Content will be injected here -->
         </div>
 
         <!-- Footer -->
-        <footer class="mt-24 py-12 text-center border-t border-[#d4af37]/20">
-            <p class="text-[#d4af37] opacity-60 text-lg">LoRD Academy &copy; 2025</p>
-            <p class="text-white/30 mt-2 font-bold uppercase tracking-widest">Designed for Excellence</p>
+        <footer class="mt-20 py-10 text-center border-t border-[#d4af37]/20">
+            <p class="text-[#d4af37] opacity-60 text-sm sm:text-lg">LoRD Academy &copy; 2025</p>
+            <p class="text-white/30 mt-2 text-xs sm:text-sm font-bold uppercase tracking-widest">Designed for Excellence</p>
         </footer>
     </div>
 
     <script>
-        // ==========================================
-        // منطقة التعديل: أضف ملفاتك هنا بسهولة
-        // ==========================================
-        
+        // البيانات
         const DATA = {
-            // 1. قسم المقررات
             courses: [
                 { title: "الأدب العباسي", icon: "📜", link: "https://drive.google.com/uc?export=download&id=1JFqVDwBMfp9_WHvi9scF_faNJJ1pNAi1" },
                 { title: "تحليل نصوص أدبية", icon: "✍️", link: "https://drive.google.com/uc?export=download&id=1dzNBYpWO2vQazMAdaeZgCzL-I6CNijyk" },
@@ -133,15 +138,10 @@
                 { title: "مصادر لغوية وأدبية", icon: "📚", link: "https://drive.google.com/uc?export=download&id=1STXB2g8N-ego3Frej2ngc_YEMtRnREVa" },
                 { title: "مفاهيم لغوية", icon: "📖", link: "https://drive.google.com/uc?export=download&id=17oUJVmKTSjrCGd5t0yjX3dLGSRtzN5yw" }
             ],
-            // 2. قسم التلخيصات
             summaries: [
                 { title: "القائمة", icon: "📋", link: "https://drive.google.com/uc?export=download&id=1aTvx_AISEr1Ewg4KC-9Um6k5WLHoQno2" }
             ]
         };
-
-        // ==========================================
-        // كود النظام (لا داعي لتعديله)
-        // ==========================================
 
         let currentSection = 'courses';
 
@@ -150,22 +150,22 @@
             const items = DATA[currentSection];
             
             if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-20 opacity-40 text-2xl">لا يوجد محتوى في هذا القسم حالياً.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-20 opacity-40 text-xl">لا يوجد محتوى حالياً.</div>`;
                 return;
             }
 
             grid.innerHTML = items.map(item => `
-                <div class="glass-card p-10 rounded-[40px] text-center flex flex-col justify-between h-full relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-6 opacity-5 text-5xl group-hover:opacity-20 transition-opacity">👑</div>
+                <div class="glass-card p-6 sm:p-10 rounded-[30px] sm:rounded-[40px] text-center flex flex-col justify-between h-full relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 sm:p-6 opacity-5 text-4xl sm:text-5xl group-hover:opacity-20 transition-opacity">👑</div>
                     <div>
-                        <div class="text-7xl mb-8 filter drop-shadow-[0_0_15px_rgba(212,175,55,0.5)] transform group-hover:scale-110 transition-transform">
+                        <div class="text-5xl sm:text-7xl mb-6 sm:mb-8 filter drop-shadow-[0_0_15px_rgba(212,175,55,0.5)] transform group-hover:scale-110 transition-transform">
                             ${item.icon}
                         </div>
-                        <h3 class="text-2xl font-black text-white mb-10 min-h-[70px] flex items-center justify-center leading-relaxed">
+                        <h3 class="text-xl sm:text-2xl font-black text-white mb-8 sm:mb-10 min-h-[50px] sm:min-h-[70px] flex items-center justify-center leading-relaxed px-2">
                             ${item.title}
                         </h3>
                     </div>
-                    <a href="${item.link}" target="_blank" class="download-btn w-full py-5 rounded-2xl text-xl shadow-lg active:scale-95">
+                    <a href="${item.link}" target="_blank" class="download-btn w-full py-4 sm:py-5 rounded-xl sm:rounded-2xl text-lg sm:text-xl shadow-lg active:scale-95">
                         تحميل الملف
                     </a>
                 </div>
@@ -174,17 +174,26 @@
 
         function changeSection(section) {
             currentSection = section;
-            document.getElementById('tab-courses').className = section === 'courses' ? "px-12 py-4 rounded-2xl font-black text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_30px_rgba(212,175,55,0.4)]" : "px-12 py-4 rounded-2xl font-black text-xl transition-all border border-[#d4af37]/40 text-[#d4af37] hover:border-[#d4af37]";
-            document.getElementById('tab-summaries').className = section === 'summaries' ? "px-12 py-4 rounded-2xl font-black text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_30px_rgba(212,175,55,0.4)]" : "px-12 py-4 rounded-2xl font-black text-xl transition-all border border-[#d4af37]/40 text-[#d4af37] hover:border-[#d4af37]";
+            const btnCourses = document.getElementById('tab-courses');
+            const btnSummaries = document.getElementById('tab-summaries');
+
+            if(section === 'courses') {
+                btnCourses.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]";
+                btnSummaries.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]";
+            } else {
+                btnSummaries.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all bg-[#d4af37] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]";
+                btnCourses.className = "flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-sm sm:text-xl transition-all border border-[#d4af37]/40 text-[#d4af37]";
+            }
             render();
         }
 
-        // إنشاء النجوم
+        // إنشاء النجوم بذكاء
         const stars = document.getElementById('stars');
-        for (let i = 0; i < 100; i++) {
+        const count = window.innerWidth < 600 ? 40 : 100; // تقليل النجوم في الموبايل للأداء
+        for (let i = 0; i < count; i++) {
             const s = document.createElement('div');
             s.className = 'star';
-            s.style.width = Math.random() * 3 + 'px';
+            s.style.width = Math.random() * 2 + 1 + 'px';
             s.style.height = s.style.width;
             s.style.top = Math.random() * 100 + '%';
             s.style.left = Math.random() * 100 + '%';
