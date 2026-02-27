@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LoRD Academy - منصة الطالب الذكية</title>
+    <title>LoRD Academy - منصة الطالب</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -86,7 +86,7 @@
             transition: opacity 0.5s ease;
         }
 
-        /* ترس صغير - خلفية ذهبي - أيقونة سوداء - ثابت فوق */
+        /* ترس صغير ثابت - خلفية ذهبي وأيقونة سوداء */
         .gear-btn {
             position: fixed;
             top: 15px;
@@ -121,24 +121,6 @@
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
-
-        .ai-chat-bubble {
-            border: 1px solid #d4af3733;
-            background: rgba(212, 175, 55, 0.05);
-            padding: 15px;
-            border-radius: 20px;
-            margin-top: 10px;
-        }
-
-        .typing-dots::after {
-            content: '...';
-            animation: typing 1s infinite;
-        }
-        @keyframes typing {
-            0% { content: '.'; }
-            33% { content: '..'; }
-            66% { content: '...'; }
-        }
     </style>
 </head>
 <body>
@@ -158,24 +140,9 @@
             <h1 class="text-4xl sm:text-6xl md:text-8xl font-black uppercase gold-gradient tracking-tighter leading-tight select-none">
                 LoRD Academy
             </h1>
-            <h2 class="text-xl sm:text-2xl md:text-4xl text-white font-bold mt-2 sm:mt-4 tracking-wide">منصة الطالب الذكية</h2>
+            <h2 class="text-xl sm:text-2xl md:text-4xl text-white font-bold mt-2 sm:mt-4 tracking-wide">منصة الطالب</h2>
             <div class="prepared-by mt-3 text-lg sm:text-xl opacity-90 text-gray-300 font-bold">إعداد / علي جلال</div>
         </header>
-
-        <!-- AI Assistant Section -->
-        <div class="max-w-7xl mx-auto w-full mb-10">
-            <div class="glass-card p-6 rounded-[30px] border-[#d4af37]/30 shadow-lg">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="text-3xl">🤖</span>
-                    <h3 class="text-xl font-black gold-gradient">مساعد LoRD الذكي</h3>
-                </div>
-                <div class="flex gap-2">
-                    <input type="text" id="ai-input" placeholder="اسألني أي شيء في المواد الدراسية..." class="flex-1 p-3 rounded-xl text-sm">
-                    <button onclick="askGemini()" id="ai-btn" class="download-btn px-6 py-3 rounded-xl text-sm whitespace-nowrap">اسأل 🚀</button>
-                </div>
-                <div id="ai-response" class="hidden ai-chat-bubble mt-4 text-white text-sm leading-relaxed whitespace-pre-wrap"></div>
-            </div>
-        </div>
 
         <!-- Tabs -->
         <div class="flex flex-wrap justify-center gap-4 mb-10 sm:mb-16">
@@ -192,7 +159,7 @@
             <!-- Content Injected Here -->
         </div>
 
-        <!-- Admin Panel -->
+        <!-- Admin Dashboard -->
         <div id="admin-panel" class="hidden max-w-7xl mx-auto w-full glass-card p-6 sm:p-10 rounded-[30px] mb-10 fade-in">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-[#d4af37]/20 pb-4 gap-4 text-right">
                 <div class="w-full md:w-auto">
@@ -264,7 +231,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- إعدادات Firebase ---
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyCq_eJoh3wroqd9rWHMdaVscVrDAbvH1Q8",
             authDomain: "ali1-5d8ae.firebaseapp.com",
@@ -274,9 +241,6 @@
             appId: "1:20632198502:web:27810ddbaa380ddea4bca7",
             measurementId: "G-0FQ00V431K"
         };
-
-        // --- إعدادات Gemini AI ---
-        const GEMINI_API_KEY = "AIzaSyA_F_HJqb0MjQ2be_V4vK5YvsKvDeSVZeY"; 
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -306,44 +270,7 @@
         // Render Static immediately for speed
         render();
 
-        // Gemini AI Integration
-        window.askGemini = async () => {
-            const input = document.getElementById('ai-input');
-            const responseDiv = document.getElementById('ai-response');
-            const btn = document.getElementById('ai-btn');
-            const query = input.value.trim();
-
-            if (!query) return;
-
-            btn.disabled = true;
-            btn.innerText = "...";
-            responseDiv.classList.remove('hidden');
-            responseDiv.innerHTML = '<span class="typing-dots">جاري التفكير</span>';
-
-            const systemPrompt = "أنت مساعد ذكي في منصة LoRD Academy التعليمية التي يديرها علي جلال. أجب عن أسئلة الطلاب باللغة العربية بأسلوب تعليمي ودود وواضح ومختصر جداً.";
-            
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: query }] }],
-                        systemInstruction: { parts: [{ text: systemPrompt }] }
-                    })
-                });
-                const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                responseDiv.innerText = text || "عذراً، لم أستطع معالجة هذا الطلب حالياً.";
-            } catch (e) {
-                responseDiv.innerText = "حدث خطأ في الاتصال بالمساعد الذكي.";
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "اسأل 🚀";
-                input.value = "";
-            }
-        };
-
-        // Firebase Setup
+        // Firebase Auth
         signInAnonymously(auth).catch(() => {});
         onAuthStateChanged(auth, (user) => {
             const loader = document.getElementById('loading');
