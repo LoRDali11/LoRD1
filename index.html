@@ -244,7 +244,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Config - 
+        // Firebase Config - احتفظ بهذه البيانات كما هي في مشروعك الحالي
         const firebaseConfig = {
             apiKey: "AIzaSyCq_eJoh3wroqd9rWHMdaVscVrDAbvH1Q8",
             authDomain: "ali1-5d8ae.firebaseapp.com",
@@ -259,8 +259,8 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-
-        const appId = "lord-academy-final";
+        // هام: استخدم نفس الـ appId الذي كنت تستخدمه سابقاً لكي لا تفقد بياناتك
+        const appId = "lord-academy-final-v3"; 
 
         const INITIAL_STATIC_FILES = [
             { id: "s1", title: "الأدب العباسي", icon: "📜", link: "https://drive.google.com/uc?export=download&id=1JFqVDwBMfp9_WHvi9scF_faNJJ1pNAi1", folderId: "root", type: "courses", order: 1, isStatic: true },
@@ -465,4 +465,3 @@
     </script>
 </body>
 </html>
-
