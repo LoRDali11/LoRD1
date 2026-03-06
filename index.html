@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LoRD Academy - المنصة الاحترافية</title>
-    <!-- Tailwind CSS -->
+    <title>LoRD Academy - التطبيق الرسمي</title>
+    
+    <!-- PWA & Mobile Web App Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#d4af37">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3200/3200735.png">
+    
+    <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Cairo', sans-serif;
@@ -28,13 +35,7 @@
             position: absolute;
             background: white;
             border-radius: 50%;
-            opacity: 0.2;
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
+            opacity: 0.15;
         }
 
         .gold-gradient {
@@ -47,44 +48,14 @@
             background: rgba(15, 15, 15, 0.85);
             border: 1px solid rgba(212, 175, 55, 0.2);
             backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .download-btn {
-            background: linear-gradient(135deg, #d4af37 0%, #816021 100%);
+            background: linear-gradient(135deg, #d4af37) 0%, #816021 100%);
             color: black;
             font-weight: 900;
-            transition: 0.3s;
-        }
-
-        input, textarea, select {
-            background: rgba(20, 20, 20, 0.8) !important;
-            border: 1px solid rgba(212, 175, 55, 0.3) !important;
-            color: white !important;
-            outline: none;
-            padding: 8px 12px;
-        }
-
-        .admin-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: #050505;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease;
+            transition: 0.2s;
         }
 
         .gear-btn {
@@ -101,25 +72,71 @@
             justify-content: center;
             font-size: 16px;
             cursor: pointer;
-            z-index: 150;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            transition: 0.3s;
+            z-index: 200;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .log-item {
-            background: rgba(255, 255, 255, 0.03);
-            border-right: 3px solid #d4af37;
-            padding: 8px 12px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
+        input, textarea, select {
+            background: rgba(20, 20, 20, 0.9) !important;
+            border: 1px solid rgba(212, 175, 55, 0.3) !important;
+            color: white !important;
+            outline: none;
+            padding: 10px;
         }
+
+        .admin-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: #050505;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease;
+        }
+
+        .notification-banner {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #d4af37;
+            color: #000;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 1100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification-banner.show { top: 20px; }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
     </style>
 </head>
 <body>
+
+    <!-- Notification Banner -->
+    <div id="notify-banner" class="notification-banner">
+        <span>🔔</span>
+        <span id="notify-text">تم إضافة ملف جديد!</span>
+    </div>
 
     <div id="loading" class="loading-overlay text-xl font-bold animate-pulse">
         LoRD Academy...
@@ -130,111 +147,111 @@
     <div onclick="openLoginModal()" class="gear-btn" title="الإدارة">⚙️</div>
 
     <div class="relative z-10 min-h-screen flex flex-col p-4 sm:p-6 md:p-10">
-        <header class="text-center py-10 sm:py-16 mb-8 sm:mb-12 border-b-2 border-[#d4af37] bg-black/60 rounded-b-[40px] shadow-2xl px-4">
+        <header class="text-center py-8 sm:py-12 mb-6 border-b-2 border-[#d4af37] bg-black/40 rounded-b-[40px] shadow-2xl">
             <h1 class="text-4xl sm:text-6xl md:text-8xl font-black uppercase gold-gradient tracking-tighter leading-tight select-none">
                 LoRD Academy
             </h1>
-            <h2 class="text-xl sm:text-2xl md:text-4xl text-white font-bold mt-2 sm:mt-4 tracking-wide">منصة الطالب المنظمة</h2>
-            <div class="prepared-by mt-3 text-lg sm:text-xl opacity-90 text-gray-300 font-bold">إعداد / علي جلال</div>
+            <h2 class="text-xl sm:text-2xl md:text-3xl text-white font-bold mt-2 tracking-wide">تطبيق الطالب الذكي</h2>
+            <div class="prepared-by mt-2 text-sm opacity-70 text-gray-300 font-bold">إعداد / علي جلال</div>
         </header>
 
         <div id="navigation-bar" class="max-w-7xl mx-auto w-full mb-6 flex items-center justify-between px-2 hidden">
-            <button onclick="goBack()" class="flex items-center gap-2 text-white font-bold bg-[#d4af37]/20 px-4 py-2 rounded-lg border border-[#d4af37]/40 hover:bg-[#d4af37]/40 transition">
+            <button onclick="goBack()" class="flex items-center gap-2 text-white font-bold bg-[#d4af37]/10 px-4 py-2 rounded-lg border border-[#d4af37]/30 hover:bg-[#d4af37]/20 transition">
                 <span>🔙</span> عودة للرئيسية
             </button>
-            <div id="current-folder-title" class="text-xl font-black gold-gradient"></div>
+            <div id="current-folder-title" class="text-lg font-black gold-gradient"></div>
         </div>
 
-        <div id="tabs-container" class="flex flex-wrap justify-center gap-4 mb-10 sm:mb-16">
-            <button onclick="changeSection('courses')" id="tab-courses" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl font-black text-sm sm:text-xl transition-all">
+        <div id="tabs-container" class="flex flex-wrap justify-center gap-4 mb-8">
+            <button onclick="changeSection('courses')" id="tab-courses" class="flex-1 max-w-[180px] py-3 rounded-xl font-black text-sm transition-all">
                 المقررات
             </button>
-            <button onclick="changeSection('summaries')" id="tab-summaries" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl font-black text-sm sm:text-xl transition-all">
+            <button onclick="changeSection('summaries')" id="tab-summaries" class="flex-1 max-w-[180px] py-3 rounded-xl font-black text-sm transition-all">
                 التلخيصات
             </button>
         </div>
 
-        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-7xl mx-auto w-full px-2 mb-20"></div>
+        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full px-2 mb-20">
+            <!-- Content -->
+        </div>
 
         <!-- Admin Panel -->
-        <div id="admin-panel" class="hidden max-w-7xl mx-auto w-full glass-card p-6 sm:p-10 rounded-[30px] mb-10">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-[#d4af37]/20 pb-4 gap-4 text-right">
-                <div class="w-full md:w-auto">
-                    <h3 class="text-2xl font-black gold-gradient">لوحة تحكم المسؤول</h3>
-                    <p id="admin-info" class="text-sm text-white font-bold mt-1 opacity-80"></p>
+        <div id="admin-panel" class="hidden max-w-7xl mx-auto w-full glass-card p-6 rounded-[30px] mb-10">
+            <div class="flex justify-between items-center mb-6 border-b border-[#d4af37]/20 pb-4">
+                <div>
+                    <h3 class="text-xl font-black gold-gradient">لوحة تحكم المسؤول</h3>
+                    <p id="admin-info" class="text-xs text-white opacity-80 mt-1"></p>
                 </div>
-                <button onclick="logoutAdmin()" class="text-red-500 font-bold border border-red-500 px-6 py-2 rounded-xl hover:bg-red-500 hover:text-white transition">خروج</button>
+                <button onclick="logoutAdmin()" class="text-red-500 font-bold border border-red-500 px-4 py-1 rounded-lg text-sm">خروج</button>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 text-right">
-                <div class="space-y-4 bg-black/30 p-6 rounded-2xl border border-white/5">
-                    <h4 class="font-bold text-white border-r-4 border-blue-500 pr-2">إنشاء مجلد (اختياري)</h4>
-                    <input type="text" id="folder-title" placeholder="اسم المجلد" class="w-full rounded-xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-right">
+                <div class="space-y-4 bg-black/40 p-4 rounded-2xl border border-white/5">
+                    <h4 class="font-bold text-white text-sm border-r-4 border-blue-500 pr-2">إنشاء مجلد (مادة)</h4>
+                    <input type="text" id="folder-title" placeholder="اسم المجلد" class="w-full rounded-lg">
                     <div class="flex gap-2">
-                        <select id="folder-type" class="flex-1 rounded-xl">
+                        <select id="folder-type" class="flex-1 rounded-lg">
                             <option value="courses">مقرر</option>
                             <option value="summaries">تلخيص</option>
                         </select>
-                        <input type="number" id="folder-order" placeholder="الترتيب" value="0" class="w-24 rounded-xl text-center">
+                        <input type="number" id="folder-order" value="0" class="w-20 rounded-lg text-center">
                     </div>
-                    <button onclick="addNewFolder()" class="download-btn w-full py-3 rounded-xl shadow-xl active:scale-95">إنشاء 📁</button>
+                    <button onclick="addNewFolder()" class="download-btn w-full py-2 rounded-lg font-bold">إنشاء المجلد 📁</button>
                 </div>
 
-                <div class="space-y-4 bg-black/30 p-6 rounded-2xl border border-white/5">
-                    <h4 class="font-bold text-white border-r-4 border-[#d4af37] pr-2">إضافة ملف جديد</h4>
-                    <input type="text" id="file-title" placeholder="اسم الملف" class="w-full rounded-xl">
-                    <input type="text" id="file-link" placeholder="رابط التحميل" class="w-full rounded-xl">
+                <div class="space-y-4 bg-black/40 p-4 rounded-2xl border border-white/5">
+                    <h4 class="font-bold text-white text-sm border-r-4 border-[#d4af37] pr-2">إضافة مقرر / تلخيص</h4>
+                    <input type="text" id="file-title" placeholder="اسم الملف" class="w-full rounded-lg">
+                    <input type="text" id="file-link" placeholder="رابط جوجل درايف" class="w-full rounded-lg">
                     <div class="flex gap-2">
-                        <select id="file-folder-id" class="flex-1 rounded-xl">
-                            <option value="root">بالخارج (بدون مجلد)</option>
+                        <select id="file-folder-id" class="flex-1 rounded-lg">
+                            <option value="root">خارج المجلدات</option>
                         </select>
-                        <input type="number" id="file-order" placeholder="الترتيب" value="0" class="w-24 rounded-xl text-center">
+                        <input type="number" id="file-order" value="0" class="w-20 rounded-lg text-center">
                     </div>
                     <div class="flex gap-2">
-                        <select id="file-type-root" class="flex-1 rounded-xl">
+                        <select id="file-type-root" class="flex-1 rounded-lg">
                             <option value="courses">مقرر</option>
                             <option value="summaries">تلخيص</option>
                         </select>
-                        <input type="text" id="file-icon" placeholder="أيقونة" value="📚" class="w-1/4 rounded-xl text-center">
+                        <input type="text" id="file-icon" value="📚" class="w-16 rounded-lg text-center">
                     </div>
-                    <button onclick="addNewFile()" class="download-btn w-full py-3 rounded-xl shadow-xl active:scale-95">نشر 🚀</button>
+                    <button onclick="addNewFile()" class="download-btn w-full py-2 rounded-lg font-bold">نشر الآن 🚀</button>
                 </div>
 
-                <div id="logs-container" class="hidden bg-black/40 p-5 rounded-2xl border border-white/5 h-[300px] flex flex-col">
-                    <h4 class="font-bold text-blue-400 mb-4 flex items-center justify-end gap-2 text-sm">
-                        <span>🕒</span> سجل النشاطات
-                    </h4>
+                <div id="logs-container" class="hidden bg-black/50 p-4 rounded-2xl border border-white/5 h-[250px] flex flex-col">
+                    <h4 class="font-bold text-blue-400 mb-2 text-sm">🕒 سجل النشاطات</h4>
                     <div id="logs-list" class="flex-1 overflow-y-auto pr-2 custom-scrollbar"></div>
                 </div>
 
-                <div id="owner-area" class="hidden bg-red-900/10 p-5 rounded-2xl border border-red-500/20 h-[300px] flex flex-col">
-                    <h4 class="font-bold text-red-500 mb-4 border-r-4 border-red-500 pr-2">إدارة المسؤولين</h4>
-                    <div class="space-y-2 mb-4">
-                        <input type="text" id="admin-user-new" placeholder="اسم المستخدم" class="w-full p-2 rounded-lg text-xs">
-                        <input type="password" id="admin-pass-new" placeholder="كلمة المرور" class="w-full p-2 rounded-lg text-xs">
-                        <input type="text" id="admin-welcome-new" placeholder="رسالة الترحيب" class="w-full p-2 rounded-lg text-xs">
-                        <button onclick="createAdmin()" class="w-full py-2 bg-red-600 text-white rounded-lg font-bold text-xs">حفظ الحساب</button>
+                <div id="owner-area" class="hidden bg-red-900/10 p-4 rounded-2xl border border-red-500/20 h-[250px] flex flex-col">
+                    <h4 class="font-bold text-red-500 mb-2 text-sm">إدارة المسؤولين</h4>
+                    <div class="space-y-2 mb-2">
+                        <input type="text" id="admin-user-new" placeholder="اسم المستخدم" class="w-full p-2 rounded text-xs">
+                        <input type="password" id="admin-pass-new" placeholder="كلمة المرور" class="w-full p-2 rounded text-xs">
+                        <input type="text" id="admin-welcome-new" placeholder="رسالة الترحيب" class="w-full p-2 rounded text-xs">
+                        <button onclick="createAdmin()" class="w-full py-1 bg-red-600 text-white rounded font-bold text-xs">حفظ</button>
                     </div>
                     <div id="admins-list" class="flex-1 overflow-y-auto space-y-2 custom-scrollbar"></div>
                 </div>
             </div>
         </div>
 
-        <footer class="mt-auto py-10 text-center border-t border-[#d4af37]/20 opacity-60 text-sm">
-            LoRD Academy &copy; 2025
+        <footer class="mt-auto py-8 text-center border-t border-[#d4af37]/10 opacity-40 text-xs">
+            LoRD Academy App &copy; 2025
         </footer>
     </div>
 
     <!-- Login Modal -->
     <div id="login-modal" class="admin-modal">
-        <div class="glass-card p-10 rounded-[40px] w-full max-w-md text-center shadow-2xl">
-            <div class="text-5xl mb-6">🔐</div>
-            <h3 class="text-2xl font-black text-white mb-6">دخول المسؤولين</h3>
+        <div class="glass-card p-8 rounded-[30px] w-full max-sm:max-w-[90%] max-w-sm text-center shadow-2xl">
+            <div class="text-4xl mb-4">🔐</div>
+            <h3 class="text-xl font-black text-white mb-6">دخول الإدارة</h3>
             <div class="space-y-4">
-                <input type="text" id="login-user" placeholder="اسم المستخدم" class="w-full p-4 rounded-2xl text-center text-lg">
-                <input type="password" id="login-pass" placeholder="كلمة المرور" class="w-full p-4 rounded-2xl text-center text-lg tracking-widest">
-                <button onclick="attemptLogin()" class="download-btn w-full py-4 rounded-2xl text-xl font-bold">دخول</button>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-white transition text-sm">إلغاء</button>
+                <input type="text" id="login-user" placeholder="اسم المستخدم" class="w-full p-3 rounded-xl text-center">
+                <input type="password" id="login-pass" placeholder="كلمة المرور" class="w-full p-3 rounded-xl text-center">
+                <button onclick="attemptLogin()" class="download-btn w-full py-3 rounded-xl font-bold">دخول</button>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-white transition text-xs mt-2">إلغاء</button>
             </div>
         </div>
     </div>
@@ -242,9 +259,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Config - احتفظ بهذه البيانات كما هي في مشروعك الحالي
         const firebaseConfig = {
             apiKey: "AIzaSyCq_eJoh3wroqd9rWHMdaVscVrDAbvH1Q8",
             authDomain: "ali1-5d8ae.firebaseapp.com",
@@ -258,8 +274,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        
-        // هام: استخدم نفس الـ appId الذي كنت تستخدمه سابقاً لكي لا تفقد بياناتك
         const appId = "lord-academy-final-v3"; 
 
         const INITIAL_STATIC_FILES = [
@@ -283,155 +297,174 @@
         let currentSection = 'courses';
         let currentFolderId = null;
         let currentAdmin = null;
-        let isOwner = false;
+        let isFirstSync = true;
 
+        // Render Immediately
+        render();
+
+        // Notification Engine
+        async function requestNotifyPermission() {
+            if ("Notification" in window) {
+                await Notification.requestPermission();
+            }
+        }
+
+        function triggerNotification(title) {
+            // Internal UI Banner
+            const banner = document.getElementById('notify-banner');
+            document.getElementById('notify-text').innerText = `تم إضافة: ${title}`;
+            banner.classList.add('show');
+            setTimeout(() => banner.classList.remove('show'), 5000);
+
+            // Native Browser Notification (If allowed)
+            if (Notification.permission === "granted") {
+                new Notification("LoRD Academy", {
+                    body: `تم إضافة ملف جديد: ${title}`,
+                    icon: "https://cdn-icons-png.flaticon.com/512/3200/3200735.png"
+                });
+            }
+        }
+
+        // Standard PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {
+                    // Fallback for environments without sw.js file
+                    console.log('Running in light mode without background workers');
+                });
+            });
+        }
+
+        // --- UI Logic ---
         window.changeSection = (s) => { currentSection = s; currentFolderId = null; render(); };
         window.openFolder = (id) => { currentFolderId = id; render(); };
         window.goBack = () => { currentFolderId = null; render(); };
 
         function render() {
             const grid = document.getElementById('main-grid');
-            const navBar = document.getElementById('navigation-bar');
-            const tabs = document.getElementById('tabs-container');
-            const folderTitleDisplay = document.getElementById('current-folder-title');
+            if (!grid) return;
+            const activeStatics = INITIAL_STATIC_FILES.filter(f => !hiddenStatics.includes(f.id));
+            const allFiles = [...activeStatics, ...dynamicFiles];
 
-            const tCourses = document.getElementById('tab-courses');
-            const tSummaries = document.getElementById('tab-summaries');
-            if (tCourses && tSummaries) {
-                tCourses.className = `flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl font-black text-sm sm:text-xl transition-all ${currentSection === 'courses' ? 'bg-[#d4af37] text-black shadow-lg' : 'border border-[#d4af37]/40 text-[#d4af37]'}`;
-                tSummaries.className = `flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl font-black text-sm sm:text-xl transition-all ${currentSection === 'summaries' ? 'bg-[#d4af37] text-black shadow-lg' : 'border border-[#d4af37]/40 text-[#d4af37]'}`;
+            const tc = document.getElementById('tab-courses');
+            const ts = document.getElementById('tab-summaries');
+            if(tc && ts) {
+                tc.className = `flex-1 max-w-[180px] py-3 rounded-xl font-black text-sm transition-all ${currentSection === 'courses' ? 'bg-[#d4af37] text-black shadow-lg' : 'border border-[#d4af37]/30 text-[#d4af37]'}`;
+                ts.className = `flex-1 max-w-[180px] py-3 rounded-xl font-black text-sm transition-all ${currentSection === 'summaries' ? 'bg-[#d4af37] text-black shadow-lg' : 'border border-[#d4af37]/30 text-[#d4af37]'}`;
             }
 
-            const activeStatics = INITIAL_STATIC_FILES.filter(f => !hiddenStatics.includes(f.id));
-            const allCurrentFiles = [...activeStatics, ...dynamicFiles];
-
             if (currentFolderId === null) {
-                navBar.classList.add('hidden');
-                tabs.classList.remove('hidden');
-                const filteredFolders = dynamicFolders.filter(f => f.type === currentSection).sort((a, b) => (a.order || 0) - (b.order || 0));
-                const rootFiles = allCurrentFiles.filter(f => f.folderId === 'root' && f.type === currentSection).sort((a, b) => (a.order || 0) - (b.order || 0));
+                document.getElementById('navigation-bar').classList.add('hidden');
+                document.getElementById('tabs-container').classList.remove('hidden');
+                const folders = dynamicFolders.filter(f => f.type === currentSection).sort((a,b) => (a.order||0)-(b.order||0));
+                const roots = allFiles.filter(f => f.folderId === 'root' && f.type === currentSection).sort((a,b) => (a.order||0)-(b.order||0));
                 let html = "";
-                filteredFolders.forEach(f => {
-                    html += `<div onclick="openFolder('${f.id}')" class="glass-card p-8 rounded-[40px] text-center flex flex-col items-center justify-center cursor-pointer group hover:border-blue-500 transition-all relative h-full">
-                        ${currentAdmin ? `<button onclick="event.stopPropagation(); deleteFolder('${f.id}', '${f.title}')" class="absolute top-4 left-4 p-2 text-red-500 hover:bg-red-500/10 rounded-full">🗑️</button>` : ''}
-                        <div class="text-7xl mb-4 transform group-hover:scale-110 transition-transform">📁</div>
-                        <h3 class="text-xl font-black text-white leading-relaxed">${f.title}</h3>
-                        <span class="mt-2 text-xs opacity-50">${allCurrentFiles.filter(file => file.folderId === f.id).length} ملف</span>
+                folders.forEach(f => {
+                    html += `<div onclick="openFolder('${f.id}')" class="glass-card p-6 rounded-[30px] text-center flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 relative h-full">
+                        ${currentAdmin ? `<button onclick="event.stopPropagation(); deleteFolder('${f.id}', '${f.title}')" class="absolute top-2 left-2 text-red-500">🗑️</button>` : ''}
+                        <div class="text-6xl mb-3">📁</div><h3 class="text-lg font-black text-white">${f.title}</h3>
                     </div>`;
                 });
-                rootFiles.forEach(f => {
-                    html += `<div class="glass-card p-8 rounded-[40px] text-center flex flex-col justify-between h-full relative group hover:border-[#d4af37] transition-all">
-                        ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-4 left-4 p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
-                        <div>
-                            <div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform">${f.icon || '📄'}</div>
-                            <h3 class="text-xl font-black text-white mb-8 leading-relaxed">${f.title}</h3>
-                        </div>
-                        <a href="${f.link}" target="_blank" class="download-btn w-full py-4 rounded-xl text-lg block shadow-lg">تحميل</a>
+                roots.forEach(f => {
+                    html += `<div class="glass-card p-6 rounded-[30px] text-center flex flex-col justify-between relative group hover:border-[#d4af37]">
+                        ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-2 left-2 text-red-500 z-20">🗑️</button>` : ''}
+                        <div><div class="text-5xl mb-4">${f.icon || '📄'}</div><h3 class="text-md font-black text-white mb-6">${f.title}</h3></div>
+                        <a href="${f.link}" target="_blank" class="download-btn w-full py-3 rounded-xl text-sm block">تحميل</a>
                     </div>`;
                 });
-                grid.innerHTML = html || `<div class="col-span-full py-20 text-center opacity-30 text-2xl font-bold">القسم فارغ</div>`;
+                grid.innerHTML = html || `<div class="col-span-full py-10 opacity-30 text-center">لا يوجد محتوى حالياً</div>`;
             } else {
-                navBar.classList.remove('hidden');
-                tabs.classList.add('hidden');
-                const folderObj = dynamicFolders.find(f => f.id === currentFolderId);
-                folderTitleDisplay.innerText = folderObj ? folderObj.title : "";
-                const filteredFiles = allCurrentFiles.filter(file => file.folderId === currentFolderId).sort((a, b) => (a.order || 0) - (b.order || 0));
-                grid.innerHTML = filteredFiles.length === 0 ? `<div class="col-span-full py-20 text-center opacity-30 text-2xl">المجلد فارغ</div>` :
-                    filteredFiles.map(f => `<div class="glass-card p-8 rounded-[40px] text-center flex flex-col justify-between h-full relative group hover:border-[#d4af37] transition-all">
-                        ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-4 left-4 p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
-                        <div><div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform">${f.icon || '📄'}</div><h3 class="text-xl font-black text-white mb-8 leading-relaxed">${f.title}</h3></div>
-                        <a href="${f.link}" target="_blank" class="download-btn w-full py-4 rounded-xl text-lg block shadow-lg">تحميل</a>
-                    </div>`).join('');
+                document.getElementById('navigation-bar').classList.remove('hidden');
+                document.getElementById('tabs-container').classList.add('hidden');
+                const folder = dynamicFolders.find(f => f.id === currentFolderId);
+                document.getElementById('current-folder-title').innerText = folder ? folder.title : "";
+                const files = allFiles.filter(f => f.folderId === currentFolderId).sort((a,b) => (a.order||0)-(b.order||0));
+                grid.innerHTML = files.map(f => `<div class="glass-card p-6 rounded-[30px] text-center flex flex-col justify-between relative group hover:border-[#d4af37]">
+                    ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-2 left-2 text-red-500 z-20">🗑️</button>` : ''}
+                    <div><div class="text-5xl mb-4">${f.icon || '📄'}</div><h3 class="text-md font-black text-white mb-6">${f.title}</h3></div>
+                    <a href="${f.link}" target="_blank" class="download-btn w-full py-4 rounded-xl text-lg block shadow-lg">تحميل</a>
+                </div>`).join('');
             }
             updateFolderDropdown();
         }
 
         function updateFolderDropdown() {
-            const dropdown = document.getElementById('file-folder-id');
-            if (!dropdown) return;
-            const options = dynamicFolders.map(f => `<option value="${f.id}">${f.type === 'courses' ? '[مقرر]' : '[تلخيص]'} ${f.title}</option>`).join('');
-            dropdown.innerHTML = `<option value="root">بالخارج (بدون مجلد)</option>` + options;
+            const d = document.getElementById('file-folder-id');
+            if (!d) return;
+            d.innerHTML = `<option value="root">خارج المجلدات</option>` + dynamicFolders.map(f => `<option value="${f.id}">${f.title}</option>`).join('');
         }
 
+        // --- Firebase Sync ---
+        signInAnonymously(auth).catch(() => {});
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                requestNotifyPermission();
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), s => { dynamicFolders = s.docs.map(d => ({id: d.id, ...d.data()})); render(); });
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'files'), s => {
+                    const newFiles = s.docs.map(d => ({id: d.id, ...d.data()}));
+                    if (!isFirstSync && newFiles.length > dynamicFiles.length) {
+                        const added = newFiles[newFiles.length - 1];
+                        triggerNotification(added.title);
+                    }
+                    dynamicFiles = newFiles;
+                    isFirstSync = false;
+                    render();
+                    const loader = document.getElementById('loading');
+                    if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 400); }
+                });
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'hidden_statics'), s => { hiddenStatics = s.docs.map(d => d.id); render(); });
+            }
+        });
+
+        // --- Admin Actions ---
         window.addNewFolder = async () => {
-            const title = document.getElementById('folder-title').value.trim();
+            const t = document.getElementById('folder-title').value.trim();
             const type = document.getElementById('folder-type').value;
-            const order = parseInt(document.getElementById('folder-order').value) || 0;
-            if (!title) return;
-            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), { title, type, order, at: Date.now() });
-            await logAction(`أنشأ مجلد: ${title}`);
+            const ord = parseInt(document.getElementById('folder-order').value) || 0;
+            if (t) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), { title: t, type, order: ord, at: Date.now() });
             document.getElementById('folder-title').value = "";
         };
 
         window.addNewFile = async () => {
-            const title = document.getElementById('file-title').value.trim();
-            const link = document.getElementById('file-link').value.trim();
-            const folderId = document.getElementById('file-folder-id').value;
-            const order = parseInt(document.getElementById('file-order').value) || 0;
-            const type = (folderId === 'root') ? document.getElementById('file-type-root').value : dynamicFolders.find(f => f.id === folderId).type;
-            const icon = document.getElementById('file-icon').value.trim() || '📄';
-            if (!title || !link) return;
-            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'files'), { title, link, folderId, order, type, icon, at: Date.now() });
-            await logAction(`أضاف ملف: ${title}`);
+            const t = document.getElementById('file-title').value.trim();
+            const l = document.getElementById('file-link').value.trim();
+            const fid = document.getElementById('file-folder-id').value;
+            const ord = parseInt(document.getElementById('file-order').value) || 0;
+            const icon = document.getElementById('file-icon').value.trim();
+            const type = (fid === 'root') ? document.getElementById('file-type-root').value : dynamicFolders.find(f => f.id === fid).type;
+            if (t && l) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'files'), { title: t, link: l, folderId: fid, order: ord, type, icon, at: Date.now() });
             document.getElementById('file-title').value = ""; document.getElementById('file-link').value = "";
         };
 
-        window.deleteFolder = async (id, title) => {
-            if (confirm(`حذف مجلد ${title}؟ سيتم حذف المجلد فقط.`)) {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', id));
-                await logAction(`حذف مجلد: ${title}`);
-            }
-        };
-
         window.deleteFile = async (id, title, isStatic) => {
-            if (confirm(`هل أنت متأكد من حذف ${title}؟`)) {
-                if (isStatic) {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hidden_statics', id), { hidden: true });
-                } else {
-                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', id));
-                }
-                await logAction(`حذف: ${title}`);
+            if (confirm(`حذف ${title}؟`)) {
+                if (isStatic) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hidden_statics', id), { hidden: true });
+                else await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', id));
             }
         };
 
-        async function logAction(msg) {
-            if (!currentAdmin) return;
-            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'logs'), { user: currentAdmin, msg, at: Date.now() });
-        }
-
-        signInAnonymously(auth).catch(() => {});
-        onAuthStateChanged(auth, (user) => {
-            const loader = document.getElementById('loading');
-            if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }
-            if (user) {
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), (snap) => { dynamicFolders = snap.docs.map(d => ({id: d.id, ...d.data()})); render(); });
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'files'), (snap) => { dynamicFiles = snap.docs.map(d => ({id: d.id, ...d.data()})); render(); });
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'hidden_statics'), (snap) => { hiddenStatics = snap.docs.map(d => d.id); render(); });
-            }
-        });
+        window.deleteFolder = async (id, title) => {
+            if (confirm(`حذف مجلد ${title}؟`)) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', id));
+        };
 
         window.attemptLogin = async () => {
             const u = document.getElementById('login-user').value.trim();
             const p = document.getElementById('login-pass').value.trim();
             if (u === "LoRD112" && p === "Ali&my self1") { activateAdmin(u, true, "أهلاً بك يا مالك الأكاديمية العظيم"); return; }
             const docSnap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', u));
-            if (docSnap.exists() && docSnap.data().password === p) { activateAdmin(u, false, docSnap.data().welcomeMsg || `أهلاً بك يا ${u}`); }
-            else { alert("بيانات خاطئة!"); }
+            if (docSnap.exists() && docSnap.data().password === p) activateAdmin(u, false, docSnap.data().welcomeMsg || `أهلاً بك`);
+            else alert("بيانات خاطئة!");
         };
 
         function activateAdmin(name, owner, welcomeMsg) {
-            currentAdmin = name; isOwner = owner;
+            currentAdmin = name;
             document.getElementById('admin-panel').classList.remove('hidden');
             document.getElementById('admin-info').innerText = welcomeMsg;
             if (owner) {
                 document.getElementById('logs-container').classList.remove('hidden');
                 document.getElementById('owner-area').classList.remove('hidden');
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'admins'), (s) => {
-                    document.getElementById('admins-list').innerHTML = s.docs.map(d => `<div class="flex justify-between items-center bg-black/40 p-3 rounded-xl border border-white/5 mb-2"><button onclick="removeAdmin('${d.id}')" class="text-red-500 text-xs hover:underline">حذف</button><span class="text-xs font-bold text-white">${d.id}</span></div>`).join('');
-                });
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'logs'), (s) => {
-                    const logs = s.docs.map(d => d.data()).sort((a,b) => b.at - a.at).slice(0, 20);
-                    document.getElementById('logs-list').innerHTML = logs.map(l => `<div class="log-item"><div class="flex justify-between opacity-40 text-[9px]"><span>${new Date(l.at).toLocaleTimeString('ar-EG')}</span><span>${l.user}</span></div><p class="text-xs font-bold">${l.msg}</p></div>`).join('');
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'admins'), s => {
+                    document.getElementById('admins-list').innerHTML = s.docs.map(d => `<div class="flex justify-between items-center bg-black/40 p-2 rounded mb-1"><button onclick="removeAdmin('${d.id}')" class="text-red-500 text-xs">حذف</button><span class="text-xs text-white">${d.id}</span></div>`).join('');
                 });
             }
             closeModal(); render();
@@ -441,25 +474,23 @@
             const u = document.getElementById('admin-user-new').value.trim();
             const p = document.getElementById('admin-pass-new').value.trim();
             const w = document.getElementById('admin-welcome-new').value.trim();
-            if (!u || !p) return;
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', u), { password: p, welcomeMsg: w || `أهلاً بك يا ${u}` });
+            if (u && p) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', u), { password: p, welcomeMsg: w });
             document.getElementById('admin-user-new').value = ""; document.getElementById('admin-pass-new').value = ""; document.getElementById('admin-welcome-new').value = "";
-            alert("تم الحفظ");
         };
 
-        window.removeAdmin = async (id) => { if (confirm(`إزالة المسؤول ${id}؟`)) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', id)); };
-        window.logoutAdmin = () => { currentAdmin = null; isOwner = false; document.getElementById('admin-panel').classList.add('hidden'); render(); };
+        window.removeAdmin = async (id) => { if (confirm(`إزالة ${id}؟`)) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', id)); };
+        window.logoutAdmin = () => { currentAdmin = null; document.getElementById('admin-panel').classList.add('hidden'); render(); };
         window.openLoginModal = () => document.getElementById('login-modal').style.display = 'flex';
         window.closeModal = () => document.getElementById('login-modal').style.display = 'none';
 
+        // Background Stars (Static/Fast)
         const c = document.getElementById('stars');
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 20; i++) {
             const s = document.createElement('div');
             s.className = 'star';
             const size = (Math.random() * 2 + 1) + 'px';
             s.style.width = size; s.style.height = size;
             s.style.top = Math.random() * 100 + '%'; s.style.left = Math.random() * 100 + '%';
-            s.style.animationDelay = Math.random() * 5 + 's';
             c.appendChild(s);
         }
     </script>
