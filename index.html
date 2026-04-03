@@ -55,6 +55,7 @@
             color: black;
             font-weight: 900;
             transition: 0.2s;
+            cursor: pointer;
         }
 
         /* الترس الصغير الثابت - ذهبي بخلفية سوداء */
@@ -109,6 +110,24 @@
             transition: opacity 0.5s ease;
         }
 
+        /* رسالة تأكيد المشاركة */
+        #custom-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #d4af37;
+            color: black;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            min-width: 200px;
+        }
+
         .log-item {
             background: rgba(255, 255, 255, 0.03);
             border-right: 3px solid #d4af37;
@@ -129,11 +148,12 @@
 
     <div id="stars" class="stars-container"></div>
 
-    <!-- Gear Icon Fixed Top Left -->
+    <!-- نافذة الرسائل المنبثقة -->
+    <div id="custom-msg">تم نسخ الرابط بنجاح! 🔗</div>
+
     <div onclick="openLoginModal()" class="gear-btn" title="الإدارة">⚙️</div>
 
     <div class="relative z-10 min-h-screen flex flex-col p-4 sm:p-6 md:p-10">
-        <!-- Header -->
         <header class="text-center py-10 sm:py-16 mb-8 sm:mb-12 border-b-2 border-[#d4af37] bg-black/60 rounded-b-[40px] shadow-2xl px-4">
             <h1 class="text-4xl sm:text-6xl md:text-8xl font-black uppercase gold-gradient tracking-tighter leading-tight select-none">
                 LoRD Academy
@@ -142,7 +162,7 @@
             <div class="prepared-by mt-3 text-lg sm:text-xl opacity-90 text-gray-300 font-bold">إعداد / علي جلال</div>
         </header>
 
-        <!-- Navigation Bar (for folder contents) -->
+        <!-- شريط التنقل للمجلدات -->
         <div id="navigation-bar" class="max-w-7xl mx-auto w-full mb-6 flex items-center justify-between px-2 hidden">
             <button onclick="goBack()" class="flex items-center gap-2 text-white font-bold bg-[#d4af37]/20 px-4 py-2 rounded-lg border border-[#d4af37]/40 hover:bg-[#d4af37]/40 transition">
                 <span>🔙</span> عودة للرئيسية
@@ -150,7 +170,6 @@
             <div id="current-folder-title" class="text-xl font-black gold-gradient"></div>
         </div>
 
-        <!-- Tabs -->
         <div id="tabs-container" class="flex flex-wrap justify-center gap-4 mb-10 sm:mb-16">
             <button onclick="changeSection('courses')" id="tab-courses" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl font-black text-sm sm:text-xl transition-all">
                 المقررات
@@ -160,12 +179,9 @@
             </button>
         </div>
 
-        <!-- Main Grid -->
-        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-7xl mx-auto w-full px-2 mb-20">
-            <!-- Folders or Files Injected Here -->
-        </div>
+        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-7xl mx-auto w-full px-2 mb-20"></div>
 
-        <!-- Admin Panel -->
+        <!-- لوحة الإدارة -->
         <div id="admin-panel" class="hidden max-w-7xl mx-auto w-full glass-card p-6 sm:p-10 rounded-[30px] mb-10">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-[#d4af37]/20 pb-4 gap-4 text-right">
                 <div class="w-full md:w-auto text-right">
@@ -176,10 +192,9 @@
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 text-right">
-                <!-- Add Folder -->
                 <div class="space-y-4 bg-black/30 p-6 rounded-2xl border border-white/5">
                     <h4 class="font-bold text-white border-r-4 border-blue-500 pr-2">إنشاء مجلد (اختياري)</h4>
-                    <input type="text" id="folder-title" placeholder="اسم المجلد (مثلاً: البلاغة)" class="w-full rounded-xl">
+                    <input type="text" id="folder-title" placeholder="اسم المجلد" class="w-full rounded-xl">
                     <div class="flex gap-2">
                         <select id="folder-type" class="flex-1 rounded-xl">
                             <option value="courses">مقرر</option>
@@ -187,14 +202,13 @@
                         </select>
                         <input type="number" id="folder-order" placeholder="الترتيب" value="0" class="w-24 rounded-xl text-center">
                     </div>
-                    <button onclick="addNewFolder()" class="download-btn w-full py-3 rounded-xl shadow-xl active:scale-95">إنشاء مجلد 📁</button>
+                    <button onclick="addNewFolder()" class="download-btn w-full py-3 rounded-xl shadow-xl active:scale-95">إنشاء 📁</button>
                 </div>
 
-                <!-- Add File -->
                 <div class="space-y-4 bg-black/30 p-6 rounded-2xl border border-white/5">
-                    <h4 class="font-bold text-white border-r-4 border-[#d4af37] pr-2">إضافة مقرر / تلخيص جديد</h4>
-                    <input type="text" id="file-title" placeholder="اسم المقرر" class="w-full rounded-xl">
-                    <input type="text" id="file-link" placeholder="رابط جوجل درايف" class="w-full rounded-xl">
+                    <h4 class="font-bold text-white border-r-4 border-[#d4af37] pr-2">إضافة ملف جديد (تحميل مباشر)</h4>
+                    <input type="text" id="file-title" placeholder="اسم الملف" class="w-full rounded-xl">
+                    <input type="text" id="file-link" placeholder="رابط التحميل" class="w-full rounded-xl">
                     <div class="flex gap-2">
                         <select id="file-folder-id" class="flex-1 rounded-xl">
                             <option value="root">بالخارج (بدون مجلد)</option>
@@ -208,10 +222,9 @@
                         </select>
                         <input type="text" id="file-icon" placeholder="أيقونة" value="📚" class="w-1/4 rounded-xl text-center">
                     </div>
-                    <button onclick="addNewFile()" class="download-btn w-full py-3 rounded-xl shadow-xl active:scale-95">نشر الآن 🚀</button>
+                    <button onclick="addNewFile()" class="download-btn w-full py-3 rounded-xl shadow-xl active:scale-95">نشر 🚀</button>
                 </div>
 
-                <!-- Logs (Owner Only) -->
                 <div id="logs-container" class="hidden bg-black/40 p-5 rounded-2xl border border-white/5 h-[300px] flex flex-col">
                     <h4 class="font-bold text-blue-400 mb-4 flex items-center justify-end gap-2 text-sm">
                         <span>🕒</span> سجل النشاطات
@@ -219,7 +232,6 @@
                     <div id="logs-list" class="flex-1 overflow-y-auto pr-2 custom-scrollbar"></div>
                 </div>
 
-                <!-- Manage Admins (Owner Only) -->
                 <div id="owner-area" class="hidden bg-red-900/10 p-5 rounded-2xl border border-red-500/20 h-[300px] flex flex-col">
                     <h4 class="font-bold text-red-500 mb-4 border-r-4 border-red-500 pr-2">إدارة المسؤولين</h4>
                     <div class="space-y-2 mb-4">
@@ -238,7 +250,7 @@
         </footer>
     </div>
 
-    <!-- Login Modal -->
+    <!-- نافذة الدخول -->
     <div id="login-modal" class="admin-modal">
         <div class="glass-card p-10 rounded-[40px] w-full max-w-md text-center shadow-2xl">
             <div class="text-5xl mb-6">🔐</div>
@@ -296,7 +308,37 @@
         let currentFolderId = null;
         let currentAdmin = null;
 
-        // --- UI Logic ---
+        // --- ميزة المشاركة ونسخ الروابط ---
+        window.shareFile = (fileId, title) => {
+            const url = new URL(window.location.href);
+            url.searchParams.set('file', fileId);
+            const shareUrl = url.toString();
+            
+            // محاولة استخدام Clipboard API أو الطريقة التقليدية
+            const tempInput = document.createElement("input");
+            tempInput.value = shareUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            // عرض رسالة التأكيد
+            const msg = document.getElementById('custom-msg');
+            msg.innerText = `تم نسخ رابط: ${title} 🔗`;
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 3000);
+        };
+
+        function handleDirectLink(files) {
+            const params = new URLSearchParams(window.location.search);
+            const fileId = params.get('file');
+            if (fileId) {
+                const target = files.find(f => f.id === fileId);
+                if (target) window.location.href = target.link;
+            }
+        }
+
+        // --- منطق العرض (UI) ---
         window.changeSection = (s) => { currentSection = s; currentFolderId = null; render(); };
         window.openFolder = (id) => { currentFolderId = id; render(); };
         window.goBack = () => { currentFolderId = null; render(); };
@@ -304,7 +346,6 @@
         function render() {
             const grid = document.getElementById('main-grid');
             if (!grid) return;
-
             const activeStatics = INITIAL_STATIC_FILES.filter(f => !hiddenStatics.includes(f.id));
             const allFiles = [...activeStatics, ...dynamicFiles];
 
@@ -332,9 +373,12 @@
                 });
                 rootFiles.forEach(f => {
                     html += `<div class="glass-card p-8 rounded-[40px] text-center flex flex-col justify-between h-full relative group hover:border-[#d4af37] transition-all">
-                        ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-4 left-4 p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
+                            <button onclick="shareFile('${f.id}', '${f.title}')" class="p-2 text-blue-400 hover:bg-blue-400/10 rounded-full z-20" title="مشاركة">🔗</button>
+                        </div>
                         <div><div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform">${f.icon || '📄'}</div><h3 class="text-xl font-black text-white mb-8 leading-relaxed">${f.title}</h3></div>
-                        <a href="${f.link}" target="_blank" class="download-btn w-full py-4 rounded-xl text-lg block shadow-lg">تحميل الملف</a>
+                        <a href="${f.link}" download="${f.title}" class="download-btn w-full py-4 rounded-xl text-lg block shadow-lg">تحميل مباشر</a>
                     </div>`;
                 });
                 grid.innerHTML = html || `<div class="col-span-full py-20 text-center opacity-30 text-2xl font-bold">القسم فارغ</div>`;
@@ -347,9 +391,12 @@
                 const filteredFiles = allFiles.filter(file => file.folderId === currentFolderId).sort((a,b) => (a.order||0)-(b.order||0));
                 grid.innerHTML = filteredFiles.length === 0 ? `<div class="col-span-full py-20 text-center opacity-30 text-2xl">المجلد فارغ</div>` :
                     filteredFiles.map(f => `<div class="glass-card p-8 rounded-[40px] text-center flex flex-col justify-between h-full relative group hover:border-[#d4af37] transition-all">
-                        ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-4 left-4 p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-4 left-4 p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
+                            <button onclick="shareFile('${f.id}', '${f.title}')" class="p-2 text-blue-400 hover:bg-blue-400/10 rounded-full z-20" title="مشاركة">🔗</button>
+                        </div>
                         <div><div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform">${f.icon || '📄'}</div><h3 class="text-xl font-black text-white mb-8 leading-relaxed">${f.title}</h3></div>
-                        <a href="${f.link}" target="_blank" class="download-btn w-full py-4 rounded-xl text-lg block shadow-lg">تحميل الملف</a>
+                        <a href="${f.link}" download="${f.title}" class="download-btn w-full py-4 rounded-xl text-lg block shadow-lg">تحميل مباشر</a>
                     </div>`).join('');
             }
             updateFolderDropdown();
@@ -361,7 +408,7 @@
             dropdown.innerHTML = `<option value="root">بالخارج (بدون مجلد)</option>` + dynamicFolders.map(f => `<option value="${f.id}">${f.title}</option>`).join('');
         }
 
-        // --- Firebase Actions ---
+        // --- أفعال Firebase ---
         window.addNewFolder = async () => {
             const t = document.getElementById('folder-title').value.trim();
             const type = document.getElementById('folder-type').value;
@@ -372,13 +419,22 @@
 
         window.addNewFile = async () => {
             const t = document.getElementById('file-title').value.trim();
-            const l = document.getElementById('file-link').value.trim();
+            let l = document.getElementById('file-link').value.trim();
             const fid = document.getElementById('file-folder-id').value;
             const order = parseInt(document.getElementById('file-order').value) || 0;
             const type = (fid === 'root') ? document.getElementById('file-type-root').value : dynamicFolders.find(f => f.id === fid).type;
             const icon = document.getElementById('file-icon').value.trim() || '📄';
-            if (t && l) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'files'), { title: t, link: l, folderId: fid, order, type, icon, at: Date.now() });
-            document.getElementById('file-title').value = ""; document.getElementById('file-link').value = "";
+            
+            // تحويل تلقائي لرابط التحميل المباشر
+            if (l.includes('drive.google.com')) {
+                const match = l.match(/\/d\/(.+?)\//) || l.match(/id=(.+?)(&|$)/);
+                if (match && match[1]) l = `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+
+            if (t && l) {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'files'), { title: t, link: l, folderId: fid, order, type, icon, at: Date.now() });
+                document.getElementById('file-title').value = ""; document.getElementById('file-link').value = "";
+            }
         };
 
         window.deleteFile = async (id, title, isStatic) => {
@@ -392,14 +448,18 @@
             if (confirm(`حذف مجلد ${title}؟ سيتم حذف المجلد فقط.`)) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', id));
         };
 
-        // --- Auth & Sync ---
+        // --- الدخول والمزامنة ---
         signInAnonymously(auth).catch(() => {});
         onAuthStateChanged(auth, (user) => {
             const loader = document.getElementById('loading');
             if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }
             if (user) {
                 onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), snap => { dynamicFolders = snap.docs.map(d => ({id: d.id, ...d.data()})); render(); });
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'files'), snap => { dynamicFiles = snap.docs.map(d => ({id: d.id, ...d.data()})); render(); });
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'files'), snap => { 
+                    dynamicFiles = snap.docs.map(d => ({id: d.id, ...d.data()})); 
+                    handleDirectLink([...INITIAL_STATIC_FILES, ...dynamicFiles]);
+                    render(); 
+                });
                 onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'hidden_statics'), snap => { hiddenStatics = snap.docs.map(d => d.id); render(); });
             }
         });
@@ -407,30 +467,12 @@
         window.attemptLogin = async () => {
             const u = document.getElementById('login-user').value.trim();
             const p = document.getElementById('login-pass').value.trim();
-
-            // 1. المسؤول المالك
-            if (u === "LoRD112" && p === "Ali&my self1") { 
-                activateAdmin(u, true, "أهلاً بك يا مالك الأكاديمية العظيم"); 
-                return; 
-            }
-
-            // 2. المسؤولين الثابتين (حبيبة وسلمى)
-            if (u === "Habiba" && p === "00000000") {
-                activateAdmin(u, false, "أهلاً بكِ يا حبيبة في لوحة التحكم");
-                return;
-            }
-            if (u === "Salma" && p === "11330077") {
-                activateAdmin(u, false, "أهلاً بكِ يا سلمى في لوحة التحكم");
-                return;
-            }
-
-            // 3. المسؤولين من قاعدة البيانات
+            if (u === "LoRD112" && p === "Ali&my self1") { activateAdmin(u, true, "أهلاً بك يا مالك الأكاديمية العظيم"); return; }
+            if (u === "Habiba" && p === "00000000") { activateAdmin(u, false, "أهلاً بكِ يا حبيبة في لوحة التحكم"); return; }
+            if (u === "Salma" && p === "11330077") { activateAdmin(u, false, "أهلاً بكِ يا سلمى في لوحة التحكم"); return; }
             const docSnap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', u));
-            if (docSnap.exists() && docSnap.data().password === p) {
-                activateAdmin(u, false, docSnap.data().welcomeMsg || `أهلاً بك يا ${u}`);
-            } else {
-                alert("بيانات خاطئة!");
-            }
+            if (docSnap.exists() && docSnap.data().password === p) activateAdmin(u, false, docSnap.data().welcomeMsg || `أهلاً بك يا ${u}`);
+            else alert("بيانات خاطئة!");
         };
 
         function activateAdmin(name, owner, welcomeMsg) {
@@ -441,7 +483,7 @@
                 document.getElementById('logs-container').classList.remove('hidden');
                 document.getElementById('owner-area').classList.remove('hidden');
                 onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'admins'), s => {
-                    document.getElementById('admins-list').innerHTML = s.docs.map(d => `<div class="flex justify-between items-center bg-black/40 p-2 rounded mb-1"><button onclick="removeAdmin('${d.id}')" class="text-red-500 text-xs">حذف</button><span class="text-xs text-white">${d.id}</span></div>`).join('');
+                    document.getElementById('admins-list').innerHTML = s.docs.map(d => `<div class="flex justify-between items-center bg-black/40 p-2 rounded mb-1"><button onclick="removeAdmin('${d.id}')" class="text-red-500 text-xs hover:underline">حذف</button><span class="text-xs text-white">${d.id}</span></div>`).join('');
                 });
             }
             closeModal(); render();
@@ -460,7 +502,7 @@
         window.openLoginModal = () => document.getElementById('login-modal').style.display = 'flex';
         window.closeModal = () => document.getElementById('login-modal').style.display = 'none';
 
-        // Stars setup
+        // تأثير النجوم
         const c = document.getElementById('stars');
         for (let i = 0; i < 40; i++) {
             const s = document.createElement('div');
@@ -468,6 +510,7 @@
             const size = (Math.random() * 2 + 1) + 'px';
             s.style.width = size; s.style.height = size;
             s.style.top = Math.random() * 100 + '%'; s.style.left = Math.random() * 100 + '%';
+            s.style.animationDelay = Math.random() * 5 + 's';
             c.appendChild(s);
         }
     </script>
