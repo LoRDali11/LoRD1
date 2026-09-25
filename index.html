@@ -58,7 +58,6 @@
             cursor: pointer;
         }
 
-        /* الترس الصغير الثابت - ذهبي بخلفية سوداء */
         .gear-btn {
             position: fixed;
             top: 15px;
@@ -110,7 +109,6 @@
             transition: opacity 0.5s ease;
         }
 
-        /* رسالة تأكيد المشاركة */
         #custom-msg {
             position: fixed;
             bottom: 30px;
@@ -148,7 +146,6 @@
 
     <div id="stars" class="stars-container"></div>
 
-    <!-- نافذة الرسائل المنبثقة -->
     <div id="custom-msg">تم نسخ الرابط بنجاح! 🔗</div>
 
     <div onclick="openLoginModal()" class="gear-btn" title="الإدارة">⚙️</div>
@@ -162,7 +159,6 @@
             <div class="prepared-by mt-3 text-lg sm:text-xl opacity-90 text-gray-300 font-bold">إعداد / علي جلال</div>
         </header>
 
-        <!-- شريط التنقل للمجلدات -->
         <div id="navigation-bar" class="max-w-7xl mx-auto w-full mb-6 flex items-center justify-between px-2 hidden">
             <button onclick="goBack()" class="flex items-center gap-2 text-white font-bold bg-[#d4af37]/20 px-4 py-2 rounded-lg border border-[#d4af37]/40 hover:bg-[#d4af37]/40 transition">
                 <span>🔙</span> عودة للرئيسية
@@ -181,7 +177,6 @@
 
         <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-7xl mx-auto w-full px-2 mb-20"></div>
 
-        <!-- لوحة الإدارة -->
         <div id="admin-panel" class="hidden max-w-7xl mx-auto w-full glass-card p-6 sm:p-10 rounded-[30px] mb-10">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-[#d4af37]/20 pb-4 gap-4 text-right">
                 <div class="w-full md:w-auto text-right">
@@ -250,7 +245,6 @@
         </footer>
     </div>
 
-    <!-- نافذة الدخول -->
     <div id="login-modal" class="admin-modal">
         <div class="glass-card p-10 rounded-[40px] w-full max-w-md text-center shadow-2xl">
             <div class="text-5xl mb-6">🔐</div>
@@ -264,13 +258,26 @@
         </div>
     </div>
 
-    <!-- Firebase & Script -->
+    <div id="move-modal" class="admin-modal">
+        <div class="glass-card p-10 rounded-[40px] w-full max-w-md text-center shadow-2xl">
+            <div class="text-5xl mb-6">🔄</div>
+            <h3 class="text-2xl font-black text-white mb-6" id="move-file-title">نقل الملف</h3>
+            <div class="space-y-4">
+                <input type="hidden" id="move-file-id">
+                <select id="move-folder-select" class="w-full p-4 rounded-2xl text-center text-lg">
+                    <!-- Options populated via JS -->
+                </select>
+                <button onclick="confirmMoveFile()" class="download-btn w-full py-4 rounded-2xl text-xl font-bold">تأكيد النقل</button>
+                <button onclick="closeMoveModal()" class="text-gray-500 hover:text-white transition text-sm">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyCq_eJoh3wroqd9rWHMdaVscVrDAbvH1Q8",
             authDomain: "ali1-5d8ae.firebaseapp.com",
@@ -308,13 +315,11 @@
         let currentFolderId = null;
         let currentAdmin = null;
 
-        // --- ميزة المشاركة ونسخ الروابط ---
         window.shareFile = (fileId, title) => {
             const url = new URL(window.location.href);
             url.searchParams.set('file', fileId);
             const shareUrl = url.toString();
             
-            // محاولة استخدام Clipboard API أو الطريقة التقليدية
             const tempInput = document.createElement("input");
             tempInput.value = shareUrl;
             document.body.appendChild(tempInput);
@@ -322,7 +327,6 @@
             document.execCommand("copy");
             document.body.removeChild(tempInput);
 
-            // عرض رسالة التأكيد
             const msg = document.getElementById('custom-msg');
             msg.innerText = `تم نسخ رابط: ${title} 🔗`;
             msg.style.display = 'block';
@@ -338,7 +342,6 @@
             }
         }
 
-        // --- منطق العرض (UI) ---
         window.changeSection = (s) => { currentSection = s; currentFolderId = null; render(); };
         window.openFolder = (id) => { currentFolderId = id; render(); };
         window.goBack = () => { currentFolderId = null; render(); };
@@ -375,6 +378,7 @@
                     html += `<div class="glass-card p-8 rounded-[40px] text-center flex flex-col justify-between h-full relative group hover:border-[#d4af37] transition-all">
                         <div class="absolute top-4 left-4 flex gap-2">
                             ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
+                            ${currentAdmin && !f.isStatic ? `<button onclick="openMoveModal('${f.id}', '${f.title}', '${f.folderId}')" class="p-2 text-yellow-500 hover:bg-yellow-500/10 rounded-full z-20" title="نقل">🔄</button>` : ''}
                             <button onclick="shareFile('${f.id}', '${f.title}')" class="p-2 text-blue-400 hover:bg-blue-400/10 rounded-full z-20" title="مشاركة">🔗</button>
                         </div>
                         <div><div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform">${f.icon || '📄'}</div><h3 class="text-xl font-black text-white mb-8 leading-relaxed">${f.title}</h3></div>
@@ -392,7 +396,8 @@
                 grid.innerHTML = filteredFiles.length === 0 ? `<div class="col-span-full py-20 text-center opacity-30 text-2xl">المجلد فارغ</div>` :
                     filteredFiles.map(f => `<div class="glass-card p-8 rounded-[40px] text-center flex flex-col justify-between h-full relative group hover:border-[#d4af37] transition-all">
                         <div class="absolute top-4 left-4 flex gap-2">
-                            ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="absolute top-4 left-4 p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
+                            ${currentAdmin ? `<button onclick="deleteFile('${f.id}', '${f.title}', ${f.isStatic || false})" class="p-2 text-red-500 hover:bg-red-500/10 rounded-full z-20">🗑️</button>` : ''}
+                            ${currentAdmin && !f.isStatic ? `<button onclick="openMoveModal('${f.id}', '${f.title}', '${f.folderId}')" class="p-2 text-yellow-500 hover:bg-yellow-500/10 rounded-full z-20" title="نقل">🔄</button>` : ''}
                             <button onclick="shareFile('${f.id}', '${f.title}')" class="p-2 text-blue-400 hover:bg-blue-400/10 rounded-full z-20" title="مشاركة">🔗</button>
                         </div>
                         <div><div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform">${f.icon || '📄'}</div><h3 class="text-xl font-black text-white mb-8 leading-relaxed">${f.title}</h3></div>
@@ -408,7 +413,6 @@
             dropdown.innerHTML = `<option value="root">بالخارج (بدون مجلد)</option>` + dynamicFolders.map(f => `<option value="${f.id}">${f.title}</option>`).join('');
         }
 
-        // --- أفعال Firebase ---
         window.addNewFolder = async () => {
             const t = document.getElementById('folder-title').value.trim();
             const type = document.getElementById('folder-type').value;
@@ -425,7 +429,6 @@
             const type = (fid === 'root') ? document.getElementById('file-type-root').value : dynamicFolders.find(f => f.id === fid).type;
             const icon = document.getElementById('file-icon').value.trim() || '📄';
             
-            // تحويل تلقائي لرابط التحميل المباشر
             if (l.includes('drive.google.com')) {
                 const match = l.match(/\/d\/(.+?)\//) || l.match(/id=(.+?)(&|$)/);
                 if (match && match[1]) l = `https://drive.google.com/uc?export=download&id=${match[1]}`;
@@ -438,17 +441,19 @@
         };
 
         window.deleteFile = async (id, title, isStatic) => {
-            if (confirm(`حذف ${title}؟`)) {
-                if (isStatic) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hidden_statics', id), { hidden: true });
-                else await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', id));
+            // No alert or confirm allowed
+            if (isStatic) {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hidden_statics', id), { hidden: true });
+            } else {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', id));
             }
         };
 
         window.deleteFolder = async (id, title) => {
-            if (confirm(`حذف مجلد ${title}؟ سيتم حذف المجلد فقط.`)) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', id));
+            // No alert or confirm allowed
+            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', id));
         };
 
-        // --- الدخول والمزامنة ---
         signInAnonymously(auth).catch(() => {});
         onAuthStateChanged(auth, (user) => {
             const loader = document.getElementById('loading');
@@ -472,7 +477,7 @@
             if (u === "Salma" && p === "11330077") { activateAdmin(u, false, "أهلاً بكِ يا سلمى في لوحة التحكم"); return; }
             const docSnap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', u));
             if (docSnap.exists() && docSnap.data().password === p) activateAdmin(u, false, docSnap.data().welcomeMsg || `أهلاً بك يا ${u}`);
-            else alert("بيانات خاطئة!");
+            else console.error("بيانات خاطئة!"); // Replaced alert
         };
 
         function activateAdmin(name, owner, welcomeMsg) {
@@ -497,12 +502,45 @@
             document.getElementById('admin-user-new').value = ""; document.getElementById('admin-pass-new').value = ""; document.getElementById('admin-welcome-new').value = "";
         };
 
-        window.removeAdmin = async (id) => { if (confirm(`إزالة ${id}؟`)) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', id)); };
+        window.removeAdmin = async (id) => { 
+            // No confirm allowed
+            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', id)); 
+        };
+        
         window.logoutAdmin = () => { currentAdmin = null; document.getElementById('admin-panel').classList.add('hidden'); render(); };
         window.openLoginModal = () => document.getElementById('login-modal').style.display = 'flex';
         window.closeModal = () => document.getElementById('login-modal').style.display = 'none';
 
-        // تأثير النجوم
+        // --- دوال نقل الملفات الجديدة ---
+        window.openMoveModal = (id, title, currentFolderId) => {
+            document.getElementById('move-file-id').value = id;
+            document.getElementById('move-file-title').innerText = `نقل: ${title}`;
+            
+            const select = document.getElementById('move-folder-select');
+            select.innerHTML = `<option value="root">بالخارج (بدون مجلد)</option>` + 
+                dynamicFolders.map(f => `<option value="${f.id}" ${f.id === currentFolderId ? 'selected' : ''}>${f.title}</option>`).join('');
+            
+            document.getElementById('move-modal').style.display = 'flex';
+        };
+
+        window.closeMoveModal = () => document.getElementById('move-modal').style.display = 'none';
+
+        window.confirmMoveFile = async () => {
+            const fileId = document.getElementById('move-file-id').value;
+            const newFolderId = document.getElementById('move-folder-select').value;
+            const newType = newFolderId === 'root' ? currentSection : dynamicFolders.find(f => f.id === newFolderId).type;
+
+            try {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', fileId), { 
+                    folderId: newFolderId,
+                    type: newType
+                });
+                closeMoveModal();
+            } catch (error) {
+                console.error("حصلت مشكلة أثناء النقل، جرب تاني."); // Replaced alert
+            }
+        };
+
         const c = document.getElementById('stars');
         for (let i = 0; i < 40; i++) {
             const s = document.createElement('div');
