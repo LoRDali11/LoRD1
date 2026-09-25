@@ -166,6 +166,12 @@
             <div id="current-folder-title" class="text-xl font-black gold-gradient"></div>
         </div>
 
+        <!-- أزرار اختيار الترم -->
+        <div id="term-selector" class="flex justify-center gap-4 mb-6">
+            <button onclick="changeTerm('term1')" id="btn-term1" class="px-6 py-2 rounded-full font-bold transition-all bg-black/50 text-white border border-[#d4af37]/50 hover:bg-[#d4af37]/20">الترم الأول</button>
+            <button onclick="changeTerm('term2')" id="btn-term2" class="px-6 py-2 rounded-full font-bold transition-all bg-[#d4af37] text-black shadow-lg shadow-[#d4af37]/20">الترم الثاني</button>
+        </div>
+
         <div id="tabs-container" class="flex flex-wrap justify-center gap-4 mb-10 sm:mb-16">
             <button onclick="changeSection('courses')" id="tab-courses" class="flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl font-black text-sm sm:text-xl transition-all">
                 المقررات
@@ -191,6 +197,10 @@
                     <h4 class="font-bold text-white border-r-4 border-blue-500 pr-2">إنشاء مجلد (اختياري)</h4>
                     <input type="text" id="folder-title" placeholder="اسم المجلد" class="w-full rounded-xl">
                     <div class="flex gap-2">
+                        <select id="folder-term" class="flex-1 rounded-xl">
+                            <option value="term1">الترم الأول</option>
+                            <option value="term2" selected>الترم الثاني</option>
+                        </select>
                         <select id="folder-type" class="flex-1 rounded-xl">
                             <option value="courses">مقرر</option>
                             <option value="summaries">تلخيص</option>
@@ -206,11 +216,11 @@
                     <input type="text" id="file-link" placeholder="رابط التحميل" class="w-full rounded-xl">
                     <div class="flex gap-2">
                         <select id="file-folder-id" class="flex-1 rounded-xl">
-                            <option value="root">بالخارج (بدون مجلد)</option>
+                            <!-- Options populated via JS -->
                         </select>
                         <input type="number" id="file-order" placeholder="الترتيب" value="0" class="w-24 rounded-xl text-center">
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2" id="file-root-options">
                         <select id="file-type-root" class="flex-1 rounded-xl">
                             <option value="courses">مقرر</option>
                             <option value="summaries">تلخيص</option>
@@ -311,6 +321,7 @@
         let dynamicFolders = [];
         let dynamicFiles = [];
         let hiddenStatics = [];
+        let currentTerm = 'term2'; // تم إضافة متغير الترم
         let currentSection = 'courses';
         let currentFolderId = null;
         let currentAdmin = null;
@@ -343,14 +354,24 @@
         }
 
         window.changeSection = (s) => { currentSection = s; currentFolderId = null; render(); };
+        window.changeTerm = (t) => { currentTerm = t; currentFolderId = null; render(); }; // دالة تغيير الترم
         window.openFolder = (id) => { currentFolderId = id; render(); };
         window.goBack = () => { currentFolderId = null; render(); };
 
         function render() {
             const grid = document.getElementById('main-grid');
             if (!grid) return;
-            const activeStatics = INITIAL_STATIC_FILES.filter(f => !hiddenStatics.includes(f.id));
+            // إعطاء الملفات الثابتة ترم تاني افتراضياً
+            const activeStatics = INITIAL_STATIC_FILES.filter(f => !hiddenStatics.includes(f.id)).map(f => ({...f, term: 'term2'}));
             const allFiles = [...activeStatics, ...dynamicFiles];
+
+            // تحديث ألوان أزرار الترم
+            const btnTerm1 = document.getElementById('btn-term1');
+            const btnTerm2 = document.getElementById('btn-term2');
+            if(btnTerm1 && btnTerm2) {
+                btnTerm1.className = `px-6 py-2 rounded-full font-bold transition-all ${currentTerm === 'term1' ? 'bg-[#d4af37] text-black shadow-lg shadow-[#d4af37]/20' : 'bg-black/50 text-white border border-[#d4af37]/50 hover:bg-[#d4af37]/20'}`;
+                btnTerm2.className = `px-6 py-2 rounded-full font-bold transition-all ${currentTerm === 'term2' ? 'bg-[#d4af37] text-black shadow-lg shadow-[#d4af37]/20' : 'bg-black/50 text-white border border-[#d4af37]/50 hover:bg-[#d4af37]/20'}`;
+            }
 
             const tc = document.getElementById('tab-courses');
             const ts = document.getElementById('tab-summaries');
@@ -359,12 +380,17 @@
                 ts.className = `flex-1 max-w-[200px] py-3 sm:py-4 rounded-xl font-black text-sm sm:text-xl transition-all ${currentSection === 'summaries' ? 'bg-[#d4af37] text-black shadow-lg' : 'border border-[#d4af37]/40 text-[#d4af37]'}`;
             }
 
+            // تصفية المجلدات والملفات حسب الترم
+            const currentTermFolders = dynamicFolders.filter(f => (f.term || 'term2') === currentTerm);
+            const currentTermFiles = allFiles.filter(f => (f.term || 'term2') === currentTerm);
+
             if (currentFolderId === null) {
                 document.getElementById('navigation-bar').classList.add('hidden');
                 document.getElementById('tabs-container').classList.remove('hidden');
+                document.getElementById('term-selector').classList.remove('hidden');
 
-                const filteredFolders = dynamicFolders.filter(f => f.type === currentSection).sort((a,b) => (a.order||0)-(b.order||0));
-                const rootFiles = allFiles.filter(f => f.folderId === 'root' && f.type === currentSection).sort((a,b) => (a.order||0)-(b.order||0));
+                const filteredFolders = currentTermFolders.filter(f => f.type === currentSection).sort((a,b) => (a.order||0)-(b.order||0));
+                const rootFiles = currentTermFiles.filter(f => f.folderId === 'root' && f.type === currentSection).sort((a,b) => (a.order||0)-(b.order||0));
 
                 let html = "";
                 filteredFolders.forEach(f => {
@@ -389,6 +415,8 @@
             } else {
                 document.getElementById('navigation-bar').classList.remove('hidden');
                 document.getElementById('tabs-container').classList.add('hidden');
+                document.getElementById('term-selector').classList.add('hidden');
+                
                 const folderObj = dynamicFolders.find(f => f.id === currentFolderId);
                 document.getElementById('current-folder-title').innerText = folderObj ? folderObj.title : "";
 
@@ -410,24 +438,51 @@
         function updateFolderDropdown() {
             const dropdown = document.getElementById('file-folder-id');
             if (!dropdown) return;
-            dropdown.innerHTML = `<option value="root">بالخارج (بدون مجلد)</option>` + dynamicFolders.map(f => `<option value="${f.id}">${f.title}</option>`).join('');
+            dropdown.innerHTML = `<option value="root_term1">بالخارج (الترم الأول)</option><option value="root_term2" selected>بالخارج (الترم الثاني)</option>` + 
+                dynamicFolders.map(f => `<option value="${f.id}">[${(f.term || 'term2') === 'term1' ? 'ترم 1' : 'ترم 2'}] ${f.title}</option>`).join('');
+                
+            // إظهار/إخفاء خيارات الـ root بناءً على الاختيار
+            dropdown.addEventListener('change', (e) => {
+                const rootOptions = document.getElementById('file-root-options');
+                if (e.target.value.startsWith('root')) {
+                    rootOptions.style.display = 'flex';
+                } else {
+                    rootOptions.style.display = 'none';
+                }
+            });
         }
 
         window.addNewFolder = async () => {
             const t = document.getElementById('folder-title').value.trim();
+            const term = document.getElementById('folder-term').value;
             const type = document.getElementById('folder-type').value;
             const order = parseInt(document.getElementById('folder-order').value) || 0;
-            if (t) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), { title: t, type, order, at: Date.now() });
+            if (t) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), { title: t, term, type, order, at: Date.now() });
             document.getElementById('folder-title').value = "";
         };
 
         window.addNewFile = async () => {
             const t = document.getElementById('file-title').value.trim();
             let l = document.getElementById('file-link').value.trim();
-            const fid = document.getElementById('file-folder-id').value;
+            let fid = document.getElementById('file-folder-id').value;
             const order = parseInt(document.getElementById('file-order').value) || 0;
-            const type = (fid === 'root') ? document.getElementById('file-type-root').value : dynamicFolders.find(f => f.id === fid).type;
-            const icon = document.getElementById('file-icon').value.trim() || '📄';
+            
+            let term = 'term2';
+            let type = 'courses';
+            let icon = '📄';
+
+            if (fid.startsWith('root')) {
+                term = fid === 'root_term1' ? 'term1' : 'term2';
+                fid = 'root';
+                type = document.getElementById('file-type-root').value;
+                icon = document.getElementById('file-icon').value.trim() || '📄';
+            } else {
+                const parentFolder = dynamicFolders.find(f => f.id === fid);
+                if(parentFolder) {
+                    term = parentFolder.term || 'term2';
+                    type = parentFolder.type;
+                }
+            }
             
             if (l.includes('drive.google.com')) {
                 const match = l.match(/\/d\/(.+?)\//) || l.match(/id=(.+?)(&|$)/);
@@ -435,7 +490,7 @@
             }
 
             if (t && l) {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'files'), { title: t, link: l, folderId: fid, order, type, icon, at: Date.now() });
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'files'), { title: t, link: l, folderId: fid, term, order, type, icon, at: Date.now() });
                 document.getElementById('file-title').value = ""; document.getElementById('file-link').value = "";
             }
         };
@@ -517,8 +572,8 @@
             document.getElementById('move-file-title').innerText = `نقل: ${title}`;
             
             const select = document.getElementById('move-folder-select');
-            select.innerHTML = `<option value="root">بالخارج (بدون مجلد)</option>` + 
-                dynamicFolders.map(f => `<option value="${f.id}" ${f.id === currentFolderId ? 'selected' : ''}>${f.title}</option>`).join('');
+            select.innerHTML = `<option value="root_term1">بالخارج (الترم الأول)</option><option value="root_term2">بالخارج (الترم الثاني)</option>` + 
+                dynamicFolders.map(f => `<option value="${f.id}" ${f.id === currentFolderId ? 'selected' : ''}>[${(f.term || 'term2') === 'term1' ? 'ترم 1' : 'ترم 2'}] ${f.title}</option>`).join('');
             
             document.getElementById('move-modal').style.display = 'flex';
         };
@@ -527,17 +582,29 @@
 
         window.confirmMoveFile = async () => {
             const fileId = document.getElementById('move-file-id').value;
-            const newFolderId = document.getElementById('move-folder-select').value;
-            const newType = newFolderId === 'root' ? currentSection : dynamicFolders.find(f => f.id === newFolderId).type;
+            let newFolderId = document.getElementById('move-folder-select').value;
+            
+            let newType, newTerm;
+
+            if (newFolderId.startsWith('root')) {
+                newTerm = newFolderId === 'root_term1' ? 'term1' : 'term2';
+                newFolderId = 'root';
+                newType = currentSection; // يحتفظ بنفس القسم الحالي
+            } else {
+                const targetFolder = dynamicFolders.find(f => f.id === newFolderId);
+                newType = targetFolder.type;
+                newTerm = targetFolder.term || 'term2';
+            }
 
             try {
                 await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', fileId), { 
                     folderId: newFolderId,
-                    type: newType
+                    type: newType,
+                    term: newTerm
                 });
                 closeMoveModal();
             } catch (error) {
-                console.error("حصلت مشكلة أثناء النقل، جرب تاني."); // Replaced alert
+                console.error("حصلت مشكلة أثناء النقل، جرب تاني.");
             }
         };
 
