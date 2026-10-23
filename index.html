@@ -131,7 +131,7 @@
 
         @media (max-width: 640px) {
             input, textarea, select {
-                font-size: 16px; /* يمنع التقريب التلقائي المزعج في المتصفح على الموبايل */
+                font-size: 16px;
                 padding: 10px 12px;
             }
             .glass-card-interactive:hover {
@@ -222,7 +222,7 @@
 
     <!-- شاشة التحميل -->
     <div id="loading" class="loading-overlay">
-        <div class="w-16 h-16 rounded-2xl download-btn flex items-center justify-center text-3xl shadow-2xl animate-bounce">👑</div>
+        <div class="w-14 h-14 rounded-2xl download-btn flex items-center justify-center text-lg font-black shadow-2xl tracking-tighter">LA</div>
         <div class="text-2xl font-black gold-gradient tracking-wider animate-pulse">LoRD Academy</div>
         <div class="text-xs text-gray-400 font-semibold">جاري تجهيز المنصة الأكاديمية...</div>
     </div>
@@ -230,7 +230,7 @@
     <!-- خلفية النجوم -->
     <div id="stars" class="stars-container"></div>
 
-    <!-- إشعارات النظام (Toast) -->
+    <!-- إشعارات النظام -->
     <div id="custom-msg"></div>
 
     <!-- الشريط العلوي المتوافق مع الهاتف -->
@@ -238,8 +238,8 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
             <!-- الشعار -->
             <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl download-btn flex items-center justify-center text-lg sm:text-xl shadow-md select-none shrink-0">
-                    👑
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl download-btn flex items-center justify-center text-xs sm:text-sm font-black shadow-md select-none shrink-0 tracking-tighter">
+                    LA
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-1.5">
@@ -261,7 +261,7 @@
 
                 <!-- زر الإدارة -->
                 <button id="open-login-btn" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition min-h-[38px]">
-                    <span>⚙️</span>
+                    <svg class="w-4 h-4 accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                     <span id="admin-nav-label" class="text-xs sm:text-sm">الإدارة</span>
                 </button>
             </div>
@@ -272,9 +272,8 @@
         
         <!-- الهيدر الرئيسي (مضغوط وأنيق على الموبايل) -->
         <header class="relative overflow-hidden text-center py-4 px-3.5 sm:py-10 sm:px-8 mb-4 sm:mb-8 glass-card rounded-2xl sm:rounded-3xl shadow-xl">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-sm text-gray-300 font-bold mb-2 sm:mb-4">
-                <span>🎓</span>
-                <span>منصة الطالب • إعداد / علي جلال</span>
+            <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-sm text-gray-300 font-bold mb-2 sm:mb-4">
+                <span>منصة الطالب الأكاديمية • إعداد / علي جلال</span>
             </div>
             <h1 class="text-2xl sm:text-5xl md:text-6xl font-black uppercase gold-gradient tracking-tight leading-tight select-none">
                 LoRD Academy
@@ -301,29 +300,28 @@
         </header>
 
         <!-- لوحة تحكم المسؤول (تظهر عند تسجيل الدخول) -->
-        <div id="admin-panel" class="hidden w-full glass-card p-5 sm:p-8 rounded-3xl mb-8 border-2 accent-border shadow-2xl">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b border-white/10 pb-4 gap-4">
+        <div id="admin-panel" class="hidden w-full glass-card p-4 sm:p-8 rounded-2xl sm:rounded-3xl mb-6 sm:mb-8 border-2 accent-border shadow-2xl">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 border-b border-white/10 pb-4 gap-3">
                 <div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-2xl">🛡️</span>
-                        <h3 class="text-xl sm:text-2xl font-black gold-gradient">لوحة تحكم المسؤول</h3>
-                    </div>
+                    <h3 class="text-lg sm:text-2xl font-black gold-gradient">لوحة تحكم المسؤول</h3>
                     <p id="admin-info" class="text-xs sm:text-sm text-gray-300 font-bold mt-1"></p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span id="admin-email-badge" class="text-xs px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-gray-300 font-bold">📧 غير مرتبط ببريد</span>
-                    <button id="logout-admin-btn" class="text-red-400 font-bold border border-red-500/40 bg-red-500/10 px-5 py-2 rounded-xl hover:bg-red-500 hover:text-white transition text-sm">
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                    <button id="restore-all-btn" type="button" class="px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs sm:text-sm transition">
+                        استعادة كافة المقررات والتلخيصات
+                    </button>
+                    <span id="admin-email-badge" class="text-xs px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-gray-300 font-bold">غير مرتبط ببريد</span>
+                    <button id="logout-admin-btn" class="text-red-400 font-bold border border-red-500/40 bg-red-500/10 px-4 py-2 rounded-xl hover:bg-red-500 hover:text-white transition text-xs sm:text-sm">
                         تسجيل خروج
                     </button>
                 </div>
             </div>
 
             <!-- ربط حساب الأدمن بالبريد الإلكتروني وأمان الحساب -->
-            <div class="bg-black/40 p-5 rounded-2xl border border-white/10 mb-6 text-right">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-                    <h4 class="font-bold text-white flex items-center gap-2 text-base">
-                        <span class="text-lg">📧</span>
-                        <span>ربط حسابك بالبريد الإلكتروني واستعادة كلمة المرور</span>
+            <div class="bg-black/40 p-4 sm:p-5 rounded-2xl border border-white/10 mb-5 text-right">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
+                    <h4 class="font-bold text-white text-sm sm:text-base border-r-4 accent-border pr-2.5">
+                        ربط الحساب بالبريد الإلكتروني واستعادة كلمة المرور
                     </h4>
                     <span id="my-linked-email-status" class="text-xs font-bold accent-text"></span>
                 </div>
@@ -332,17 +330,16 @@
                     <input type="email" id="my-admin-email" placeholder="البريد الإلكتروني (example@gmail.com)" class="w-full rounded-xl text-xs sm:text-sm">
                     <input type="password" id="my-admin-new-pass" placeholder="كلمة مرور جديدة (اختياري لتحديثها)" class="w-full rounded-xl text-xs sm:text-sm">
                     <button id="save-my-email-btn" class="download-btn py-2.5 px-4 rounded-xl text-xs sm:text-sm font-black shadow-lg">
-                        حفظ وربط البريد الإلكتروني 🔗
+                        حفظ وربط البريد الإلكتروني
                     </button>
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-right">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 text-right">
                 <!-- إنشاء مجلد -->
-                <div class="space-y-3.5 bg-black/40 p-5 rounded-2xl border border-white/10">
-                    <h4 class="font-bold text-white flex items-center gap-2 text-base">
-                        <span class="text-lg">📁</span>
-                        <span>إنشاء مجلد جديد</span>
+                <div class="space-y-3 bg-black/40 p-4 sm:p-5 rounded-2xl border border-white/10">
+                    <h4 class="font-bold text-white text-sm sm:text-base border-r-4 accent-border pr-2.5">
+                        إنشاء مجلد جديد
                     </h4>
                     <input type="text" id="folder-title" placeholder="اسم المجلد (مثال: محاضرات الأدب)" class="w-full rounded-xl text-sm">
                     <div class="grid grid-cols-3 gap-2">
@@ -356,14 +353,13 @@
                         </select>
                         <input type="number" id="folder-order" placeholder="الترتيب" value="0" class="rounded-xl text-center text-xs sm:text-sm">
                     </div>
-                    <button id="add-folder-btn" class="download-btn w-full py-3 rounded-xl shadow-lg text-sm">إنشاء المجلد 📁</button>
+                    <button id="add-folder-btn" class="download-btn w-full py-3 rounded-xl shadow-lg text-sm">إنشاء المجلد</button>
                 </div>
 
                 <!-- إضافة ملف جديد -->
-                <div class="space-y-3.5 bg-black/40 p-5 rounded-2xl border border-white/10">
-                    <h4 class="font-bold text-white flex items-center gap-2 text-base">
-                        <span class="text-lg">🚀</span>
-                        <span>إضافة ملف جديد (يتحول تلقائياً لتحميل مباشر)</span>
+                <div class="space-y-3 bg-black/40 p-4 sm:p-5 rounded-2xl border border-white/10">
+                    <h4 class="font-bold text-white text-sm sm:text-base border-r-4 accent-border pr-2.5">
+                        إضافة ملف جديد (تحميل مباشر)
                     </h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <input type="text" id="file-title" placeholder="اسم الملف أو المقرر" class="w-full rounded-xl text-sm">
@@ -380,17 +376,16 @@
                             <option value="courses">قسم المقررات</option>
                             <option value="summaries">قسم التلخيصات</option>
                         </select>
-                        <input type="text" id="file-icon" placeholder="أيقونة" value="📚" class="w-20 rounded-xl text-center text-sm" title="أيقونة الملف">
+                        <input type="text" id="file-icon" placeholder="رمز" value="PDF" class="w-20 rounded-xl text-center text-xs sm:text-sm" title="رمز مختصر للملف">
                     </div>
-                    <button id="add-file-btn" class="download-btn w-full py-3 rounded-xl shadow-lg text-sm">نشر الملف الآن 🚀</button>
+                    <button id="add-file-btn" class="download-btn w-full py-3 rounded-xl shadow-lg text-sm">نشر الملف الآن</button>
                 </div>
 
                 <!-- سجل النشاطات للمالك -->
-                <div id="logs-container" class="hidden bg-black/40 p-5 rounded-2xl border border-white/10 h-[320px] flex flex-col">
+                <div id="logs-container" class="hidden bg-black/40 p-4 sm:p-5 rounded-2xl border border-white/10 h-[300px] flex flex-col">
                     <div class="flex items-center justify-between mb-3">
-                        <h4 class="font-bold text-blue-400 flex items-center gap-2 text-sm">
-                            <span>🕒</span>
-                            <span>سجل النشاطات المباشر</span>
+                        <h4 class="font-bold text-blue-400 text-sm border-r-4 border-blue-400 pr-2.5">
+                            سجل النشاطات المباشر
                         </h4>
                         <span class="text-[11px] text-gray-400">آخر العمليات</span>
                     </div>
@@ -398,10 +393,9 @@
                 </div>
 
                 <!-- إدارة المسؤولين للمالك -->
-                <div id="owner-area" class="hidden bg-red-950/20 p-5 rounded-2xl border border-red-500/25 h-[320px] flex flex-col">
-                    <h4 class="font-bold text-red-400 mb-3 flex items-center gap-2 text-sm">
-                        <span>👑</span>
-                        <span>إدارة حسابات المسؤولين</span>
+                <div id="owner-area" class="hidden bg-red-950/20 p-4 sm:p-5 rounded-2xl border border-red-500/25 h-[300px] flex flex-col">
+                    <h4 class="font-bold text-red-400 mb-3 text-sm border-r-4 border-red-400 pr-2.5">
+                        إدارة حسابات المسؤولين
                     </h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
                         <input type="text" id="admin-user-new" placeholder="اسم المستخدم" class="p-2 rounded-lg text-xs">
@@ -432,16 +426,13 @@
 
                 <!-- التبويبات (المقررات / التلخيصات / المفضلة) -->
                 <div id="tabs-container" class="grid grid-cols-3 sm:flex items-center gap-1.5 sm:gap-2 w-full md:w-auto justify-center">
-                    <button id="tab-courses" class="px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 min-h-[40px]">
-                        <span>📚</span>
+                    <button id="tab-courses" class="px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 min-h-[40px]">
                         <span>المقررات</span>
                     </button>
-                    <button id="tab-summaries" class="px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 min-h-[40px]">
-                        <span>📝</span>
+                    <button id="tab-summaries" class="px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 min-h-[40px]">
                         <span>التلخيصات</span>
                     </button>
-                    <button id="tab-favorites" class="px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 min-h-[40px]">
-                        <span>⭐</span>
+                    <button id="tab-favorites" class="px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 min-h-[40px]">
                         <span>المفضلة</span>
                         <span id="fav-count-badge" class="text-[10px] sm:text-[11px] px-1.5 py-0.2 rounded-full bg-black/30">0</span>
                     </button>
@@ -451,8 +442,10 @@
             <!-- شريط البحث والفرز وطريقة العرض -->
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                 <div class="relative flex-1">
-                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-sm">🔍</span>
-                    <input type="text" id="search-input" placeholder="ابحث عن اسم المقرر أو الملخص..." class="w-full pr-9 pl-12 py-2.5 rounded-xl text-sm min-h-[42px]">
+                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </span>
+                    <input type="text" id="search-input" placeholder="ابحث عن اسم المقرر أو الملخص..." class="w-full pr-10 pl-12 py-2.5 rounded-xl text-sm min-h-[42px]">
                     <button id="clear-search-btn" class="hidden absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-300 hover:text-white text-xs bg-white/10 px-2 py-1 rounded-lg">مسح</button>
                 </div>
 
@@ -465,8 +458,8 @@
 
                     <!-- تبديل العرض شبكة / قائمة -->
                     <div class="flex bg-black/60 p-1 rounded-xl border border-white/10 shrink-0">
-                        <button id="view-grid-btn" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition min-h-[34px]" title="عرض شبكي">شبكة ⊞</button>
-                        <button id="view-list-btn" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition min-h-[34px]" title="عرض مدمج">قائمة ☰</button>
+                        <button id="view-grid-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition min-h-[34px]" title="عرض شبكي">شبكة</button>
+                        <button id="view-list-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition min-h-[34px]" title="عرض قائمة">قائمة</button>
                     </div>
                 </div>
             </div>
@@ -475,8 +468,7 @@
         <!-- شريط مسار المجلد (Breadcrumbs) عند الدخول لمجلد -->
         <div id="navigation-bar" class="w-full mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-2 glass-card p-3 sm:p-4 rounded-2xl hidden">
             <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-base font-bold min-w-0">
-                <button id="go-back-btn" class="flex items-center gap-1 text-black font-extrabold download-btn px-3 py-2 rounded-xl transition text-xs sm:text-sm shrink-0">
-                    <span>↩️</span>
+                <button id="go-back-btn" class="flex items-center gap-1.5 text-black font-extrabold download-btn px-3.5 py-2 rounded-xl transition text-xs sm:text-sm shrink-0">
                     <span>عودة للرئيسية</span>
                 </button>
                 <span class="text-gray-500">/</span>
@@ -501,40 +493,42 @@
         </footer>
     </div>
 
-    <!-- شريط تنقل سفلي مخصص للهاتف (Mobile Bottom Bar) لسهولة الوصول بإصبع واحد -->
+    <!-- شريط تنقل سفلي مخصص للهاتف (Mobile Bottom Bar) بدون إيموجي -->
     <div id="mobile-bottom-nav" class="sm:hidden fixed bottom-0 inset-x-0 z-40 glass-card border-t border-white/15 px-2 py-1.5 flex items-center justify-around shadow-2xl">
-        <button type="button" data-mob-tab="courses" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-extrabold transition accent-text">
-            <span class="text-base leading-none">📚</span>
+        <button type="button" data-mob-tab="courses" class="flex-1 py-2 rounded-xl flex flex-col items-center justify-center gap-1 text-[11px] font-black transition accent-bg shadow-md">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
             <span>المقررات</span>
         </button>
-        <button type="button" data-mob-tab="summaries" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition">
-            <span class="text-base leading-none">📝</span>
+        <button type="button" data-mob-tab="summaries" class="flex-1 py-2 rounded-xl flex flex-col items-center justify-center gap-1 text-[11px] font-bold text-gray-400 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             <span>التلخيصات</span>
         </button>
-        <button type="button" data-mob-tab="favorites" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition">
-            <span class="text-base leading-none">⭐</span>
+        <button type="button" data-mob-tab="favorites" class="flex-1 py-2 rounded-xl flex flex-col items-center justify-center gap-1 text-[11px] font-bold text-gray-400 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
             <span>المفضلة</span>
         </button>
-        <button type="button" id="mob-search-focus-btn" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition">
-            <span class="text-base leading-none">🔍</span>
+        <button type="button" id="mob-search-focus-btn" class="flex-1 py-2 rounded-xl flex flex-col items-center justify-center gap-1 text-[11px] font-bold text-gray-400 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <span>بحث سريع</span>
         </button>
     </div>
 
     <!-- نافذة تسجيل دخول الإدارة واستعادة كلمة المرور -->
     <div id="login-modal" class="admin-modal">
-        <div class="glass-card p-7 sm:p-9 rounded-3xl w-full max-w-md text-center shadow-2xl border border-white/15">
+        <div class="glass-card p-6 sm:p-9 rounded-3xl w-full max-w-md text-center shadow-2xl border border-white/15">
             <!-- شاشة تسجيل الدخول -->
             <div id="login-view-box">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl download-btn flex items-center justify-center text-3xl shadow-lg">🔐</div>
-                <h3 class="text-2xl font-black text-white mb-1">دخول لوحة الإدارة</h3>
+                <div class="w-14 h-14 mx-auto mb-4 rounded-2xl download-btn flex items-center justify-center shadow-lg">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-white mb-1">دخول لوحة الإدارة</h3>
                 <p class="text-xs text-gray-400 mb-6">أدخل اسم المستخدم أو البريد الإلكتروني المرتبط</p>
                 <div class="space-y-3.5">
                     <input type="text" id="login-user" placeholder="اسم المستخدم أو البريد الإلكتروني" class="w-full p-3.5 rounded-xl text-center text-sm sm:text-base">
                     <input type="password" id="login-pass" placeholder="كلمة المرور" class="w-full p-3.5 rounded-xl text-center text-sm sm:text-base">
                     <div class="flex items-center justify-between px-1">
                         <button id="forgot-pass-trigger-btn" type="button" class="text-xs font-bold accent-text hover:underline">
-                            هل نسيت كلمة المرور؟ 🔑
+                            هل نسيت كلمة المرور؟
                         </button>
                         <span class="text-[11px] text-gray-500">حماية بالبريد</span>
                     </div>
@@ -546,7 +540,9 @@
 
             <!-- شاشة استعادة كلمة المرور عبر البريد الإلكتروني -->
             <div id="forgot-view-box" class="hidden">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl download-btn flex items-center justify-center text-3xl shadow-lg">📧</div>
+                <div class="w-14 h-14 mx-auto mb-4 rounded-2xl download-btn flex items-center justify-center shadow-lg">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
                 <h3 class="text-xl sm:text-2xl font-black text-white mb-1">استعادة كلمة المرور</h3>
                 <p class="text-xs text-gray-400 mb-5">أدخل اسم المستخدم والبريد الإلكتروني المرتبط بالحساب لإرسال رابط الاستعادة أو تعيين كلمة مرور جديدة</p>
                 <div class="space-y-3 text-right">
@@ -559,18 +555,18 @@
                         <input type="email" id="reset-email" placeholder="example@gmail.com" class="w-full p-3 rounded-xl text-center text-sm">
                     </div>
                     <div id="instant-reset-box" class="hidden pt-2 border-t border-white/10">
-                        <label class="text-[11px] text-emerald-400 font-bold block mb-1">✅ تم التحقق من تطابق البريد! أدخل كلمة المرور الجديدة:</label>
+                        <label class="text-[11px] text-emerald-400 font-bold block mb-1">تم التحقق من تطابق البريد، أدخل كلمة المرور الجديدة:</label>
                         <input type="password" id="reset-new-password" placeholder="كلمة المرور الجديدة" class="w-full p-3 rounded-xl text-center text-sm">
                     </div>
                     <p id="reset-feedback-msg" class="text-xs font-bold text-center hidden"></p>
                     <button id="send-reset-email-btn" type="button" class="download-btn w-full py-3 rounded-xl text-sm font-black">
-                        التحقق واستعادة كلمة المرور 📩
+                        التحقق واستعادة كلمة المرور
                     </button>
                     <button id="confirm-new-pass-btn" type="button" class="hidden w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-black transition">
-                        حفظ كلمة المرور الجديدة والدخول 🚀
+                        حفظ كلمة المرور الجديدة والدخول
                     </button>
                     <button id="back-to-login-btn" type="button" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 transition text-xs sm:text-sm font-bold text-center">
-                        ← العودة لتسجيل الدخول
+                        العودة لتسجيل الدخول
                     </button>
                 </div>
             </div>
@@ -579,9 +575,8 @@
 
     <!-- نافذة نقل الملف -->
     <div id="move-modal" class="admin-modal">
-        <div class="glass-card p-7 sm:p-9 rounded-3xl w-full max-w-md text-center shadow-2xl border border-white/15">
-            <div class="text-4xl mb-3">🔄</div>
-            <h3 class="text-xl font-black text-white mb-2" id="move-file-title">نقل الملف</h3>
+        <div class="glass-card p-6 sm:p-9 rounded-3xl w-full max-w-md text-center shadow-2xl border border-white/15">
+            <h3 class="text-xl font-black gold-gradient mb-2" id="move-file-title">نقل الملف</h3>
             <p class="text-xs text-gray-400 mb-5">اختر الوجهة الجديدة للملف</p>
             <div class="space-y-4">
                 <input type="hidden" id="move-file-id">
@@ -598,7 +593,7 @@
 
     <!-- نافذة تعديل ملف أو مجلد -->
     <div id="edit-modal" class="admin-modal">
-        <div class="glass-card p-7 sm:p-9 rounded-3xl w-full max-w-md text-right shadow-2xl border border-white/15">
+        <div class="glass-card p-6 sm:p-9 rounded-3xl w-full max-w-md text-right shadow-2xl border border-white/15">
             <h3 class="text-xl font-black gold-gradient mb-4 text-center" id="edit-modal-header">تعديل البيانات</h3>
             <input type="hidden" id="edit-item-id">
             <input type="hidden" id="edit-item-kind">
@@ -613,7 +608,7 @@
                 </div>
                 <div class="flex gap-2">
                     <div id="edit-icon-wrapper" class="w-24">
-                        <label class="text-xs text-gray-400 font-bold block mb-1">الأيقونة</label>
+                        <label class="text-xs text-gray-400 font-bold block mb-1">الرمز</label>
                         <input type="text" id="edit-item-icon" class="w-full rounded-xl text-center text-sm">
                     </div>
                     <div class="flex-1">
@@ -631,9 +626,8 @@
 
     <!-- نافذة تأكيد الحذف -->
     <div id="confirm-modal" class="admin-modal">
-        <div class="glass-card p-7 rounded-3xl w-full max-w-sm text-center shadow-2xl border border-red-500/30">
-            <div class="text-4xl mb-3">⚠️</div>
-            <h3 class="text-lg font-black text-white mb-2">تأكيد الحذف</h3>
+        <div class="glass-card p-6 sm:p-7 rounded-3xl w-full max-w-sm text-center shadow-2xl border border-red-500/30">
+            <h3 class="text-lg font-black text-red-400 mb-2">تأكيد الحذف</h3>
             <p id="confirm-modal-text" class="text-xs sm:text-sm text-gray-300 mb-6 leading-relaxed"></p>
             <div class="flex gap-2">
                 <button id="confirm-yes-btn" class="flex-1 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-sm transition">نعم، احذف</button>
@@ -644,15 +638,15 @@
 
     <!-- نافذة معاينة الملفات -->
     <div id="preview-modal" class="admin-modal">
-        <div class="glass-card p-4 sm:p-6 rounded-3xl w-full max-w-4xl h-[85vh] flex flex-col shadow-2xl border border-white/15">
-            <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
-                <h3 id="preview-modal-title" class="text-base sm:text-lg font-black gold-gradient truncate">معاينة الملف</h3>
-                <div class="flex items-center gap-2">
-                    <a id="preview-download-btn" href="#" download class="download-btn px-4 py-1.5 rounded-xl text-xs font-black">تحميل مباشر ⬇️</a>
-                    <button id="close-preview-btn" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">إغلاق ✕</button>
+        <div class="glass-card p-3 sm:p-6 rounded-2xl sm:rounded-3xl w-full max-w-4xl h-[88vh] flex flex-col shadow-2xl border border-white/15">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 gap-2">
+                <h3 id="preview-modal-title" class="text-sm sm:text-lg font-black gold-gradient truncate">معاينة الملف</h3>
+                <div class="flex items-center gap-2 shrink-0">
+                    <a id="preview-download-btn" href="#" download class="download-btn px-3.5 py-1.5 rounded-xl text-xs font-black">تحميل مباشر</a>
+                    <button id="close-preview-btn" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">إغلاق</button>
                 </div>
             </div>
-            <div class="flex-1 bg-black/60 rounded-2xl overflow-hidden relative">
+            <div class="flex-1 bg-black/60 rounded-xl sm:rounded-2xl overflow-hidden relative">
                 <iframe id="preview-iframe" src="about:blank" class="w-full h-full border-0" allow="autoplay"></iframe>
             </div>
         </div>
@@ -679,19 +673,33 @@
         const appId = "lord-academy-final-v3";
 
         const INITIAL_STATIC_FILES = [
-            { id: "s1", title: "الأدب العباسي", icon: "📜", link: "https://drive.google.com/uc?export=download&id=1JFqVDwBMfp9_WHvi9scF_faNJJ1pNAi1", folderId: "root", type: "courses", order: 1, isStatic: true },
-            { id: "s2", title: "تحليل نصوص أدبية", icon: "✍️", link: "https://drive.google.com/uc?export=download&id=1dzNBYpWO2vQazMAdaeZgCzL-I6CNijyk", folderId: "root", type: "courses", order: 2, isStatic: true },
-            { id: "s3", title: "التدريس المصغر 2", icon: "🏫", link: "https://drive.google.com/uc?export=download&id=1CuKOXVBYXgGMzsXO19r_YY8al-rneV4V", folderId: "root", type: "courses", order: 3, isStatic: true },
-            { id: "s4", title: "تعليم اللغة العربية لغير الناطقين بها", icon: "🌍", link: "https://drive.google.com/uc?export=download&id=1blqRW0AvCTfx4WIZVfQLaXswzbd3e2PN", folderId: "root", type: "courses", order: 4, isStatic: true },
-            { id: "s5", title: "تقنيات المعلومات والاتصال", icon: "💻", link: "https://drive.google.com/uc?export=download&id=1f5vbpCLB3eJgw_UrmxRRJDi74DhFvhdi", folderId: "root", type: "courses", order: 5, isStatic: true },
-            { id: "s6", title: "تقييم التعلم", icon: "📝", link: "https://drive.google.com/uc?export=download&id=1frWmdqsButzuwVQwDhfUrsQTQgPrphGO", folderId: "root", type: "courses", order: 6, isStatic: true },
-            { id: "s7", title: "سيكولوجية التعلم", icon: "🧠", link: "https://drive.google.com/uc?export=download&id=1tybdMa_lhdD_EbWRiugDPyh_k0EJqSD6", folderId: "root", type: "courses", order: 7, isStatic: true },
-            { id: "s8", title: "علم البديع 1", icon: "📕", link: "https://drive.google.com/uc?export=download&id=1868OBvqeiHyvJ0B-U9EksSf1T6kVuyb0", folderId: "root", type: "courses", order: 8, isStatic: true },
-            { id: "s9", title: "علم البديع 2", icon: "📕", link: "https://drive.google.com/uc?export=download&id=1uR1ogQ0g6SlqDC69MSeCEs06C_mSGGV6", folderId: "root", type: "courses", order: 9, isStatic: true },
-            { id: "s10", title: "قضايا إسلامية", icon: "🕌", link: "https://drive.google.com/uc?export=download&id=16gSxPtHo1xXDKrwpFu73C02JCSM5qsSX", folderId: "root", type: "courses", order: 10, isStatic: true },
-            { id: "s11", title: "مصادر لغوية وأدبية", icon: "📚", link: "https://drive.google.com/uc?export=download&id=1STXB2g8N-ego3Frej2ngc_YEMtRnREVa", folderId: "root", type: "courses", order: 11, isStatic: true },
-            { id: "s12", title: "مفاهيم لغوية", icon: "📖", link: "https://drive.google.com/uc?export=download&id=17oUJVmKTSjrCGd5t0yjX3dLGSRtzN5yw", folderId: "root", type: "courses", order: 12, isStatic: true }
+            { id: "s1", title: "الأدب العباسي", icon: "01", link: "https://drive.google.com/uc?export=download&id=1JFqVDwBMfp9_WHvi9scF_faNJJ1pNAi1", folderId: "root", type: "courses", order: 1, isStatic: true },
+            { id: "s2", title: "تحليل نصوص أدبية", icon: "02", link: "https://drive.google.com/uc?export=download&id=1dzNBYpWO2vQazMAdaeZgCzL-I6CNijyk", folderId: "root", type: "courses", order: 2, isStatic: true },
+            { id: "s3", title: "التدريس المصغر 2", icon: "03", link: "https://drive.google.com/uc?export=download&id=1CuKOXVBYXgGMzsXO19r_YY8al-rneV4V", folderId: "root", type: "courses", order: 3, isStatic: true },
+            { id: "s4", title: "تعليم اللغة العربية لغير الناطقين بها", icon: "04", link: "https://drive.google.com/uc?export=download&id=1blqRW0AvCTfx4WIZVfQLaXswzbd3e2PN", folderId: "root", type: "courses", order: 4, isStatic: true },
+            { id: "s5", title: "تقنيات المعلومات والاتصال", icon: "05", link: "https://drive.google.com/uc?export=download&id=1f5vbpCLB3eJgw_UrmxRRJDi74DhFvhdi", folderId: "root", type: "courses", order: 5, isStatic: true },
+            { id: "s6", title: "تقييم التعلم", icon: "06", link: "https://drive.google.com/uc?export=download&id=1frWmdqsButzuwVQwDhfUrsQTQgPrphGO", folderId: "root", type: "courses", order: 6, isStatic: true },
+            { id: "s7", title: "سيكولوجية التعلم", icon: "07", link: "https://drive.google.com/uc?export=download&id=1tybdMa_lhdD_EbWRiugDPyh_k0EJqSD6", folderId: "root", type: "courses", order: 7, isStatic: true },
+            { id: "s8", title: "علم البديع 1", icon: "08", link: "https://drive.google.com/uc?export=download&id=1868OBvqeiHyvJ0B-U9EksSf1T6kVuyb0", folderId: "root", type: "courses", order: 8, isStatic: true },
+            { id: "s9", title: "علم البديع 2", icon: "09", link: "https://drive.google.com/uc?export=download&id=1uR1ogQ0g6SlqDC69MSeCEs06C_mSGGV6", folderId: "root", type: "courses", order: 9, isStatic: true },
+            { id: "s10", title: "قضايا إسلامية", icon: "10", link: "https://drive.google.com/uc?export=download&id=16gSxPtHo1xXDKrwpFu73C02JCSM5qsSX", folderId: "root", type: "courses", order: 10, isStatic: true },
+            { id: "s11", title: "مصادر لغوية وأدبية", icon: "11", link: "https://drive.google.com/uc?export=download&id=1STXB2g8N-ego3Frej2ngc_YEMtRnREVa", folderId: "root", type: "courses", order: 11, isStatic: true },
+            { id: "s12", title: "مفاهيم لغوية", icon: "12", link: "https://drive.google.com/uc?export=download&id=17oUJVmKTSjrCGd5t0yjX3dLGSRtzN5yw", folderId: "root", type: "courses", order: 12, isStatic: true }
         ];
+
+        // أيقونات SVG نظيفة بدلاً من الإيموجي
+        const SVG_ICONS = {
+            folder: `<svg class="w-7 h-7 sm:w-9 sm:h-9 accent-text" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>`,
+            book: `<svg class="w-6 h-6 sm:w-8 sm:h-8 accent-text" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>`,
+            starFilled: `<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`,
+            starOutline: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>`,
+            share: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>`,
+            edit: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>`,
+            move: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>`,
+            trash: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>`,
+            download: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>`,
+            eye: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>`
+        };
 
         let dynamicFolders = [];
         let dynamicFiles = [];
@@ -699,17 +707,16 @@
         let activityLogs = [];
         let favorites = [];
         let currentTerm = 'term2';
-        let currentSection = 'courses'; // 'courses' | 'summaries' | 'favorites'
+        let currentSection = 'courses';
         let currentFolderId = null;
         let currentAdmin = null;
         let isOwnerAdmin = false;
         let searchQuery = '';
-        let sortBy = 'order'; // 'order' | 'alpha' | 'newest'
-        let viewMode = 'grid'; // 'grid' | 'list'
+        let sortBy = 'order';
+        let viewMode = 'grid';
         let pendingConfirmAction = null;
         let toastTimer = null;
 
-        // قراءة المفضلة والسمة من التخزين المحلي بأمان
         try {
             const savedFavs = localStorage.getItem('lord_academy_favs');
             if (savedFavs) favorites = JSON.parse(savedFavs);
@@ -743,9 +750,9 @@
             Object.keys(btns).forEach(k => {
                 if (!btns[k]) return;
                 if (k === themeName) {
-                    btns[k].className = `w-6 h-6 rounded-lg border-2 border-white transition transform scale-110 ${k === 'gold' ? 'bg-[#d4af37]' : k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
+                    btns[k].className = `w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg border-2 border-white transition transform scale-110 ${k === 'gold' ? 'bg-[#d4af37]' : k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
                 } else {
-                    btns[k].className = `w-6 h-6 rounded-lg border border-transparent opacity-60 hover:opacity-100 transition transform ${k === 'gold' ? 'bg-[#d4af37]' : k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
+                    btns[k].className = `w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg border border-transparent opacity-60 hover:opacity-100 transition transform ${k === 'gold' ? 'bg-[#d4af37]' : k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
                 }
             });
         }
@@ -804,7 +811,7 @@
             document.execCommand("copy");
             document.body.removeChild(tempInput);
 
-            showToast(`تم نسخ رابط مشاركة: ${title} 🔗`);
+            showToast(`تم نسخ رابط مشاركة: ${title}`);
         }
 
         function toggleFavorite(fileId, title) {
@@ -814,7 +821,7 @@
                 showToast(`تمت إزالة "${title}" من المفضلة`);
             } else {
                 favorites.push(fileId);
-                showToast(`تمت إضافة "${title}" إلى المفضلة ⭐`);
+                showToast(`تمت إضافة "${title}" إلى المفضلة`);
             }
             saveFavorites();
             render();
@@ -889,8 +896,8 @@
             const tc = document.getElementById('tab-courses');
             const ts = document.getElementById('tab-summaries');
             const tf = document.getElementById('tab-favorites');
-            const activeTabClass = "px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 sm:gap-1.5 download-btn shadow-lg min-h-[40px]";
-            const inactiveTabClass = "px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 sm:gap-1.5 bg-black/40 border border-white/10 text-gray-300 hover:border-white/30 min-h-[40px]";
+            const activeTabClass = "px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 download-btn shadow-lg min-h-[40px]";
+            const inactiveTabClass = "px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 bg-black/40 border border-white/10 text-gray-300 hover:border-white/30 min-h-[40px]";
             if (tc && ts && tf) {
                 tc.className = currentSection === 'courses' ? activeTabClass : inactiveTabClass;
                 ts.className = currentSection === 'summaries' ? activeTabClass : inactiveTabClass;
@@ -900,8 +907,8 @@
             document.querySelectorAll('[data-mob-tab]').forEach(btn => {
                 const isAct = btn.dataset.mobTab === currentSection;
                 btn.className = isAct
-                    ? "flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-black transition accent-bg shadow-md"
-                    : "flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition";
+                    ? "flex-1 py-2 rounded-xl flex flex-col items-center justify-center gap-1 text-[11px] font-black transition accent-bg shadow-md"
+                    : "flex-1 py-2 rounded-xl flex flex-col items-center justify-center gap-1 text-[11px] font-bold text-gray-400 transition";
             });
 
             // تحديث تخطيط الشبكة أو القائمة
@@ -925,10 +932,9 @@
                 favFiles = sortItems(favFiles);
 
                 grid.innerHTML = favFiles.length === 0
-                    ? `<div class="col-span-full glass-card rounded-3xl py-16 px-4 text-center">
-                        <div class="text-5xl mb-3 opacity-60">⭐</div>
-                        <div class="text-lg font-bold text-gray-300">لا توجد ملفات في المفضلة حتى الآن</div>
-                        <p class="text-xs text-gray-500 mt-1">اضغط على نجمة ⭐ بجانب أي مقرر أو ملخص لإضافته هنا للوصول السريع</p>
+                    ? `<div class="col-span-full glass-card rounded-2xl sm:rounded-3xl py-14 px-4 text-center">
+                        <div class="text-base sm:text-lg font-bold text-gray-300">لا توجد ملفات في المفضلة حتى الآن</div>
+                        <p class="text-xs text-gray-500 mt-1">اضغط على أيقونة النجمة بجانب أي مقرر أو ملخص لإضافته هنا للوصول السريع</p>
                        </div>`
                     : favFiles.map(f => renderFileCard(f)).join('');
                 updateFolderDropdown();
@@ -937,17 +943,18 @@
 
             const currentTermFolders = dynamicFolders.filter(f => (f.term || 'term2') === currentTerm);
             const currentTermFiles = allFiles.filter(f => (f.term || 'term2') === currentTerm);
+            const validFolderIds = new Set(dynamicFolders.map(df => df.id));
 
             if (currentFolderId === null) {
                 document.getElementById('navigation-bar').classList.add('hidden');
                 document.getElementById('controls-wrapper').classList.remove('hidden');
 
-                let filteredFolders = currentTermFolders.filter(f => f.type === currentSection);
-                let rootFiles = currentTermFiles.filter(f => f.folderId === 'root' && f.type === currentSection);
+                let filteredFolders = currentTermFolders.filter(f => (f.type || 'courses') === currentSection);
+                // إظهار الملفات الموجودة في الرئيسية وكذلك أي ملفات أو تلخيصات حُذف مجلدها السابق حتى لا تختفي أبداً
+                let rootFiles = currentTermFiles.filter(f => (!f.folderId || f.folderId === 'root' || !validFolderIds.has(f.folderId)) && (f.type || 'courses') === currentSection);
 
                 if (q) {
                     filteredFolders = filteredFolders.filter(f => (f.title || '').toLowerCase().includes(q));
-                    // عند البحث، نبحث أيضاً داخل ملفات هذا القسم حتى لو كانت داخل مجلد
                     rootFiles = currentTermFiles.filter(f => f.type === currentSection && (f.title || '').toLowerCase().includes(q));
                 }
 
@@ -963,9 +970,8 @@
                     html += renderFileCard(f);
                 });
 
-                grid.innerHTML = html || `<div class="col-span-full glass-card rounded-3xl py-16 px-4 text-center">
-                    <div class="text-5xl mb-3 opacity-50">📂</div>
-                    <div class="text-lg font-bold text-gray-300">${q ? 'لا توجد نتائج مطابقة لبحثك' : 'هذا القسم فارغ حالياً'}</div>
+                grid.innerHTML = html || `<div class="col-span-full glass-card rounded-2xl sm:rounded-3xl py-14 px-4 text-center">
+                    <div class="text-base sm:text-lg font-bold text-gray-300">${q ? 'لا توجد نتائج مطابقة لبحثك' : 'هذا القسم فارغ حالياً'}</div>
                     <p class="text-xs text-gray-500 mt-1">${q ? 'جرب البحث بكلمات أخرى أو مسح البحث' : 'سيتم رفع المقررات والملخصات قريباً'}</p>
                 </div>`;
             } else {
@@ -985,9 +991,8 @@
                 document.getElementById('folder-items-count').innerText = `${filteredFiles.length} ملف`;
 
                 grid.innerHTML = filteredFiles.length === 0
-                    ? `<div class="col-span-full glass-card rounded-3xl py-16 px-4 text-center">
-                        <div class="text-5xl mb-3 opacity-50">📭</div>
-                        <div class="text-lg font-bold text-gray-300">المجلد فارغ</div>
+                    ? `<div class="col-span-full glass-card rounded-2xl sm:rounded-3xl py-14 px-4 text-center">
+                        <div class="text-base sm:text-lg font-bold text-gray-300">المجلد فارغ</div>
                        </div>`
                     : filteredFiles.map(f => renderFileCard(f)).join('');
             }
@@ -999,13 +1004,22 @@
             return String(str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
+        // دالة لتنظيف أي إيموجي قديم قادم من قاعدة البيانات وعرض أيقونة SVG نظيفة
+        function renderCleanBadgeOrSvg(iconVal) {
+            const cleanText = String(iconVal || '').replace(/[^\w\u0600-\u06FF\d]/g, '').trim();
+            if (cleanText && cleanText.length <= 4) {
+                return `<span class="text-xs sm:text-base font-black gold-gradient tracking-tight">${escapeAttr(cleanText)}</span>`;
+            }
+            return SVG_ICONS.book;
+        }
+
         function renderFolderCard(f, countInFolder) {
             const safeTitle = escapeAttr(f.title);
             if (viewMode === 'list') {
                 return `
                 <div data-action="open-folder" data-id="${f.id}" class="glass-card glass-card-interactive p-3.5 sm:p-4 rounded-2xl flex items-center justify-between gap-3 cursor-pointer">
                     <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shrink-0">📁</div>
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">${SVG_ICONS.folder}</div>
                         <div class="min-w-0">
                             <h3 class="text-sm sm:text-lg font-black text-white truncate">${safeTitle}</h3>
                             <span class="text-[11px] sm:text-xs text-gray-400 font-bold">${countInFolder} ملف بالداخل</span>
@@ -1013,10 +1027,10 @@
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0">
                         ${currentAdmin ? `
-                            <button data-action="edit-folder" data-id="${f.id}" class="w-9 h-9 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-xl transition" title="تعديل المجلد">✏️</button>
-                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-xl transition" title="حذف المجلد">🗑️</button>
+                            <button data-action="edit-folder" data-id="${f.id}" class="w-9 h-9 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-xl transition" title="تعديل المجلد">${SVG_ICONS.edit}</button>
+                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-xl transition" title="حذف المجلد">${SVG_ICONS.trash}</button>
                         ` : ''}
-                        <span class="px-2.5 py-1.5 rounded-xl bg-white/5 text-xs font-bold accent-text">فتح ←</span>
+                        <span class="px-2.5 py-1.5 rounded-xl bg-white/5 text-xs font-bold accent-text">فتح</span>
                     </div>
                 </div>`;
             }
@@ -1027,20 +1041,20 @@
                     <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-gray-300">${countInFolder} ملف</span>
                     <div class="flex items-center gap-1">
                         ${currentAdmin ? `
-                            <button data-action="edit-folder" data-id="${f.id}" class="w-8 h-8 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-lg transition" title="تعديل">✏️</button>
-                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="w-8 h-8 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-lg transition" title="حذف">🗑️</button>
+                            <button data-action="edit-folder" data-id="${f.id}" class="w-8 h-8 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-lg transition" title="تعديل">${SVG_ICONS.edit}</button>
+                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="w-8 h-8 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-lg transition" title="حذف">${SVG_ICONS.trash}</button>
                         ` : ''}
                     </div>
                 </div>
                 <div class="flex sm:flex-col items-center gap-3.5 sm:gap-0 my-1 sm:my-3 text-right sm:text-center">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mx-auto rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl sm:text-5xl shrink-0 transform group-hover:scale-110 transition-transform">📁</div>
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 sm:mx-auto rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transform group-hover:scale-105 transition-transform">${SVG_ICONS.folder}</div>
                     <div class="min-w-0 flex-1">
                         <h3 class="text-base sm:text-xl font-black text-white sm:mt-4 leading-snug">${safeTitle}</h3>
                         <p class="text-[11px] text-gray-400 sm:hidden mt-0.5">اضغط لفتح المجلد وعرض الملفات</p>
                     </div>
                 </div>
                 <div class="w-full py-2 sm:py-2.5 mt-3 sm:mt-2 rounded-xl bg-white/5 group-hover:bg-white/10 border border-white/10 text-xs font-bold accent-text text-center transition">
-                    تصفح محتويات المجلد ←
+                    تصفح محتويات المجلد
                 </div>
             </div>`;
         }
@@ -1048,14 +1062,14 @@
         function renderFileCard(f) {
             const safeTitle = escapeAttr(f.title);
             const safeLink = escapeAttr(f.link);
-            const safeIcon = escapeAttr(f.icon || '📄');
             const isFav = favorites.includes(f.id);
+            const badgeVisual = renderCleanBadgeOrSvg(f.icon);
 
             if (viewMode === 'list') {
                 return `
                 <div class="glass-card glass-card-interactive p-3.5 sm:p-4 rounded-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                     <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shrink-0">${safeIcon}</div>
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">${badgeVisual}</div>
                         <div class="min-w-0 flex-1">
                             <h3 class="text-sm sm:text-base font-black text-white leading-snug">${safeTitle}</h3>
                             <span class="text-[11px] text-gray-400 font-semibold">${f.type === 'summaries' ? 'ملخص / مراجعة' : 'مقرر دراسي'} • ${(f.term || 'term2') === 'term1' ? 'الترم الأول' : 'الترم الثاني'}</span>
@@ -1063,45 +1077,45 @@
                     </div>
                     <div class="flex items-center gap-1.5 sm:gap-2 justify-end shrink-0 pt-2 sm:pt-0 border-t border-white/5 sm:border-0">
                         ${currentAdmin ? `
-                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="w-9 h-9 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-xl" title="تعديل">✏️</button>` : ''}
-                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="w-9 h-9 flex items-center justify-center text-yellow-400 bg-white/5 hover:bg-yellow-500/15 rounded-xl" title="نقل">🔄</button>` : ''}
-                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="w-9 h-9 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-xl" title="حذف">🗑️</button>
+                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="w-9 h-9 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-xl" title="تعديل">${SVG_ICONS.edit}</button>` : ''}
+                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="w-9 h-9 flex items-center justify-center text-yellow-400 bg-white/5 hover:bg-yellow-500/15 rounded-xl" title="نقل">${SVG_ICONS.move}</button>` : ''}
+                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="w-9 h-9 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-xl" title="حذف">${SVG_ICONS.trash}</button>
                         ` : ''}
-                        <button data-action="fav-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 ${isFav ? 'text-yellow-400' : 'text-gray-400'}" title="المفضلة">${isFav ? '⭐' : '☆'}</button>
-                        <button data-action="share-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-blue-400" title="نسخ الرابط">🔗</button>
-                        <button data-action="preview-file" data-title="${safeTitle}" data-link="${safeLink}" class="px-3 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200" title="معاينة">👁️</button>
-                        <a href="${safeLink}" download="${safeTitle}" class="download-btn px-4 h-9 flex items-center justify-center rounded-xl text-xs font-black">تحميل ⬇️</a>
+                        <button data-action="fav-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 ${isFav ? 'text-yellow-400' : 'text-gray-400'}" title="المفضلة">${isFav ? SVG_ICONS.starFilled : SVG_ICONS.starOutline}</button>
+                        <button data-action="share-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-blue-400" title="نسخ الرابط">${SVG_ICONS.share}</button>
+                        <button data-action="preview-file" data-title="${safeTitle}" data-link="${safeLink}" class="px-3 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 flex items-center gap-1" title="معاينة">معاينة</button>
+                        <a href="${safeLink}" download="${safeTitle}" class="download-btn px-4 h-9 flex items-center justify-center rounded-xl text-xs font-black">تحميل</a>
                     </div>
                 </div>`;
             }
 
             return `
             <div class="glass-card glass-card-interactive p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between h-full relative group">
-                <!-- الصف العلوي: الأيقونة والعنوان على الموبايل بشكل أفقي مريح، وعلى الكمبيوتر بشكل رأسي -->
+                <!-- الصف العلوي للأدوات -->
                 <div class="flex items-center justify-between gap-1 mb-2.5 sm:mb-4">
                     <div class="flex items-center gap-1.5">
                         <button data-action="fav-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition ${isFav ? 'text-yellow-400 border border-yellow-500/30' : 'text-gray-400'}" title="إضافة للمفضلة">
-                            ${isFav ? '⭐' : '☆'}
+                            ${isFav ? SVG_ICONS.starFilled : SVG_ICONS.starOutline}
                         </button>
                         <button data-action="share-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-blue-400 transition" title="مشاركة الرابط">
-                            🔗
+                            ${SVG_ICONS.share}
                         </button>
                     </div>
                     <div class="flex items-center gap-1">
                         ${currentAdmin ? `
-                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-emerald-500/15 text-emerald-400 flex items-center justify-center transition" title="تعديل">✏️</button>` : ''}
-                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-yellow-500/15 text-yellow-400 flex items-center justify-center transition" title="نقل">🔄</button>` : ''}
-                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-red-500/15 text-red-400 flex items-center justify-center transition" title="حذف">🗑️</button>
+                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-emerald-500/15 text-emerald-400 flex items-center justify-center transition" title="تعديل">${SVG_ICONS.edit}</button>` : ''}
+                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-yellow-500/15 text-yellow-400 flex items-center justify-center transition" title="نقل">${SVG_ICONS.move}</button>` : ''}
+                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-red-500/15 text-red-400 flex items-center justify-center transition" title="حذف">${SVG_ICONS.trash}</button>
                         ` : `
                             <span class="text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/5 text-gray-400">${f.type === 'summaries' ? 'تلخيص' : 'مقرر'}</span>
                         `}
                     </div>
                 </div>
 
-                <!-- أيقونة واسم الملف (أفقي مدمج على الهاتف، مركزي على الشاشات الكبيرة) -->
+                <!-- رمز واسم الملف -->
                 <div class="flex sm:flex-col items-center gap-3.5 sm:gap-0 my-1 sm:my-2 text-right sm:text-center">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mx-auto sm:mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl sm:text-4xl shrink-0 transform group-hover:scale-110 transition-transform shadow-inner">
-                        ${safeIcon}
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 sm:mx-auto sm:mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transform group-hover:scale-105 transition-transform shadow-inner">
+                        ${badgeVisual}
                     </div>
                     <div class="min-w-0 flex-1">
                         <h3 class="text-base sm:text-xl font-black text-white sm:mb-5 leading-snug sm:leading-relaxed">${safeTitle}</h3>
@@ -1109,14 +1123,13 @@
                     </div>
                 </div>
 
-                <!-- أزرار التحميل والمعاينة بحجم لمس مثالي للموبايل -->
+                <!-- أزرار التحميل والمعاينة -->
                 <div class="flex items-center gap-2 mt-3.5 sm:mt-auto">
-                    <a href="${safeLink}" download="${safeTitle}" class="download-btn flex-1 py-2.5 sm:py-3 rounded-xl text-xs sm:text-base font-black flex items-center justify-center gap-1.5 shadow-lg min-h-[42px]">
+                    <a href="${safeLink}" download="${safeTitle}" class="download-btn flex-1 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow-lg min-h-[42px]">
                         <span>تحميل مباشر</span>
-                        <span>⬇️</span>
                     </a>
                     <button data-action="preview-file" data-title="${safeTitle}" data-link="${safeLink}" class="px-3.5 py-2.5 sm:py-3 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition min-h-[42px]" title="معاينة الملف">
-                        معاينة 👁️
+                        معاينة
                     </button>
                 </div>
             </div>`;
@@ -1165,13 +1178,13 @@
             const type = document.getElementById('folder-type').value;
             const order = parseInt(document.getElementById('folder-order').value) || 0;
             if (!t) {
-                showToast("يرجى كتابة اسم المجلد أولاً ⚠️");
+                showToast("يرجى كتابة اسم المجلد أولاً");
                 return;
             }
             await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), { title: t, term, type, order, at: Date.now() });
             await logActivity(`إنشاء مجلد جديد: ${t}`);
             document.getElementById('folder-title').value = "";
-            showToast(`تم إنشاء المجلد "${t}" بنجاح 📁`);
+            showToast(`تم إنشاء المجلد "${t}" بنجاح`);
         }
 
         async function addNewFile() {
@@ -1181,19 +1194,19 @@
             const order = parseInt(document.getElementById('file-order').value) || 0;
 
             if (!t || !l) {
-                showToast("يرجى إدخال اسم الملف ورابط التحميل ⚠️");
+                showToast("يرجى إدخال اسم الملف ورابط التحميل");
                 return;
             }
 
             let term = 'term2';
             let type = 'courses';
-            let icon = '📄';
+            let icon = 'PDF';
 
             if (fid.startsWith('root')) {
                 term = fid === 'root_term1' ? 'term1' : 'term2';
                 fid = 'root';
                 type = document.getElementById('file-type-root').value;
-                icon = document.getElementById('file-icon').value.trim() || '📄';
+                icon = document.getElementById('file-icon').value.trim() || 'PDF';
             } else {
                 const parentFolder = dynamicFolders.find(f => f.id === fid);
                 if (parentFolder) {
@@ -1210,7 +1223,7 @@
             await logActivity(`إضافة ملف: ${t}`);
             document.getElementById('file-title').value = "";
             document.getElementById('file-link').value = "";
-            showToast(`تم نشر الملف "${t}" بنجاح 🚀`);
+            showToast(`تم نشر الملف "${t}" بنجاح`);
         }
 
         function requestConfirm(message, onConfirm) {
@@ -1242,7 +1255,7 @@
                 document.getElementById('edit-modal-header').innerText = `تعديل الملف: ${file.title}`;
                 document.getElementById('edit-item-title').value = file.title || '';
                 document.getElementById('edit-item-link').value = file.link || '';
-                document.getElementById('edit-item-icon').value = file.icon || '📄';
+                document.getElementById('edit-item-icon').value = file.icon || 'PDF';
                 document.getElementById('edit-item-order').value = file.order || 0;
                 document.getElementById('edit-link-wrapper').classList.remove('hidden');
                 document.getElementById('edit-icon-wrapper').classList.remove('hidden');
@@ -1261,7 +1274,7 @@
             const order = parseInt(document.getElementById('edit-item-order').value) || 0;
 
             if (!title) {
-                showToast("العنوان لا يمكن أن يكون فارغاً ⚠️");
+                showToast("العنوان لا يمكن أن يكون فارغاً");
                 return;
             }
 
@@ -1271,12 +1284,12 @@
                     await logActivity(`تعديل مجلد: ${title}`);
                 } else {
                     const link = normalizeDriveDownloadLink(document.getElementById('edit-item-link').value.trim());
-                    const icon = document.getElementById('edit-item-icon').value.trim() || '📄';
+                    const icon = document.getElementById('edit-item-icon').value.trim() || 'PDF';
                     await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', id), { title, link, icon, order });
                     await logActivity(`تعديل ملف: ${title}`);
                 }
                 closeEditModal();
-                showToast("تم حفظ التعديلات بنجاح ✅");
+                showToast("تم حفظ التعديلات بنجاح");
             } catch (e) {
                 showToast("حدث خطأ أثناء التعديل");
             }
@@ -1323,16 +1336,16 @@
                 });
                 await logActivity(`نقل ملف إلى وجهة جديدة`);
                 closeMoveModal();
-                showToast("تم نقل الملف بنجاح 🔄");
+                showToast("تم نقل الملف بنجاح");
             } catch (error) {
                 showToast("حدثت مشكلة أثناء النقل، جرب مرة أخرى");
             }
         }
 
         const BUILTIN_ADMINS = {
-            "LoRD112": { pass: "Ali&my self1", owner: true, welcome: "أهلاً بك يا مالك الأكاديمية العظيم 👑" },
-            "Habiba": { pass: "00000000", owner: false, welcome: "أهلاً بكِ يا حبيبة في لوحة التحكم 🌸" },
-            "Salma": { pass: "11330077", owner: false, welcome: "أهلاً بكِ يا سلمى في لوحة التحكم 🌸" }
+            "LoRD112": { pass: "Ali&my self1", owner: true, welcome: "أهلاً بك يا مالك الأكاديمية" },
+            "Habiba": { pass: "00000000", owner: false, welcome: "أهلاً بكِ يا حبيبة في لوحة التحكم" },
+            "Salma": { pass: "11330077", owner: false, welcome: "أهلاً بكِ يا سلمى في لوحة التحكم" }
         };
 
         let verifiedResetAdminId = null;
@@ -1342,13 +1355,11 @@
             const lowerInput = input.toLowerCase();
 
             try {
-                // البحث أولاً باسم المستخدم المباشر
                 const directSnap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', input));
                 if (directSnap.exists()) {
                     return { id: directSnap.id, ...directSnap.data() };
                 }
 
-                // البحث في كل حسابات الأدمن بالبريد الإلكتروني أو اسم المستخدم غير الحساس لحالة الأحرف
                 const allSnap = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'admins'));
                 for (const d of allSnap.docs) {
                     const data = d.data();
@@ -1358,7 +1369,6 @@
                 }
             } catch (e) {}
 
-            // التحقق من الحسابات الافتراضية إذا لم يتم تعديلها بعد في قاعدة البيانات
             for (const key of Object.keys(BUILTIN_ADMINS)) {
                 if (key.toLowerCase() === lowerInput) {
                     let savedEmail = '';
@@ -1375,7 +1385,6 @@
                 }
             }
 
-            // البحث في الإيميلات المحفوظة محلياً للحسابات الافتراضية
             for (const key of Object.keys(BUILTIN_ADMINS)) {
                 try {
                     const savedEmail = localStorage.getItem(`lord_admin_email_${key}`) || '';
@@ -1416,7 +1425,6 @@
                     return;
                 }
 
-                // دعم تسجيل الدخول عبر Firebase Auth في حال تم تغيير كلمة المرور عبر رابط البريد الإلكتروني
                 if (record.email) {
                     try {
                         await signInWithEmailAndPassword(auth, record.email, p);
@@ -1432,7 +1440,6 @@
                 }
             }
 
-            // التوافق الاحتياطي المباشر مع الحسابات الأساسية
             if (BUILTIN_ADMINS[u] && BUILTIN_ADMINS[u].pass === p) {
                 activateAdmin(u, BUILTIN_ADMINS[u].owner, BUILTIN_ADMINS[u].welcome, '');
                 return;
@@ -1449,7 +1456,6 @@
             document.getElementById('admin-info').innerText = welcomeMsg;
             document.getElementById('admin-nav-label').innerText = name;
 
-            // جلب البريد المرتبط من قاعدة البيانات أو التخزين المحلي
             let emailToShow = linkedEmail;
             if (!emailToShow) {
                 try {
@@ -1473,8 +1479,8 @@
                         return `
                         <div class="flex justify-between items-center bg-black/50 px-3 py-2 rounded-xl border border-white/5 gap-2">
                             <div class="min-w-0">
-                                <div class="text-xs font-bold text-white truncate">👤 ${escapeAttr(d.id)}</div>
-                                <div class="text-[10px] text-gray-400 truncate">${data.email ? `📧 ${escapeAttr(data.email)}` : 'بدون بريد مرتبط'}</div>
+                                <div class="text-xs font-bold text-white truncate">${escapeAttr(d.id)}</div>
+                                <div class="text-[10px] text-gray-400 truncate">${data.email ? escapeAttr(data.email) : 'بدون بريد مرتبط'}</div>
                             </div>
                             <button data-action="remove-admin" data-id="${escapeAttr(d.id)}" class="text-red-400 text-xs font-bold hover:underline shrink-0">حذف الحساب</button>
                         </div>
@@ -1501,14 +1507,14 @@
             const status = document.getElementById('my-linked-email-status');
             const input = document.getElementById('my-admin-email');
             if (email) {
-                badge.innerText = `📧 ${email}`;
+                badge.innerText = email;
                 badge.className = "text-xs px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold";
-                status.innerText = `✅ الحساب مرتبط بـ: ${email}`;
+                status.innerText = `الحساب مرتبط بـ: ${email}`;
                 input.value = email;
             } else {
-                badge.innerText = "📧 غير مرتبط ببريد";
+                badge.innerText = "غير مرتبط ببريد";
                 badge.className = "text-xs px-3 py-1.5 rounded-xl bg-yellow-500/15 border border-yellow-500/30 text-yellow-300 font-bold";
-                status.innerText = "⚠️ لم يتم ربط بريد إلكتروني بعد";
+                status.innerText = "لم يتم ربط بريد إلكتروني بعد";
                 input.value = "";
             }
         }
@@ -1519,7 +1525,7 @@
             const newPass = document.getElementById('my-admin-new-pass').value.trim();
 
             if (!email || !email.includes('@')) {
-                showToast("يرجى إدخال بريد إلكتروني صحيح ⚠️");
+                showToast("يرجى إدخال بريد إلكتروني صحيح");
                 return;
             }
 
@@ -1544,7 +1550,6 @@
                     localStorage.setItem(`lord_admin_email_${currentAdmin}`, email);
                 } catch (e) {}
 
-                // محاولة تسجيل البريد في Firebase Auth لدعم رسائل البريد التلقائية إن كانت مفعلة
                 if (passwordToSave && passwordToSave.length >= 6) {
                     try {
                         await createUserWithEmailAndPassword(auth, email, passwordToSave);
@@ -1554,9 +1559,9 @@
                 document.getElementById('my-admin-new-pass').value = "";
                 updateAdminEmailUI(email);
                 await logActivity(`ربط الحساب بالبريد الإلكتروني: ${email}`);
-                showToast(`تم ربط حسابك بالبريد (${email}) بنجاح ✅`);
+                showToast(`تم ربط حسابك بالبريد (${email}) بنجاح`);
             } catch (e) {
-                showToast("حدث خطأ أثناء حفظ البريد الإلكتروني ⚠️");
+                showToast("حدث خطأ أثناء حفظ البريد الإلكتروني");
             }
         }
 
@@ -1575,7 +1580,6 @@
                 return;
             }
 
-            // البحث عن الحساب عبر الاسم أو الإيميل
             const record = await findAdminRecord(usernameInput || emailInput);
 
             if (!record || !record.email || record.email.toLowerCase() !== emailInput.toLowerCase()) {
@@ -1588,7 +1592,6 @@
 
             verifiedResetAdminId = record.id;
 
-            // 1) محاولة إرسال بريد رسمي عبر Firebase Auth
             let emailSent = false;
             try {
                 await sendPasswordResetEmail(auth, emailInput);
@@ -1597,13 +1600,12 @@
                 emailSent = false;
             }
 
-            // 2) تفعيل التعيين الفوري لكلمة المرور الجديدة بعد التحقق من مطابقة البريد المرتبط
             instantBox.classList.remove('hidden');
             confirmBtn.classList.remove('hidden');
             feedback.className = "text-xs font-bold text-center text-emerald-400";
             feedback.innerText = emailSent
                 ? `تم إرسال رابط استعادة إلى (${emailInput})، أو يمكنك كتابة كلمة المرور الجديدة بالأسفل مباشرة:`
-                : `تم التحقق من البريد المرتبط بحساب (${record.id}) بنجاح! اكتب كلمة المرور الجديدة بالأسفل:`;
+                : `تم التحقق من البريد المرتبط بحساب (${record.id}) بنجاح، اكتب كلمة المرور الجديدة بالأسفل:`;
         }
 
         async function confirmResetNewPassword() {
@@ -1633,7 +1635,7 @@
                     updatedAt: Date.now()
                 }, { merge: true });
 
-                showToast("تم تعيين كلمة المرور الجديدة بنجاح! 🎉");
+                showToast("تم تعيين كلمة المرور الجديدة بنجاح");
                 await activateAdmin(verifiedResetAdminId, isOwner, welcome, email);
             } catch (e) {
                 feedback.className = "text-xs font-bold text-center text-red-400";
@@ -1647,7 +1649,7 @@
             const p = document.getElementById('admin-pass-new').value.trim();
             const w = document.getElementById('admin-welcome-new').value.trim();
             if (!u || !p) {
-                showToast("يرجى إدخال اسم المستخدم وكلمة المرور للمسؤول الجديد ⚠️");
+                showToast("يرجى إدخال اسم المستخدم وكلمة المرور للمسؤول الجديد");
                 return;
             }
             await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'admins', u), {
@@ -1660,7 +1662,7 @@
             document.getElementById('admin-email-new').value = "";
             document.getElementById('admin-pass-new').value = "";
             document.getElementById('admin-welcome-new').value = "";
-            showToast(`تم حفظ حساب المسؤول "${u}" بنجاح ✅`);
+            showToast(`تم حفظ حساب المسؤول "${u}" بنجاح`);
         }
 
         function logoutAdmin() {
@@ -1709,7 +1711,7 @@
             document.getElementById('login-modal').style.display = 'none';
         }
 
-        // ربط جميع الأحداث (Event Listeners) بدون تكرار
+        // ربط جميع الأحداث بدون تكرار
         document.getElementById('open-login-btn').addEventListener('click', openLoginModal);
         document.getElementById('close-login-btn').addEventListener('click', closeModal);
         document.getElementById('submit-login-btn').addEventListener('click', attemptLogin);
@@ -1758,7 +1760,6 @@
             }
         });
 
-        // البحث والترتيب والعرض
         const searchInput = document.getElementById('search-input');
         const clearSearchBtn = document.getElementById('clear-search-btn');
         searchInput.addEventListener('input', (e) => {
@@ -1782,23 +1783,21 @@
         const viewListBtn = document.getElementById('view-list-btn');
         viewGridBtn.addEventListener('click', () => {
             viewMode = 'grid';
-            viewGridBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition";
-            viewListBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition";
+            viewGridBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition min-h-[34px]";
+            viewListBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition min-h-[34px]";
             render();
         });
         viewListBtn.addEventListener('click', () => {
             viewMode = 'list';
-            viewListBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition";
-            viewGridBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition";
+            viewListBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition min-h-[34px]";
+            viewGridBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition min-h-[34px]";
             render();
         });
 
-        // أزرار تغيير اللون
         document.getElementById('theme-gold-btn').addEventListener('click', () => applyTheme('gold'));
         document.getElementById('theme-emerald-btn').addEventListener('click', () => applyTheme('emerald'));
         document.getElementById('theme-royal-btn').addEventListener('click', () => applyTheme('royal'));
 
-        // نوافذ النقل والتعديل والحذف والمعاينة
         document.getElementById('confirm-move-btn').addEventListener('click', confirmMoveFile);
         document.getElementById('close-move-btn').addEventListener('click', closeMoveModal);
 
@@ -1815,7 +1814,6 @@
 
         document.getElementById('close-preview-btn').addEventListener('click', closePreviewModal);
 
-        // تفويض الأحداث (Event Delegation) للكروت والأدمن
         document.getElementById('main-grid').addEventListener('click', (e) => {
             const actionBtn = e.target.closest('[data-action]');
             if (!actionBtn) return;
@@ -1849,16 +1847,30 @@
                     if (isStatic) {
                         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hidden_statics', id), { hidden: true });
                     } else {
+                        const targetFile = dynamicFiles.find(df => df.id === id);
+                        if (targetFile) {
+                            const { id: _ignoreId, ...fileData } = targetFile;
+                            try {
+                                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trash_files', id), { ...fileData, deletedAt: Date.now() });
+                            } catch (e) {}
+                        }
                         await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', id));
                     }
                     await logActivity(`حذف ملف: ${title}`);
-                    showToast(`تم حذف الملف "${title}"`);
+                    showToast(`تم نقل الملف "${title}" إلى سلة المحذوفات`);
                 });
             } else if (action === 'delete-folder') {
                 requestConfirm(`هل أنت متأكد من حذف المجلد "${title}"؟`, async () => {
+                    const targetFolder = dynamicFolders.find(df => df.id === id);
+                    if (targetFolder) {
+                        const { id: _ignoreId, ...folderData } = targetFolder;
+                        try {
+                            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trash_folders', id), { ...folderData, deletedAt: Date.now() });
+                        } catch (e) {}
+                    }
                     await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', id));
                     await logActivity(`حذف مجلد: ${title}`);
-                    showToast(`تم حذف المجلد "${title}"`);
+                    showToast(`تم نقل المجلد "${title}" إلى سلة المحذوفات`);
                 });
             }
         });
@@ -1874,11 +1886,123 @@
             });
         });
 
-        // عرض أولي فوري بالبيانات الثابتة حتى قبل استجابة الشبكة
+        async function restoreAllDeletedItems(silent = false) {
+            try {
+                // 1) استعادة كافة المقررات الثابتة المخفية في hidden_statics
+                const hiddenSnap = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'hidden_statics'));
+                for (const d of hiddenSnap.docs) {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hidden_statics', d.id));
+                }
+                hiddenStatics = [];
+
+                // 2) استعادة أي مجلدات محذوفة في trash_folders
+                const trashFoldersSnap = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'trash_folders'));
+                for (const d of trashFoldersSnap.docs) {
+                    const data = d.data();
+                    delete data.deletedAt;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', d.id), data);
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trash_folders', d.id));
+                }
+
+                // 3) استعادة أي ملفات أو تلخيصات محذوفة في trash_files
+                const trashFilesSnap = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'trash_files'));
+                for (const d of trashFilesSnap.docs) {
+                    const data = d.data();
+                    delete data.deletedAt;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', d.id), data);
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trash_files', d.id));
+                }
+
+                // 4) فحص النسخ الاحتياطية من الإصدارات السابقة للمنصة إن وجدت واستعادتها
+                const legacyAppIds = ["lord-academy-final-v2", "lord-academy-final-v1", "lord-academy"];
+                for (const oldId of legacyAppIds) {
+                    try {
+                        const oldFiles = await getDocs(collection(db, 'artifacts', oldId, 'public', 'data', 'files'));
+                        for (const d of oldFiles.docs) {
+                            if (!dynamicFiles.some(f => f.id === d.id)) {
+                                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'files', d.id), d.data(), { merge: true });
+                            }
+                        }
+                        const oldFolders = await getDocs(collection(db, 'artifacts', oldId, 'public', 'data', 'folders'));
+                        for (const d of oldFolders.docs) {
+                            if (!dynamicFolders.some(f => f.id === d.id)) {
+                                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'folders', d.id), d.data(), { merge: true });
+                            }
+                        }
+                    } catch (e) {}
+                }
+
+                render();
+                if (!silent) {
+                    showToast("تمت استعادة جميع المقررات والتلخيصات والمجلدات بنجاح");
+                }
+            } catch (e) {
+                hiddenStatics = [];
+                render();
+                if (!silent) {
+                    showToast("تم إظهار كافة المقررات والتلخيصات المتاحة");
+                }
+            }
+        }
+
+        document.getElementById('restore-all-btn').addEventListener('click', () => restoreAllDeletedItems(false));
+
+        // تحميل أي نسخة مخزنة محلياً فوراً حتى لا تظهر المنصة فارغة أثناء الاتصال
+        try {
+            const cachedFolders = localStorage.getItem('lord_cached_folders');
+            const cachedFiles = localStorage.getItem('lord_cached_files');
+            if (cachedFolders) dynamicFolders = JSON.parse(cachedFolders);
+            if (cachedFiles) dynamicFiles = JSON.parse(cachedFiles);
+        } catch (e) {}
+
         render();
 
-        // الاتصال بقاعدة البيانات Firebase
-        signInAnonymously(auth).catch(() => {
+        let listenersAttached = false;
+        let autoRestoredOnce = false;
+
+        function attachFirestoreListeners() {
+            if (listenersAttached) return;
+            listenersAttached = true;
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), snap => {
+                dynamicFolders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                try { localStorage.setItem('lord_cached_folders', JSON.stringify(dynamicFolders)); } catch (e) {}
+                render();
+            }, () => {
+                listenersAttached = false;
+            });
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'files'), snap => {
+                dynamicFiles = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                try { localStorage.setItem('lord_cached_files', JSON.stringify(dynamicFiles)); } catch (e) {}
+                handleDirectLink([...INITIAL_STATIC_FILES, ...dynamicFiles]);
+                render();
+            }, () => {
+                listenersAttached = false;
+            });
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'hidden_statics'), snap => {
+                hiddenStatics = snap.docs.map(d => d.id);
+                // استعادة المقررات الثابتة المخفية تلقائياً عند فتح المنصة بناءً على طلب المستخدم
+                if (!autoRestoredOnce && hiddenStatics.length > 0) {
+                    autoRestoredOnce = true;
+                    restoreAllDeletedItems(true);
+                } else {
+                    render();
+                }
+            });
+        }
+
+        // بدء الاستماع فوراً وكذلك بعد تسجيل الدخول المجهول لضمان عمل القاعدة في جميع المتصفحات
+        attachFirestoreListeners();
+
+        signInAnonymously(auth).then(() => {
+            attachFirestoreListeners();
+            if (!autoRestoredOnce) {
+                autoRestoredOnce = true;
+                restoreAllDeletedItems(true);
+            }
+        }).catch(() => {
             const loader = document.getElementById('loading');
             if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 400); }
         });
@@ -1887,23 +2011,10 @@
             const loader = document.getElementById('loading');
             if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 400); }
             if (user) {
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'folders'), snap => {
-                    dynamicFolders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    render();
-                });
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'files'), snap => {
-                    dynamicFiles = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    handleDirectLink([...INITIAL_STATIC_FILES, ...dynamicFiles]);
-                    render();
-                });
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'hidden_statics'), snap => {
-                    hiddenStatics = snap.docs.map(d => d.id);
-                    render();
-                });
+                attachFirestoreListeners();
             }
         });
 
-        // إنشاء النجوم في الخلفية
         const starsContainer = document.getElementById('stars');
         for (let i = 0; i < 45; i++) {
             const s = document.createElement('div');
