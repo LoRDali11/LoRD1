@@ -120,12 +120,26 @@
         }
 
         input, textarea, select {
-            background: rgba(15, 15, 20, 0.9) !important;
+            background: rgba(15, 15, 20, 0.92) !important;
             border: 1px solid rgba(var(--accent-rgb), 0.3) !important;
             color: #ffffff !important;
             outline: none;
-            padding: 10px 14px;
+            padding: 10px 12px;
+            font-size: 15px;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        @media (max-width: 640px) {
+            input, textarea, select {
+                font-size: 16px; /* يمنع التقريب التلقائي المزعج في المتصفح على الموبايل */
+                padding: 10px 12px;
+            }
+            .glass-card-interactive:hover {
+                transform: none;
+            }
+            .glass-card-interactive:active {
+                transform: scale(0.99);
+            }
         }
 
         input:focus, textarea:focus, select:focus {
@@ -142,7 +156,8 @@
             z-index: 200;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 12px;
+            overflow-y: auto;
         }
 
         .loading-overlay {
@@ -154,27 +169,39 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 14px;
             transition: opacity 0.5s ease;
         }
 
         #custom-msg {
             position: fixed;
-            bottom: 28px;
+            bottom: 80px;
             left: 50%;
-            transform: translateX(-50%) translateY(20px);
+            transform: translateX(-50%);
             background: rgba(18, 18, 24, 0.96);
             color: #ffffff;
             border: 1px solid var(--accent);
-            padding: 12px 24px;
-            border-radius: 16px;
+            padding: 10px 18px;
+            border-radius: 14px;
+            font-size: 0.85rem;
             font-weight: 700;
             z-index: 1000;
             display: none;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.65);
             text-align: center;
-            min-width: 240px;
+            width: 90%;
+            max-width: 340px;
             backdrop-filter: blur(12px);
+        }
+
+        @media (min-width: 640px) {
+            #custom-msg {
+                bottom: 28px;
+                width: auto;
+                min-width: 260px;
+                font-size: 0.95rem;
+                padding: 12px 24px;
+            }
         }
 
         .log-item {
@@ -206,69 +233,69 @@
     <!-- إشعارات النظام (Toast) -->
     <div id="custom-msg"></div>
 
-    <!-- الشريط العلوي -->
-    <nav class="sticky top-0 z-50 glass-card border-b border-white/10 px-4 sm:px-8 py-3.5">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+    <!-- الشريط العلوي المتوافق مع الهاتف -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-white/10 px-3 sm:px-8 py-2.5 sm:py-3.5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
             <!-- الشعار -->
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl download-btn flex items-center justify-center text-xl shadow-md select-none">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl download-btn flex items-center justify-center text-lg sm:text-xl shadow-md select-none shrink-0">
                     👑
                 </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-black text-lg sm:text-xl gold-gradient tracking-tight">LoRD Academy</span>
-                        <span id="connection-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">متصل</span>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-black text-base sm:text-xl gold-gradient tracking-tight truncate">LoRD Academy</span>
+                        <span id="connection-badge" class="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold shrink-0">متصل</span>
                     </div>
-                    <p class="text-[11px] text-gray-400 font-semibold hidden sm:block">منصة الطالب الجامعية • إعداد / علي جلال</p>
+                    <p class="text-[10px] sm:text-[11px] text-gray-400 font-semibold truncate">إعداد / علي جلال</p>
                 </div>
             </div>
 
             <!-- أدوات الشريط العلوي -->
-            <div class="flex items-center gap-2 sm:gap-3">
+            <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
                 <!-- مبدل المظهر -->
                 <div class="flex items-center bg-black/50 border border-white/10 rounded-xl p-1 gap-1" title="تغيير لون المنصة">
-                    <button id="theme-gold-btn" class="w-6 h-6 rounded-lg bg-[#d4af37] border-2 border-white/80 transition transform hover:scale-110" title="ذهبي ملكي"></button>
-                    <button id="theme-emerald-btn" class="w-6 h-6 rounded-lg bg-[#10b981] border border-transparent opacity-70 hover:opacity-100 transition transform hover:scale-110" title="زمردي أكاديمي"></button>
-                    <button id="theme-royal-btn" class="w-6 h-6 rounded-lg bg-[#3b82f6] border border-transparent opacity-70 hover:opacity-100 transition transform hover:scale-110" title="أزرق ملكي"></button>
+                    <button id="theme-gold-btn" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-[#d4af37] border-2 border-white/80 transition transform" title="ذهبي ملكي"></button>
+                    <button id="theme-emerald-btn" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-[#10b981] border border-transparent opacity-70 hover:opacity-100 transition transform" title="زمردي أكاديمي"></button>
+                    <button id="theme-royal-btn" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-[#3b82f6] border border-transparent opacity-70 hover:opacity-100 transition transform" title="أزرق ملكي"></button>
                 </div>
 
                 <!-- زر الإدارة -->
-                <button id="open-login-btn" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition">
+                <button id="open-login-btn" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition min-h-[38px]">
                     <span>⚙️</span>
-                    <span id="admin-nav-label" class="hidden sm:inline">الإدارة</span>
+                    <span id="admin-nav-label" class="text-xs sm:text-sm">الإدارة</span>
                 </button>
             </div>
         </div>
     </nav>
 
-    <div class="relative z-10 min-h-screen flex flex-col p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full">
+    <div class="relative z-10 min-h-screen flex flex-col px-3 pt-3 pb-24 sm:p-6 md:p-8 max-w-7xl mx-auto w-full">
         
-        <!-- الهيدر الرئيسي -->
-        <header class="relative overflow-hidden text-center py-8 sm:py-12 mb-8 glass-card rounded-3xl px-4 sm:px-8 shadow-2xl">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs sm:text-sm text-gray-300 font-bold mb-4">
+        <!-- الهيدر الرئيسي (مضغوط وأنيق على الموبايل) -->
+        <header class="relative overflow-hidden text-center py-4 px-3.5 sm:py-10 sm:px-8 mb-4 sm:mb-8 glass-card rounded-2xl sm:rounded-3xl shadow-xl">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-sm text-gray-300 font-bold mb-2 sm:mb-4">
                 <span>🎓</span>
-                <span>إعداد / علي جلال</span>
+                <span>منصة الطالب • إعداد / علي جلال</span>
             </div>
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black uppercase gold-gradient tracking-tight leading-tight select-none">
+            <h1 class="text-2xl sm:text-5xl md:text-6xl font-black uppercase gold-gradient tracking-tight leading-tight select-none">
                 LoRD Academy
             </h1>
-            <h2 class="text-lg sm:text-2xl text-gray-200 font-bold mt-2 tracking-wide">
-                منصة الطالب للمقررات الدراسية والتلخيصات
+            <h2 class="text-xs sm:text-xl text-gray-300 font-bold mt-1 sm:mt-2 tracking-wide">
+                المقررات الدراسية والتلخيصات الجامعية
             </h2>
 
-            <!-- إحصائيات سريعة -->
-            <div class="grid grid-cols-3 gap-3 max-w-lg mx-auto mt-6 pt-6 border-t border-white/10">
-                <div class="bg-black/40 rounded-2xl p-3 border border-white/5">
-                    <div id="stat-courses" class="text-xl sm:text-2xl font-black gold-gradient">0</div>
-                    <div class="text-[11px] sm:text-xs text-gray-400 font-bold">مقرر دراسي</div>
+            <!-- إحصائيات سريعة متناسقة مع شاشة الهاتف -->
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 max-w-lg mx-auto mt-3.5 pt-3.5 sm:mt-6 sm:pt-6 border-t border-white/10">
+                <div class="bg-black/40 rounded-xl sm:rounded-2xl py-2 px-1.5 sm:p-3 border border-white/5">
+                    <div id="stat-courses" class="text-base sm:text-2xl font-black gold-gradient leading-none">0</div>
+                    <div class="text-[10px] sm:text-xs text-gray-400 font-bold mt-1">مقرر دراسي</div>
                 </div>
-                <div class="bg-black/40 rounded-2xl p-3 border border-white/5">
-                    <div id="stat-summaries" class="text-xl sm:text-2xl font-black gold-gradient">0</div>
-                    <div class="text-[11px] sm:text-xs text-gray-400 font-bold">ملخص ومراجعة</div>
+                <div class="bg-black/40 rounded-xl sm:rounded-2xl py-2 px-1.5 sm:p-3 border border-white/5">
+                    <div id="stat-summaries" class="text-base sm:text-2xl font-black gold-gradient leading-none">0</div>
+                    <div class="text-[10px] sm:text-xs text-gray-400 font-bold mt-1">ملخص ومراجعة</div>
                 </div>
-                <div class="bg-black/40 rounded-2xl p-3 border border-white/5">
-                    <div id="stat-folders" class="text-xl sm:text-2xl font-black gold-gradient">0</div>
-                    <div class="text-[11px] sm:text-xs text-gray-400 font-bold">مجلد منظم</div>
+                <div class="bg-black/40 rounded-xl sm:rounded-2xl py-2 px-1.5 sm:p-3 border border-white/5">
+                    <div id="stat-folders" class="text-base sm:text-2xl font-black gold-gradient leading-none">0</div>
+                    <div class="text-[10px] sm:text-xs text-gray-400 font-bold mt-1">مجلد منظم</div>
                 </div>
             </div>
         </header>
@@ -391,80 +418,80 @@
         </div>
 
         <!-- شريط التحكم: اختيار الترم + التبويبات + البحث والترتيب -->
-        <div id="controls-wrapper" class="space-y-4 mb-8">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4 glass-card p-3 sm:p-4 rounded-2xl">
+        <div id="controls-wrapper" class="space-y-2.5 sm:space-y-4 mb-4 sm:mb-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-4 glass-card p-2.5 sm:p-4 rounded-2xl">
                 <!-- اختيار الترم -->
                 <div id="term-selector" class="flex items-center bg-black/60 p-1 rounded-xl border border-white/10 w-full md:w-auto">
-                    <button id="btn-term1" class="flex-1 md:flex-initial px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all">
+                    <button id="btn-term1" class="flex-1 md:flex-initial px-3 sm:px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all min-h-[38px]">
                         الترم الأول
                     </button>
-                    <button id="btn-term2" class="flex-1 md:flex-initial px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all">
+                    <button id="btn-term2" class="flex-1 md:flex-initial px-3 sm:px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all min-h-[38px]">
                         الترم الثاني
                     </button>
                 </div>
 
                 <!-- التبويبات (المقررات / التلخيصات / المفضلة) -->
-                <div id="tabs-container" class="flex items-center gap-2 w-full md:w-auto justify-center">
-                    <button id="tab-courses" class="flex-1 md:flex-initial px-5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5">
+                <div id="tabs-container" class="grid grid-cols-3 sm:flex items-center gap-1.5 sm:gap-2 w-full md:w-auto justify-center">
+                    <button id="tab-courses" class="px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 min-h-[40px]">
                         <span>📚</span>
                         <span>المقررات</span>
                     </button>
-                    <button id="tab-summaries" class="flex-1 md:flex-initial px-5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5">
+                    <button id="tab-summaries" class="px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 min-h-[40px]">
                         <span>📝</span>
                         <span>التلخيصات</span>
                     </button>
-                    <button id="tab-favorites" class="flex-1 md:flex-initial px-4 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5">
+                    <button id="tab-favorites" class="px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 min-h-[40px]">
                         <span>⭐</span>
                         <span>المفضلة</span>
-                        <span id="fav-count-badge" class="text-[11px] px-1.5 py-0.2 rounded-full bg-black/30">0</span>
+                        <span id="fav-count-badge" class="text-[10px] sm:text-[11px] px-1.5 py-0.2 rounded-full bg-black/30">0</span>
                     </button>
                 </div>
             </div>
 
             <!-- شريط البحث والفرز وطريقة العرض -->
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                 <div class="relative flex-1">
-                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">🔍</span>
-                    <input type="text" id="search-input" placeholder="ابحث عن اسم المقرر، الملخص، أو المجلد..." class="w-full pr-10 pl-9 py-2.5 rounded-xl text-sm">
-                    <button id="clear-search-btn" class="hidden absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-xs bg-white/10 px-2 py-0.5 rounded-md">مسح</button>
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-sm">🔍</span>
+                    <input type="text" id="search-input" placeholder="ابحث عن اسم المقرر أو الملخص..." class="w-full pr-9 pl-12 py-2.5 rounded-xl text-sm min-h-[42px]">
+                    <button id="clear-search-btn" class="hidden absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-300 hover:text-white text-xs bg-white/10 px-2 py-1 rounded-lg">مسح</button>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <select id="sort-select" class="rounded-xl text-xs sm:text-sm py-2.5 px-3 flex-1 sm:flex-initial">
+                    <select id="sort-select" class="rounded-xl text-xs sm:text-sm py-2 px-3 flex-1 sm:flex-initial min-h-[42px]">
                         <option value="order">الترتيب الافتراضي</option>
                         <option value="alpha">ترتيب أبجدي (أ - ي)</option>
                         <option value="newest">الأحدث أولاً</option>
                     </select>
 
                     <!-- تبديل العرض شبكة / قائمة -->
-                    <div class="flex bg-black/60 p-1 rounded-xl border border-white/10">
-                        <button id="view-grid-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition" title="عرض شبكي">شبكة ⊞</button>
-                        <button id="view-list-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition" title="عرض قائمة">قائمة ☰</button>
+                    <div class="flex bg-black/60 p-1 rounded-xl border border-white/10 shrink-0">
+                        <button id="view-grid-btn" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold accent-bg transition min-h-[34px]" title="عرض شبكي">شبكة ⊞</button>
+                        <button id="view-list-btn" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition min-h-[34px]" title="عرض مدمج">قائمة ☰</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- شريط مسار المجلد (Breadcrumbs) عند الدخول لمجلد -->
-        <div id="navigation-bar" class="w-full mb-6 flex flex-wrap items-center justify-between gap-3 glass-card p-4 rounded-2xl hidden">
-            <div class="flex items-center gap-2 text-sm sm:text-base font-bold">
-                <button id="go-back-btn" class="flex items-center gap-1.5 text-black font-extrabold download-btn px-4 py-2 rounded-xl transition">
+        <div id="navigation-bar" class="w-full mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-2 glass-card p-3 sm:p-4 rounded-2xl hidden">
+            <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-base font-bold min-w-0">
+                <button id="go-back-btn" class="flex items-center gap-1 text-black font-extrabold download-btn px-3 py-2 rounded-xl transition text-xs sm:text-sm shrink-0">
                     <span>↩️</span>
                     <span>عودة للرئيسية</span>
                 </button>
                 <span class="text-gray-500">/</span>
-                <span id="current-folder-term-badge" class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-gray-300"></span>
+                <span id="current-folder-term-badge" class="text-[11px] sm:text-xs px-2 py-1 rounded-lg bg-white/5 text-gray-300 shrink-0"></span>
                 <span class="text-gray-500">/</span>
-                <span id="current-folder-title" class="text-lg sm:text-xl font-black gold-gradient"></span>
+                <span id="current-folder-title" class="text-sm sm:text-xl font-black gold-gradient truncate"></span>
             </div>
-            <div id="folder-items-count" class="text-xs font-bold text-gray-400 bg-black/40 px-3 py-1.5 rounded-xl border border-white/5"></div>
+            <div id="folder-items-count" class="text-[11px] sm:text-xs font-bold text-gray-400 bg-black/40 px-2.5 py-1 rounded-xl border border-white/5 shrink-0"></div>
         </div>
 
         <!-- الشبكة الرئيسية للمجلدات والملفات -->
-        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full mb-16"></div>
+        <div id="main-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 w-full mb-10 sm:mb-16"></div>
 
         <!-- الفوتر -->
-        <footer class="mt-auto py-8 text-center border-t border-white/10 text-xs sm:text-sm text-gray-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <footer class="mt-auto py-6 sm:py-8 text-center border-t border-white/10 text-xs sm:text-sm text-gray-400 flex flex-col sm:flex-row items-center justify-between gap-2">
             <div class="font-bold">
                 <span class="gold-gradient font-black">LoRD Academy</span> &copy; 2025 — جميع الحقوق محفوظة
             </div>
@@ -472,6 +499,26 @@
                 إعداد وتطوير / <span class="text-white font-bold">علي جلال</span>
             </div>
         </footer>
+    </div>
+
+    <!-- شريط تنقل سفلي مخصص للهاتف (Mobile Bottom Bar) لسهولة الوصول بإصبع واحد -->
+    <div id="mobile-bottom-nav" class="sm:hidden fixed bottom-0 inset-x-0 z-40 glass-card border-t border-white/15 px-2 py-1.5 flex items-center justify-around shadow-2xl">
+        <button type="button" data-mob-tab="courses" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-extrabold transition accent-text">
+            <span class="text-base leading-none">📚</span>
+            <span>المقررات</span>
+        </button>
+        <button type="button" data-mob-tab="summaries" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition">
+            <span class="text-base leading-none">📝</span>
+            <span>التلخيصات</span>
+        </button>
+        <button type="button" data-mob-tab="favorites" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition">
+            <span class="text-base leading-none">⭐</span>
+            <span>المفضلة</span>
+        </button>
+        <button type="button" id="mob-search-focus-btn" class="flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition">
+            <span class="text-base leading-none">🔍</span>
+            <span>بحث سريع</span>
+        </button>
     </div>
 
     <!-- نافذة تسجيل دخول الإدارة واستعادة كلمة المرور -->
@@ -834,27 +881,34 @@
             const btnTerm1 = document.getElementById('btn-term1');
             const btnTerm2 = document.getElementById('btn-term2');
             if (btnTerm1 && btnTerm2) {
-                btnTerm1.className = `flex-1 md:flex-initial px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all ${currentTerm === 'term1' ? 'download-btn shadow-md' : 'text-gray-300 hover:text-white'}`;
-                btnTerm2.className = `flex-1 md:flex-initial px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all ${currentTerm === 'term2' ? 'download-btn shadow-md' : 'text-gray-300 hover:text-white'}`;
+                btnTerm1.className = `flex-1 md:flex-initial px-3 sm:px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all min-h-[38px] ${currentTerm === 'term1' ? 'download-btn shadow-md' : 'text-gray-300 hover:text-white'}`;
+                btnTerm2.className = `flex-1 md:flex-initial px-3 sm:px-5 py-2 rounded-lg font-bold text-xs sm:text-sm transition-all min-h-[38px] ${currentTerm === 'term2' ? 'download-btn shadow-md' : 'text-gray-300 hover:text-white'}`;
             }
 
-            // تحديث حالة التبويبات
+            // تحديث حالة التبويبات العلوية والسفلية للموبايل
             const tc = document.getElementById('tab-courses');
             const ts = document.getElementById('tab-summaries');
             const tf = document.getElementById('tab-favorites');
-            const activeTabClass = "flex-1 md:flex-initial px-5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 download-btn shadow-lg";
-            const inactiveTabClass = "flex-1 md:flex-initial px-5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 bg-black/40 border border-white/10 text-gray-300 hover:border-white/30";
+            const activeTabClass = "px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 sm:gap-1.5 download-btn shadow-lg min-h-[40px]";
+            const inactiveTabClass = "px-2 sm:px-5 py-2 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 sm:gap-1.5 bg-black/40 border border-white/10 text-gray-300 hover:border-white/30 min-h-[40px]";
             if (tc && ts && tf) {
                 tc.className = currentSection === 'courses' ? activeTabClass : inactiveTabClass;
                 ts.className = currentSection === 'summaries' ? activeTabClass : inactiveTabClass;
                 tf.className = currentSection === 'favorites' ? activeTabClass : inactiveTabClass;
             }
 
+            document.querySelectorAll('[data-mob-tab]').forEach(btn => {
+                const isAct = btn.dataset.mobTab === currentSection;
+                btn.className = isAct
+                    ? "flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-black transition accent-bg shadow-md"
+                    : "flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-[11px] font-bold text-gray-400 transition";
+            });
+
             // تحديث تخطيط الشبكة أو القائمة
             if (viewMode === 'list') {
-                grid.className = "flex flex-col gap-3 w-full mb-16";
+                grid.className = "flex flex-col gap-2.5 sm:gap-3 w-full mb-10 sm:mb-16";
             } else {
-                grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full mb-16";
+                grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 w-full mb-10 sm:mb-16";
             }
 
             const q = searchQuery.trim().toLowerCase();
@@ -949,40 +1003,43 @@
             const safeTitle = escapeAttr(f.title);
             if (viewMode === 'list') {
                 return `
-                <div data-action="open-folder" data-id="${f.id}" class="glass-card glass-card-interactive p-4 rounded-2xl flex items-center justify-between gap-4 cursor-pointer">
-                    <div class="flex items-center gap-3.5 min-w-0">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shrink-0">📁</div>
+                <div data-action="open-folder" data-id="${f.id}" class="glass-card glass-card-interactive p-3.5 sm:p-4 rounded-2xl flex items-center justify-between gap-3 cursor-pointer">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shrink-0">📁</div>
                         <div class="min-w-0">
-                            <h3 class="text-base sm:text-lg font-black text-white truncate">${safeTitle}</h3>
-                            <span class="text-xs text-gray-400 font-bold">${countInFolder} ملف بالداخل</span>
+                            <h3 class="text-sm sm:text-lg font-black text-white truncate">${safeTitle}</h3>
+                            <span class="text-[11px] sm:text-xs text-gray-400 font-bold">${countInFolder} ملف بالداخل</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2 shrink-0">
+                    <div class="flex items-center gap-1.5 shrink-0">
                         ${currentAdmin ? `
-                            <button data-action="edit-folder" data-id="${f.id}" class="p-2 text-emerald-400 hover:bg-emerald-500/15 rounded-xl transition" title="تعديل المجلد">✏️</button>
-                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="p-2 text-red-400 hover:bg-red-500/15 rounded-xl transition" title="حذف المجلد">🗑️</button>
+                            <button data-action="edit-folder" data-id="${f.id}" class="w-9 h-9 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-xl transition" title="تعديل المجلد">✏️</button>
+                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-xl transition" title="حذف المجلد">🗑️</button>
                         ` : ''}
-                        <span class="px-3 py-1.5 rounded-xl bg-white/5 text-xs font-bold accent-text">فتح المجلد ←</span>
+                        <span class="px-2.5 py-1.5 rounded-xl bg-white/5 text-xs font-bold accent-text">فتح ←</span>
                     </div>
                 </div>`;
             }
 
             return `
-            <div data-action="open-folder" data-id="${f.id}" class="glass-card glass-card-interactive p-6 sm:p-7 rounded-3xl text-center flex flex-col items-center justify-between cursor-pointer group relative h-full">
-                <div class="w-full flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300">${countInFolder} ملف</span>
+            <div data-action="open-folder" data-id="${f.id}" class="glass-card glass-card-interactive p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between cursor-pointer group relative h-full">
+                <div class="flex items-center justify-between gap-2 mb-2 sm:mb-3">
+                    <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-gray-300">${countInFolder} ملف</span>
                     <div class="flex items-center gap-1">
                         ${currentAdmin ? `
-                            <button data-action="edit-folder" data-id="${f.id}" class="p-1.5 text-emerald-400 hover:bg-emerald-500/15 rounded-lg transition" title="تعديل">✏️</button>
-                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="p-1.5 text-red-400 hover:bg-red-500/15 rounded-lg transition" title="حذف">🗑️</button>
+                            <button data-action="edit-folder" data-id="${f.id}" class="w-8 h-8 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-lg transition" title="تعديل">✏️</button>
+                            <button data-action="delete-folder" data-id="${f.id}" data-title="${safeTitle}" class="w-8 h-8 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-lg transition" title="حذف">🗑️</button>
                         ` : ''}
                     </div>
                 </div>
-                <div class="my-4">
-                    <div class="w-20 h-20 mx-auto rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-5xl transform group-hover:scale-110 transition-transform">📁</div>
-                    <h3 class="text-lg sm:text-xl font-black text-white mt-4 leading-relaxed">${safeTitle}</h3>
+                <div class="flex sm:flex-col items-center gap-3.5 sm:gap-0 my-1 sm:my-3 text-right sm:text-center">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mx-auto rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl sm:text-5xl shrink-0 transform group-hover:scale-110 transition-transform">📁</div>
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-base sm:text-xl font-black text-white sm:mt-4 leading-snug">${safeTitle}</h3>
+                        <p class="text-[11px] text-gray-400 sm:hidden mt-0.5">اضغط لفتح المجلد وعرض الملفات</p>
+                    </div>
                 </div>
-                <div class="w-full py-2.5 rounded-xl bg-white/5 group-hover:bg-white/10 border border-white/10 text-xs font-bold accent-text transition">
+                <div class="w-full py-2 sm:py-2.5 mt-3 sm:mt-2 rounded-xl bg-white/5 group-hover:bg-white/10 border border-white/10 text-xs font-bold accent-text text-center transition">
                     تصفح محتويات المجلد ←
                 </div>
             </div>`;
@@ -996,66 +1053,70 @@
 
             if (viewMode === 'list') {
                 return `
-                <div class="glass-card glass-card-interactive p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div class="flex items-center gap-3.5 min-w-0 w-full sm:w-auto">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shrink-0">${safeIcon}</div>
+                <div class="glass-card glass-card-interactive p-3.5 sm:p-4 rounded-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shrink-0">${safeIcon}</div>
                         <div class="min-w-0 flex-1">
-                            <h3 class="text-base font-black text-white truncate">${safeTitle}</h3>
+                            <h3 class="text-sm sm:text-base font-black text-white leading-snug">${safeTitle}</h3>
                             <span class="text-[11px] text-gray-400 font-semibold">${f.type === 'summaries' ? 'ملخص / مراجعة' : 'مقرر دراسي'} • ${(f.term || 'term2') === 'term1' ? 'الترم الأول' : 'الترم الثاني'}</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0">
+                    <div class="flex items-center gap-1.5 sm:gap-2 justify-end shrink-0 pt-2 sm:pt-0 border-t border-white/5 sm:border-0">
                         ${currentAdmin ? `
-                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="p-2 text-emerald-400 hover:bg-emerald-500/15 rounded-xl" title="تعديل">✏️</button>` : ''}
-                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="p-2 text-yellow-400 hover:bg-yellow-500/15 rounded-xl" title="نقل">🔄</button>` : ''}
-                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="p-2 text-red-400 hover:bg-red-500/15 rounded-xl" title="حذف">🗑️</button>
+                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="w-9 h-9 flex items-center justify-center text-emerald-400 bg-white/5 hover:bg-emerald-500/15 rounded-xl" title="تعديل">✏️</button>` : ''}
+                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="w-9 h-9 flex items-center justify-center text-yellow-400 bg-white/5 hover:bg-yellow-500/15 rounded-xl" title="نقل">🔄</button>` : ''}
+                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="w-9 h-9 flex items-center justify-center text-red-400 bg-white/5 hover:bg-red-500/15 rounded-xl" title="حذف">🗑️</button>
                         ` : ''}
-                        <button data-action="fav-file" data-id="${f.id}" data-title="${safeTitle}" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 ${isFav ? 'text-yellow-400' : 'text-gray-400'}" title="المفضلة">${isFav ? '⭐' : '☆'}</button>
-                        <button data-action="preview-file" data-title="${safeTitle}" data-link="${safeLink}" class="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200" title="معاينة">معاينة 👁️</button>
-                        <button data-action="share-file" data-id="${f.id}" data-title="${safeTitle}" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-blue-400" title="نسخ الرابط">🔗</button>
-                        <a href="${safeLink}" download="${safeTitle}" class="download-btn px-4 py-2 rounded-xl text-xs font-black">تحميل ⬇️</a>
+                        <button data-action="fav-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 ${isFav ? 'text-yellow-400' : 'text-gray-400'}" title="المفضلة">${isFav ? '⭐' : '☆'}</button>
+                        <button data-action="share-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-blue-400" title="نسخ الرابط">🔗</button>
+                        <button data-action="preview-file" data-title="${safeTitle}" data-link="${safeLink}" class="px-3 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200" title="معاينة">👁️</button>
+                        <a href="${safeLink}" download="${safeTitle}" class="download-btn px-4 h-9 flex items-center justify-center rounded-xl text-xs font-black">تحميل ⬇️</a>
                     </div>
                 </div>`;
             }
 
             return `
-            <div class="glass-card glass-card-interactive p-6 rounded-3xl text-center flex flex-col justify-between h-full relative group">
-                <!-- شريط الأدوات العلوي للكارت -->
-                <div class="flex items-center justify-between gap-1 mb-4">
-                    <div class="flex items-center gap-1">
-                        <button data-action="fav-file" data-id="${f.id}" data-title="${safeTitle}" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition ${isFav ? 'text-yellow-400 border border-yellow-500/30' : 'text-gray-400'}" title="إضافة للمفضلة">
+            <div class="glass-card glass-card-interactive p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between h-full relative group">
+                <!-- الصف العلوي: الأيقونة والعنوان على الموبايل بشكل أفقي مريح، وعلى الكمبيوتر بشكل رأسي -->
+                <div class="flex items-center justify-between gap-1 mb-2.5 sm:mb-4">
+                    <div class="flex items-center gap-1.5">
+                        <button data-action="fav-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition ${isFav ? 'text-yellow-400 border border-yellow-500/30' : 'text-gray-400'}" title="إضافة للمفضلة">
                             ${isFav ? '⭐' : '☆'}
                         </button>
-                        <button data-action="share-file" data-id="${f.id}" data-title="${safeTitle}" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-blue-400 transition" title="مشاركة الرابط">
+                        <button data-action="share-file" data-id="${f.id}" data-title="${safeTitle}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-blue-400 transition" title="مشاركة الرابط">
                             🔗
                         </button>
                     </div>
                     <div class="flex items-center gap-1">
                         ${currentAdmin ? `
-                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-emerald-500/15 text-emerald-400 flex items-center justify-center transition" title="تعديل">✏️</button>` : ''}
-                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-yellow-500/15 text-yellow-400 flex items-center justify-center transition" title="نقل">🔄</button>` : ''}
-                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-red-500/15 text-red-400 flex items-center justify-center transition" title="حذف">🗑️</button>
+                            ${!f.isStatic ? `<button data-action="edit-file" data-id="${f.id}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-emerald-500/15 text-emerald-400 flex items-center justify-center transition" title="تعديل">✏️</button>` : ''}
+                            ${!f.isStatic ? `<button data-action="move-file" data-id="${f.id}" data-title="${safeTitle}" data-folder="${f.folderId}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-yellow-500/15 text-yellow-400 flex items-center justify-center transition" title="نقل">🔄</button>` : ''}
+                            <button data-action="delete-file" data-id="${f.id}" data-title="${safeTitle}" data-static="${f.isStatic ? '1' : '0'}" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl bg-white/5 hover:bg-red-500/15 text-red-400 flex items-center justify-center transition" title="حذف">🗑️</button>
                         ` : `
-                            <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/5 text-gray-400">${f.type === 'summaries' ? 'تلخيص' : 'مقرر'}</span>
+                            <span class="text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/5 text-gray-400">${f.type === 'summaries' ? 'تلخيص' : 'مقرر'}</span>
                         `}
                     </div>
                 </div>
 
-                <!-- أيقونة واسم الملف -->
-                <div class="my-2">
-                    <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-4xl transform group-hover:scale-110 transition-transform shadow-inner">
+                <!-- أيقونة واسم الملف (أفقي مدمج على الهاتف، مركزي على الشاشات الكبيرة) -->
+                <div class="flex sm:flex-col items-center gap-3.5 sm:gap-0 my-1 sm:my-2 text-right sm:text-center">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mx-auto sm:mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl sm:text-4xl shrink-0 transform group-hover:scale-110 transition-transform shadow-inner">
                         ${safeIcon}
                     </div>
-                    <h3 class="text-lg sm:text-xl font-black text-white mb-5 leading-relaxed">${safeTitle}</h3>
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-base sm:text-xl font-black text-white sm:mb-5 leading-snug sm:leading-relaxed">${safeTitle}</h3>
+                        <span class="text-[11px] text-gray-400 font-semibold sm:hidden block mt-0.5">${(f.term || 'term2') === 'term1' ? 'الترم الأول' : 'الترم الثاني'} • جاهز للتحميل</span>
+                    </div>
                 </div>
 
-                <!-- أزرار التحميل والمعاينة -->
-                <div class="flex items-center gap-2 mt-auto">
-                    <a href="${safeLink}" download="${safeTitle}" class="download-btn flex-1 py-3 rounded-xl text-sm sm:text-base font-black block shadow-lg">
-                        تحميل مباشر ⬇️
+                <!-- أزرار التحميل والمعاينة بحجم لمس مثالي للموبايل -->
+                <div class="flex items-center gap-2 mt-3.5 sm:mt-auto">
+                    <a href="${safeLink}" download="${safeTitle}" class="download-btn flex-1 py-2.5 sm:py-3 rounded-xl text-xs sm:text-base font-black flex items-center justify-center gap-1.5 shadow-lg min-h-[42px]">
+                        <span>تحميل مباشر</span>
+                        <span>⬇️</span>
                     </a>
-                    <button data-action="preview-file" data-title="${safeTitle}" data-link="${safeLink}" class="px-3.5 py-3 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition" title="معاينة الملف">
-                        👁️
+                    <button data-action="preview-file" data-title="${safeTitle}" data-link="${safeLink}" class="px-3.5 py-2.5 sm:py-3 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition min-h-[42px]" title="معاينة الملف">
+                        معاينة 👁️
                     </button>
                 </div>
             </div>`;
@@ -1669,6 +1730,24 @@
         document.getElementById('tab-courses').addEventListener('click', () => { currentSection = 'courses'; currentFolderId = null; render(); });
         document.getElementById('tab-summaries').addEventListener('click', () => { currentSection = 'summaries'; currentFolderId = null; render(); });
         document.getElementById('tab-favorites').addEventListener('click', () => { currentSection = 'favorites'; currentFolderId = null; render(); });
+
+        document.getElementById('mobile-bottom-nav').addEventListener('click', (e) => {
+            const tabBtn = e.target.closest('[data-mob-tab]');
+            if (tabBtn) {
+                currentSection = tabBtn.dataset.mobTab;
+                currentFolderId = null;
+                render();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        document.getElementById('mob-search-focus-btn').addEventListener('click', () => {
+            const sInput = document.getElementById('search-input');
+            if (sInput) {
+                sInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => sInput.focus(), 300);
+            }
+        });
 
         document.getElementById('go-back-btn').addEventListener('click', () => { currentFolderId = null; render(); });
 
