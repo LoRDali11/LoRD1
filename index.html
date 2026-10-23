@@ -10,12 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #d4af37;
-            --accent-light: #f9f295;
-            --accent-dark: #816021;
-            --accent-rgb: 212, 175, 55;
-            --bg-primary: #060608;
-            --bg-card: rgba(16, 16, 20, 0.82);
+            --accent: #3b82f6;
+            --accent-light: #93c5fd;
+            --accent-dark: #1d4ed8;
+            --accent-rgb: 59, 130, 246;
+            --bg-primary: #070b14;
+            --bg-card: rgba(15, 23, 42, 0.82);
         }
 
         [data-theme="emerald"] {
@@ -93,8 +93,8 @@
         }
 
         .download-btn {
-            background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 45%, var(--accent-dark) 100%);
-            color: #050505;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #ffffff;
             font-weight: 800;
             transition: all 0.25s ease;
             cursor: pointer;
@@ -112,7 +112,7 @@
 
         .accent-bg {
             background-color: var(--accent);
-            color: #050505;
+            color: #ffffff;
         }
 
         .accent-text {
@@ -222,7 +222,10 @@
 
     <!-- شاشة التحميل -->
     <div id="loading" class="loading-overlay">
-        <div class="w-14 h-14 rounded-2xl download-btn flex items-center justify-center text-lg font-black shadow-2xl tracking-tighter">LA</div>
+        <div class="w-16 h-16 rounded-2xl download-btn flex items-center justify-center text-lg font-black shadow-2xl tracking-tighter overflow-hidden">
+            <img id="loading-logo-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="LoRD Academy Logo" class="hidden w-full h-full object-cover max-w-full h-auto">
+            <span id="loading-logo-text">LA</span>
+        </div>
         <div class="text-2xl font-black gold-gradient tracking-wider animate-pulse">LoRD Academy</div>
         <div class="text-xs text-gray-400 font-semibold">جاري تجهيز المنصة الأكاديمية...</div>
     </div>
@@ -238,8 +241,9 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
             <!-- الشعار -->
             <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl download-btn flex items-center justify-center text-xs sm:text-sm font-black shadow-md select-none shrink-0 tracking-tighter">
-                    LA
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl download-btn flex items-center justify-center text-xs sm:text-sm font-black shadow-md select-none shrink-0 tracking-tighter overflow-hidden">
+                    <img id="nav-logo-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="LoRD Academy" class="hidden w-full h-full object-cover max-w-full h-auto">
+                    <span id="nav-logo-text">LA</span>
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-1.5">
@@ -252,11 +256,10 @@
 
             <!-- أدوات الشريط العلوي -->
             <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-                <!-- مبدل المظهر -->
+                <!-- مبدل المظهر (بدون الذهبي) -->
                 <div class="flex items-center bg-black/50 border border-white/10 rounded-xl p-1 gap-1" title="تغيير لون المنصة">
-                    <button id="theme-gold-btn" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-[#d4af37] border-2 border-white/80 transition transform" title="ذهبي ملكي"></button>
+                    <button id="theme-royal-btn" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-[#3b82f6] border-2 border-white/80 transition transform" title="أزرق ملكي"></button>
                     <button id="theme-emerald-btn" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-[#10b981] border border-transparent opacity-70 hover:opacity-100 transition transform" title="زمردي أكاديمي"></button>
-                    <button id="theme-royal-btn" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-[#3b82f6] border border-transparent opacity-70 hover:opacity-100 transition transform" title="أزرق ملكي"></button>
                 </div>
 
                 <!-- زر الإدارة -->
@@ -272,6 +275,9 @@
         
         <!-- الهيدر الرئيسي (مضغوط وأنيق على الموبايل) -->
         <header class="relative overflow-hidden text-center py-4 px-3.5 sm:py-10 sm:px-8 mb-4 sm:mb-8 glass-card rounded-2xl sm:rounded-3xl shadow-xl">
+            <div id="hero-logo-wrapper" class="hidden mb-3">
+                <img id="hero-logo-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="شعار الأكاديمية" class="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl object-contain border border-white/15 bg-black/40 p-1 shadow-xl max-w-full h-auto">
+            </div>
             <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-sm text-gray-300 font-bold mb-2 sm:mb-4">
                 <span>منصة الطالب الأكاديمية • إعداد / علي جلال</span>
             </div>
@@ -317,6 +323,34 @@
                 </div>
             </div>
 
+            <!-- التحكم في لوجو المنصة (رفع من الموبايل/الكمبيوتر أو رابط) -->
+            <div class="bg-black/40 p-4 sm:p-5 rounded-2xl border border-white/10 mb-5 text-right">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                    <h4 class="font-bold text-white text-sm sm:text-base border-r-4 accent-border pr-2.5">
+                        شعار المنصة (اللوجو)
+                    </h4>
+                    <span class="text-[11px] text-gray-400">يظهر لجميع الطلاب في الشريط العلوي والهيدر</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-center mt-3">
+                    <div>
+                        <label class="block text-[11px] text-gray-400 font-bold mb-1">اختيار صورة اللوجو من جهازك / هاتفك:</label>
+                        <input type="file" id="logo-file-input" accept="image/*" class="w-full rounded-xl text-xs cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400 font-bold mb-1">أو لصق رابط مباشر لصورة اللوجو:</label>
+                        <input type="text" id="logo-url-input" placeholder="https://example.com/logo.png" class="w-full rounded-xl text-xs sm:text-sm">
+                    </div>
+                    <div class="flex gap-2 sm:mt-5">
+                        <button id="save-logo-btn" type="button" class="download-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black shadow-lg">
+                            حفظ اللوجو
+                        </button>
+                        <button id="remove-logo-btn" type="button" class="py-2.5 px-3 rounded-xl bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-300 text-xs font-bold transition">
+                            حذف اللوجو
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- ربط حساب الأدمن بالبريد الإلكتروني وأمان الحساب -->
             <div class="bg-black/40 p-4 sm:p-5 rounded-2xl border border-white/10 mb-5 text-right">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
@@ -344,8 +378,8 @@
                     <input type="text" id="folder-title" placeholder="اسم المجلد (مثال: محاضرات الأدب)" class="w-full rounded-xl text-sm">
                     <div class="grid grid-cols-3 gap-2">
                         <select id="folder-term" class="rounded-xl text-xs sm:text-sm">
-                            <option value="term1">الترم الأول</option>
-                            <option value="term2" selected>الترم الثاني</option>
+                            <option value="term1" selected>الترم الأول</option>
+                            <option value="term2">الترم الثاني</option>
                         </select>
                         <select id="folder-type" class="rounded-xl text-xs sm:text-sm">
                             <option value="courses">مقرر</option>
@@ -706,7 +740,7 @@
         let hiddenStatics = [];
         let activityLogs = [];
         let favorites = [];
-        let currentTerm = 'term2';
+        let currentTerm = 'term1';
         let currentSection = 'courses';
         let currentFolderId = null;
         let currentAdmin = null;
@@ -721,7 +755,7 @@
             const savedFavs = localStorage.getItem('lord_academy_favs');
             if (savedFavs) favorites = JSON.parse(savedFavs);
             const savedTheme = localStorage.getItem('lord_academy_theme');
-            if (savedTheme) applyTheme(savedTheme);
+            applyTheme(savedTheme === 'emerald' ? 'emerald' : 'royal');
         } catch (e) {
             favorites = [];
         }
@@ -733,26 +767,22 @@
         }
 
         function applyTheme(themeName) {
-            if (themeName === 'gold') {
-                document.documentElement.removeAttribute('data-theme');
-            } else {
-                document.documentElement.setAttribute('data-theme', themeName);
-            }
+            const validTheme = themeName === 'emerald' ? 'emerald' : 'royal';
+            document.documentElement.setAttribute('data-theme', validTheme);
             try {
-                localStorage.setItem('lord_academy_theme', themeName);
+                localStorage.setItem('lord_academy_theme', validTheme);
             } catch (e) {}
 
             const btns = {
-                gold: document.getElementById('theme-gold-btn'),
                 emerald: document.getElementById('theme-emerald-btn'),
                 royal: document.getElementById('theme-royal-btn')
             };
             Object.keys(btns).forEach(k => {
                 if (!btns[k]) return;
-                if (k === themeName) {
-                    btns[k].className = `w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg border-2 border-white transition transform scale-110 ${k === 'gold' ? 'bg-[#d4af37]' : k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
+                if (k === validTheme) {
+                    btns[k].className = `w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg border-2 border-white transition transform scale-110 ${k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
                 } else {
-                    btns[k].className = `w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg border border-transparent opacity-60 hover:opacity-100 transition transform ${k === 'gold' ? 'bg-[#d4af37]' : k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
+                    btns[k].className = `w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg border border-transparent opacity-60 hover:opacity-100 transition transform ${k === 'emerald' ? 'bg-[#10b981]' : 'bg-[#3b82f6]'}`;
                 }
             });
         }
@@ -1140,8 +1170,8 @@
             if (!dropdown) return;
             const currentVal = dropdown.value;
             dropdown.innerHTML =
-                `<option value="root_term1">بالخارج — رئيسية (الترم الأول)</option>` +
-                `<option value="root_term2" selected>بالخارج — رئيسية (الترم الثاني)</option>` +
+                `<option value="root_term1" selected>بالخارج — رئيسية (الترم الأول)</option>` +
+                `<option value="root_term2">بالخارج — رئيسية (الترم الثاني)</option>` +
                 dynamicFolders.map(f => `<option value="${f.id}">[${(f.term || 'term2') === 'term1' ? 'ترم 1' : 'ترم 2'}] ${escapeAttr(f.title)}</option>`).join('');
             if (currentVal && Array.from(dropdown.options).some(o => o.value === currentVal)) {
                 dropdown.value = currentVal;
@@ -1794,7 +1824,6 @@
             render();
         });
 
-        document.getElementById('theme-gold-btn').addEventListener('click', () => applyTheme('gold'));
         document.getElementById('theme-emerald-btn').addEventListener('click', () => applyTheme('emerald'));
         document.getElementById('theme-royal-btn').addEventListener('click', () => applyTheme('royal'));
 
@@ -1947,6 +1976,118 @@
 
         document.getElementById('restore-all-btn').addEventListener('click', () => restoreAllDeletedItems(false));
 
+        let pendingUploadedLogoDataUrl = null;
+
+        function applyLogoToUI(logoSrc) {
+            const navImg = document.getElementById('nav-logo-img');
+            const navTxt = document.getElementById('nav-logo-text');
+            const loadImg = document.getElementById('loading-logo-img');
+            const loadTxt = document.getElementById('loading-logo-text');
+            const heroWrap = document.getElementById('hero-logo-wrapper');
+            const heroImg = document.getElementById('hero-logo-img');
+            const urlInput = document.getElementById('logo-url-input');
+
+            if (logoSrc && logoSrc.trim()) {
+                const cleanSrc = logoSrc.trim();
+                navImg.src = cleanSrc;
+                navImg.classList.remove('hidden');
+                navTxt.classList.add('hidden');
+
+                loadImg.src = cleanSrc;
+                loadImg.classList.remove('hidden');
+                loadTxt.classList.add('hidden');
+
+                heroImg.src = cleanSrc;
+                heroWrap.classList.remove('hidden');
+
+                if (urlInput && !cleanSrc.startsWith('data:')) {
+                    urlInput.value = cleanSrc;
+                }
+                try { localStorage.setItem('lord_academy_logo', cleanSrc); } catch (e) {}
+            } else {
+                navImg.classList.add('hidden');
+                navTxt.classList.remove('hidden');
+                loadImg.classList.add('hidden');
+                loadTxt.classList.remove('hidden');
+                heroWrap.classList.add('hidden');
+                if (urlInput) urlInput.value = '';
+                try { localStorage.removeItem('lord_academy_logo'); } catch (e) {}
+            }
+        }
+
+        // تحميل اللوجو المخزن محلياً فوراً
+        try {
+            const cachedLogo = localStorage.getItem('lord_academy_logo');
+            if (cachedLogo) applyLogoToUI(cachedLogo);
+        } catch (e) {}
+
+        // ضغط وتحويل صورة اللوجو المرفوعة من الموبايل أو الكمبيوتر
+        document.getElementById('logo-file-input').addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 260;
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > h && w > maxDim) {
+                        h = Math.round((h * maxDim) / w);
+                        w = maxDim;
+                    } else if (h >= w && h > maxDim) {
+                        w = Math.round((w * maxDim) / h);
+                        h = maxDim;
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    pendingUploadedLogoDataUrl = canvas.toDataURL('image/png', 0.9);
+                    applyLogoToUI(pendingUploadedLogoDataUrl);
+                    showToast("تم تجهيز صورة اللوجو، اضغط على (حفظ اللوجو) لاعتمادها");
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('save-logo-btn').addEventListener('click', async () => {
+            const urlVal = document.getElementById('logo-url-input').value.trim();
+            const finalLogo = pendingUploadedLogoDataUrl || normalizeDriveDownloadLink(urlVal);
+            if (!finalLogo) {
+                showToast("يرجى اختيار صورة من جهازك أو وضع رابط اللوجو أولاً");
+                return;
+            }
+            applyLogoToUI(finalLogo);
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'branding'), {
+                    logoUrl: finalLogo,
+                    updatedAt: Date.now()
+                }, { merge: true });
+                pendingUploadedLogoDataUrl = null;
+                await logActivity("تحديث شعار المنصة (اللوجو)");
+                showToast("تم حفظ وتفعيل لوجو المنصة بنجاح");
+            } catch (e) {
+                showToast("تم تطبيق اللوجو محلياً");
+            }
+        });
+
+        document.getElementById('remove-logo-btn').addEventListener('click', async () => {
+            pendingUploadedLogoDataUrl = null;
+            document.getElementById('logo-file-input').value = '';
+            applyLogoToUI('');
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'branding'), {
+                    logoUrl: '',
+                    updatedAt: Date.now()
+                }, { merge: true });
+                await logActivity("إزالة شعار المنصة والعودة للشعار النصي");
+                showToast("تم حذف اللوجو والعودة للشعار الافتراضي");
+            } catch (e) {}
+        });
+
         // تحميل أي نسخة مخزنة محلياً فوراً حتى لا تظهر المنصة فارغة أثناء الاتصال
         try {
             const cachedFolders = localStorage.getItem('lord_cached_folders');
@@ -1983,12 +2124,17 @@
 
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'hidden_statics'), snap => {
                 hiddenStatics = snap.docs.map(d => d.id);
-                // استعادة المقررات الثابتة المخفية تلقائياً عند فتح المنصة بناءً على طلب المستخدم
                 if (!autoRestoredOnce && hiddenStatics.length > 0) {
                     autoRestoredOnce = true;
                     restoreAllDeletedItems(true);
                 } else {
                     render();
+                }
+            });
+
+            onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'branding'), snap => {
+                if (snap.exists() && snap.data().logoUrl !== undefined) {
+                    applyLogoToUI(snap.data().logoUrl);
                 }
             });
         }
